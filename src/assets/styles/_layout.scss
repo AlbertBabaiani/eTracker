@@ -1,0 +1,50 @@
+$bg-gradient-start: #c5e0d8; // Your secondary
+$bg-gradient-end: #f8f0fb; // Your white/rose tint
+
+.shell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100vh;
+
+  background: linear-gradient(135deg, $bg-gradient-start 0%, $bg-gradient-end 100%);
+}
+
+.container {
+  padding: var(--spacing-4);
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+// AUTH Strat
+
+$card-radius: 1.5rem;
+
+.auth-container {
+  padding: var(--spacing-6);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 26.25rem;
+
+  padding: 2.5rem 2rem 2rem;
+  border-radius: $card-radius;
+
+  box-shadow: 0 12px 40px rgba(47, 179, 139, 0.15);
+  background-color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0/8);
+}
+
+@media (max-width: 500px) {
+  .auth-container {
+    padding: var(--spacing-2);
+  }
+
+  .auth-card {
+    padding: 2rem 1rem;
+  }
+}
+
+// AUTH End

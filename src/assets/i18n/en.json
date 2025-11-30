@@ -1,0 +1,36 @@
+{
+  "AUTH": {
+    "SIGNIN": {
+      "BUTTON": "Sign In",
+      "NO_ACCOUNT": "Don't have an account?",
+      "SIGN_UP": "Sign up"
+    },
+    "FORM": {
+      "EMAIL": {
+        "LABEL": "Email Address",
+        "PLACEHOLDER": "Enter your email",
+        "ERROR": {
+          "REQUIRED": "Email is required.",
+          "INVALID": "Please enter a valid email address.",
+          "MIN_LENGTH": "Email must be at least {{length}} characters long.",
+          "MAX_LENGTH": "Email cannot exceed {{length}} characters."
+        }
+      },
+      "PASSWORD": {
+        "LABEL": "Password",
+        "PLACEHOLDER": "Enter your password",
+        "ERROR": {
+          "REQUIRED": "Password is required.",
+          "MIN_LENGTH": "Password must be at least {{length}} characters long.",
+          "MAX_LENGTH": "Password cannot exceed {{length}} characters."
+        }
+      },
+      "FORGOT_PASSWORD": "Forgot Password?"
+    },
+    "TOAST": {
+      "SUCCESS": "Welcome back!",
+      "FAILURE": "Login failed. Check credentials.",
+      "CLOSE": "Close"
+    }
+  }
+}

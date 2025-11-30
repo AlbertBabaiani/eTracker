@@ -1,0 +1,105 @@
+// Variables
+
+.full-width {
+  width: 100%;
+  margin-bottom: var(--spacing-4);
+}
+
+// Language Start
+
+.language-container {
+  position: absolute;
+  right: 2.5rem;
+  top: 2.5rem;
+}
+
+// Language End
+
+// Logo Start
+
+.center-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 1.5rem;
+
+  text-align: center;
+
+  .brand-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+}
+
+// Logo End
+
+// Icons inside inputs
+mat-icon[matPrefix] {
+  color: var(--text-secondary);
+}
+
+.forgot-pass {
+  text-align: right;
+  margin-bottom: var(--spacing-6);
+
+  a {
+    color: var(--text-secondary);
+    font-weight: var(--fw-medium);
+    font-size: 0.9rem;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--primary);
+    }
+  }
+}
+
+.login-btn {
+  width: 100%;
+}
+
+.login-btn {
+  height: 3.25rem;
+  font-size: var(--fs-lg);
+  border-radius: var(--radius-lg);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.5px;
+  background: var(--primary) !important;
+
+  transition: all 0.3s ease;
+
+  &:disabled {
+    background: var(--silver) !important;
+    color: var(--white) !important;
+  }
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: var(--spacing-4);
+  padding-top: var(--spacing-4);
+  border-top: 1px solid #eee;
+
+  p {
+    color: var(--text-secondary);
+  }
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 500px) {
+  .language-container {
+    right: 1.5rem;
+    top: 2rem;
+  }
+}

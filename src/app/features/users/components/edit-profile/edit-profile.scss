@@ -1,0 +1,23 @@
+.profile-container {
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+}
+.profile-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 24px;
+}
+mat-card-header {
+  margin-bottom: 24px;
+}
+.full-width {
+  width: 100%;
+  margin-bottom: 12px;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}

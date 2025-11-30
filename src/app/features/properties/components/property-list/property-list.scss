@@ -1,0 +1,113 @@
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block: var(--spacing-4);
+}
+
+.page-title {
+  margin-block: var(--spacing-6);
+  color: var(--primary);
+}
+
+.property-list {
+  display: grid;
+  // grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  grid-template-columns: repeat(auto-fit, 22rem);
+
+  gap: var(--spacing-7);
+}
+
+.card-header {
+  margin-bottom: var(--spacing-3);
+}
+
+.property-type-icon {
+  background: var(--primary);
+
+  color: var(--white);
+
+  width: 2.5rem;
+  aspect-ratio: 1;
+  border-radius: 100vmax;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-7);
+  margin-bottom: var(--spacing-2);
+}
+
+.card-subtitle {
+  color: var(--text-secondary);
+  font-weight: var(--fw-normal);
+
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.additional-information {
+  &-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+    margin-block: var(--spacing-3);
+    font-size: var(--fs-base);
+    color: var(--text-secondary);
+  }
+
+  &-label {
+    font-weight: var(--fw-medium);
+    margin-right: var(--spacing-1);
+  }
+}
+
+.action-buttons {
+  justify-content: space-between;
+  margin-bottom: var(--spacing-2);
+}
+
+.empty-card {
+  cursor: pointer;
+  border: 2px dashed var(--primary);
+  transition: background-color 0.2s, border-color 0.2s;
+  min-height: 22rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:focus,
+  &:hover {
+    background-color: #f5f5f5;
+    border-color: var(--primary);
+  }
+
+  .empty-state-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    color: var(--text-muted);
+  }
+
+  .big-add-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    color: var(--primary);
+  }
+
+  .empty-text {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--primary);
+  }
+}

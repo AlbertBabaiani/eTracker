@@ -1,0 +1,18 @@
+<div class="lang-switcher-container">
+  <button
+    (click)="setLanguage('en')"
+    class="lang-label"
+    [class.active]="activeLanguage() === 'en'"
+    type="button"
+  >
+    En
+  </button>
+  <button
+    (click)="setLanguage('ka')"
+    class="lang-label"
+    [class.active]="activeLanguage() === 'ka'"
+    type="button"
+  >
+    ქა
+  </button>
+</div>

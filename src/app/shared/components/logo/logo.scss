@@ -1,0 +1,49 @@
+.logo-container {
+  display: flex;
+  align-items: center;
+  width: min-content;
+
+  &.horizontal {
+    flex-direction: row;
+  }
+
+  &.vertical {
+    flex-direction: column;
+  }
+
+  &.logo-sm {
+    gap: var(--spacing-2);
+
+    .logo-text {
+      font-size: var(--fs-xl);
+    }
+
+    img {
+      width: 2rem;
+    }
+  }
+
+  &.logo-lg {
+    gap: var(--spacing-5);
+
+    .logo-text {
+      font-size: var(--fs-3xl);
+    }
+    img {
+      width: 3.5rem;
+    }
+  }
+
+  img {
+    height: auto;
+  }
+}
+
+.logo-text {
+  font-weight: var(--fw-bold);
+  color: var(--primary);
+
+  span {
+    color: var(--secondary);
+  }
+}

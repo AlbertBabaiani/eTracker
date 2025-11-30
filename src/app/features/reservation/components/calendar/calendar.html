@@ -1,0 +1,162 @@
+<div class="calendar-container">
+  <!-- 1. Header & Controls -->
+  <header class="calendar-header">
+    <div class="month-navigator">
+      <button mat-icon-button (click)="navigate(-1)">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <h2 class="current-label">{{ currentLabel() }}</h2>
+
+      <button mat-icon-button (click)="navigate(1)">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+
+      <button mat-stroked-button class="today-btn" (click)="goToToday()">Today</button>
+    </div>
+
+    <mat-button-toggle-group
+      [value]="view()"
+      (change)="view.set($event.value)"
+      appearance="standard"
+    >
+      <mat-button-toggle value="day">Day</mat-button-toggle>
+      <mat-button-toggle value="week">Week</mat-button-toggle>
+      <mat-button-toggle value="month">Month</mat-button-toggle>
+      <mat-button-toggle value="year">Year</mat-button-toggle>
+    </mat-button-toggle-group>
+  </header>
+
+  <!-- 2. Year View Grid -->
+  @if (view() === 'year') {
+  <div class="year-grid">
+    @for (month of months; track $index) {
+    <div
+      class="month-cell"
+      [class.selected-month]="isSelectedMonth($index)"
+      [class.current-month]="isActualCurrentMonth($index)"
+      (click)="selectMonth($index)"
+    >
+      {{ month }}
+    </div>
+    }
+  </div>
+  }
+
+  <!-- 3. Day (Timeline) View -->
+  @else if (view() === 'day') {
+  <div class="day-timeline-container">
+    <div class="time-labels">
+      @for (hour of hours; track hour) {
+      <div class="time-label">
+        <span>{{ formatHour(hour) }}</span>
+      </div>
+      }
+    </div>
+
+    <div class="timeline-grid">
+      @for (hour of hours; track hour) {
+      <div class="grid-line"></div>
+      } @for (slot of getCurrentDayReservations(); track slot.reservation.id) {
+      <div
+        class="timeline-event"
+        [style.top.%]="calculateTop(slot.reservation)"
+        [style.height.%]="calculateHeight(slot.reservation)"
+        [style.background-color]="slot.reservation.color"
+      >
+        <div class="event-content">
+          <div class="event-time">
+            {{ slot.reservation.startDate | date : 'shortTime' }} -
+            {{ slot.reservation.endDate | date : 'shortTime' }}
+          </div>
+          <div class="event-guest">
+            <div class="avatar-circle">{{ getInitials(slot.reservation.guestId) }}</div>
+            <span>{{ slot.reservation.guestId }}</span>
+          </div>
+          <div class="event-status">{{ slot.reservation.status | titlecase }}</div>
+        </div>
+      </div>
+      } @if (isToday(currentDate())) {
+      <div class="current-time-line" [style.top.%]="calculateCurrentTimeTop()"></div>
+      }
+    </div>
+  </div>
+  }
+
+  <!-- 4. Month / Week Grid -->
+  @else {
+  <div class="days-header" [class.hide-header]="view() === 'day'">
+    @for (day of weekDays; track day) {
+    <div class="day-name">{{ day }}</div>
+    }
+  </div>
+
+  <div class="calendar-grid" [ngClass]="view()">
+    @for (day of calendarDays(); track $index) {
+    <div
+      class="day-cell"
+      [class.empty]="!day.date"
+      [class.today]="day.isToday"
+      [class.past]="day.isPast"
+      (click)="onDayClick(day)"
+    >
+      @if (day.date) {
+      <div class="cell-header">
+        <span class="day-number">{{ day.dayNumber }}</span>
+        @if (view() === 'day') {
+        <span class="day-weekday">{{ day.date | date : 'EEEE' }}</span>
+        }
+      </div>
+
+      <div class="reservations-stack">
+        @for (slot of day.slots; track slot.reservation.id) {
+        <div
+          class="guest-chip"
+          [class.chip-start]="slot.type === 'start'"
+          [class.chip-end]="slot.type === 'end'"
+          [class.chip-stay]="slot.type === 'stay'"
+          [style.background-color]="slot.reservation.color || '#e3f2fd'"
+        >
+          <div class="avatar-mini">{{ getInitials(slot.reservation.guestId) }}</div>
+          <div class="chip-content">
+            <span class="guest-name">{{ slot.reservation.guestId }}</span>
+            @if (slot.timeLabel) {
+            <span class="chip-time">{{ slot.timeLabel }}</span>
+            }
+          </div>
+
+          @if (slot.type === 'start') { <mat-icon class="tiny-icon">login</mat-icon> } @if
+          (slot.type === 'end') { <mat-icon class="tiny-icon">logout</mat-icon> }
+        </div>
+        }
+      </div>
+      }
+    </div>
+    }
+  </div>
+  }
+
+  <!-- 5. Bottom Panel: Properties List -->
+  <footer class="properties-panel">
+    <span class="panel-label">Filter by:</span>
+    <div class="prop-list">
+      <button
+        class="prop-chip"
+        [class.active]="selectedPropertyId() === null"
+        (click)="toggleProperty(null)"
+      >
+        All
+      </button>
+      @for (prop of properties(); track prop.id) {
+      <button
+        class="prop-chip"
+        [class.active]="selectedPropertyId() === prop.id"
+        (click)="toggleProperty(prop.id)"
+      >
+        <mat-icon class="prop-icon">home</mat-icon>
+        {{ prop.alias || prop.name }}
+      </button>
+      }
+    </div>
+  </footer>
+</div>

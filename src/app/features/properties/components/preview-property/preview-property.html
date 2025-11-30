@@ -1,0 +1,115 @@
+@if (property(); as prop) {
+<div class="detail-container">
+  <div class="hero-image">
+    <img src="https://material.angular.dev/assets/img/examples/shiba2.jpg" alt="Property Image" />
+    <button mat-icon-button class="back-button" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+
+  <div class="content-wrapper container">
+    <header class="header-section">
+      <h1 class="title">{{ prop.name }} {{prop.alias ? `(${prop.alias})` : ''}}</h1>
+
+      <div class="location-row">
+        <mat-icon class="location-icon">location_on</mat-icon>
+        <span>{{ prop.location }}</span>
+      </div>
+    </header>
+
+    <mat-divider></mat-divider>
+
+    <section class="stats-grid">
+      <div class="stat-item">
+        <mat-icon>meeting_room</mat-icon>
+        <span>{{ prop.rooms }} Rooms</span>
+      </div>
+      <div class="stat-item">
+        <mat-icon>group</mat-icon>
+        <span>Max {{ prop.maxGuests }} Guests</span>
+      </div>
+
+      <div class="stat-item">
+        <mat-icon>layers</mat-icon>
+        <span>Floor {{ prop.floor }}</span>
+      </div>
+      @if (prop.blockName) {
+      <div class="stat-item">
+        <mat-icon>apartment</mat-icon>
+        <span>{{ prop.blockName }}</span>
+      </div>
+      }
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <div class="action-section">
+      <h2>Actions</h2>
+
+      <div class="button-row">
+        <a mat-flat-button [routerLink]="['/properties', prop.id, 'edit']">
+          <mat-icon>edit</mat-icon> Edit Details
+        </a>
+
+        @if (prop.socialMedia) {
+        <div class="social-actions">
+          <!-- Google Maps (Moved here) -->
+          @if (prop.googleMapsAddress) {
+          <button
+            mat-icon-button
+            class="social-btn google-maps"
+            matTooltip="Copy Google Maps Link"
+            (click)="copyToClipboard(prop.googleMapsAddress, 'Google Maps')"
+          >
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+              />
+            </svg>
+          </button>
+          }
+
+          <!-- Facebook -->
+          @if (prop.socialMedia.facebook) {
+          <button
+            mat-icon-button
+            class="social-btn facebook"
+            matTooltip="Copy Facebook Link"
+            (click)="copyToClipboard(prop.socialMedia.facebook, 'Facebook')"
+          >
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path
+                d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.15 5.96C15.21 5.96 16.12 6.04 16.12 6.04V8.51H15.02C13.78 8.51 13.39 9.28 13.39 10.07V12.06H16.18L15.74 14.96H13.39V21.96C18.16 21.21 21.82 17.06 21.82 12.06C21.82 6.53 17.32 2.04 12 2.04Z"
+              />
+            </svg>
+          </button>
+          }
+
+          <!-- Instagram -->
+          @if (prop.socialMedia.instagram) {
+          <button
+            mat-icon-button
+            class="social-btn instagram"
+            matTooltip="Copy Instagram Link"
+            (click)="copyToClipboard(prop.socialMedia.instagram, 'Instagram')"
+          >
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path
+                d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"
+              />
+            </svg>
+          </button>
+          }
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+} @else {
+<section class="error-container">
+  <mat-icon class="error-icon">error_outline</mat-icon>
+  <h2>Property not found!</h2>
+  <button mat-button (click)="goBack()">Go Back</button>
+</section>
+}

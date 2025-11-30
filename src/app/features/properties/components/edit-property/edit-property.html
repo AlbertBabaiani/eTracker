@@ -1,0 +1,130 @@
+<div class="edit-container">
+  <div class="header">
+    <button mat-icon-button (click)="cancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <h1>{{ isEditMode() ? 'Edit Property' : 'Add New Property' }}</h1>
+    <div style="width: 40px"></div>
+  </div>
+
+  @if (propertyForm) {
+  <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()" class="edit-form">
+    <h3 class="section-title">General Info</h3>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Property Name</mat-label>
+      <input matInput formControlName="name" placeholder="e.g. Sunny Apt" />
+      <mat-error>Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Alias (Short Code)</mat-label>
+      <input matInput formControlName="alias" placeholder="e.g. A101" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Location</mat-label>
+      <input matInput formControlName="location" />
+      <mat-error>Location is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Google Maps Link</mat-label>
+      <input matInput formControlName="googleMapsAddress" />
+      <mat-icon matSuffix>link</mat-icon>
+    </mat-form-field>
+
+    <h3 class="section-title">Capacity</h3>
+    <div class="row-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Rooms</mat-label>
+        <input matInput type="number" formControlName="rooms" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Max Guests</mat-label>
+        <input matInput type="number" formControlName="maxGuests" />
+      </mat-form-field>
+    </div>
+
+    <h3 class="section-title">Building Details</h3>
+
+    <div class="row-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Floor Number</mat-label>
+        <input matInput type="number" formControlName="floor" />
+        <mat-error>Floor is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Block / Building Name</mat-label>
+        <input matInput formControlName="blockName" />
+      </mat-form-field>
+    </div>
+
+    <h3 class="section-title">Social Media</h3>
+    <div class="row-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Facebook Link</mat-label>
+        <input matInput formControlName="facebook" />
+        <mat-icon matSuffix>public</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Instagram Link</mat-label>
+        <input matInput formControlName="instagram" />
+        <mat-icon matSuffix>photo_camera</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <!-- Sharing Section -->
+    <h3 class="section-title">Sharing</h3>
+    <div class="sharing-section">
+      <!-- List of current owner IDs (simplified) -->
+      @if (currentOwnerIds().length > 0) {
+      <mat-chip-set class="owner-chips">
+        @for (id of currentOwnerIds(); track id) {
+        <mat-chip>
+          <mat-icon matChipAvatar>person</mat-icon>
+          {{ id }}
+        </mat-chip>
+        }
+      </mat-chip-set>
+      }
+
+      <!-- Add Owner Button / Input -->
+      @if (!showOwnerInput()) {
+      <button mat-stroked-button type="button" color="primary" (click)="showOwnerInput.set(true)">
+        <mat-icon>person_add</mat-icon> Add another owner
+      </button>
+      } @else {
+      <div class="add-owner-row">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search User</mat-label>
+          <input matInput [formControl]="searchUserControl" [matAutocomplete]="auto" />
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="addOwner($event.option.value)"
+          >
+            @for (user of filteredUsers(); track user.uid) {
+            <mat-option [value]="user"> {{ user.displayName }} ({{ user.email }}) </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <button mat-icon-button color="warn" type="button" (click)="showOwnerInput.set(false)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      }
+    </div>
+
+    <div class="form-actions">
+      <button mat-button type="button" (click)="cancel()">Cancel</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="propertyForm.invalid">
+        {{ isEditMode() ? 'Save Changes' : 'Create Property' }}
+      </button>
+    </div>
+  </form>
+  }
+</div>

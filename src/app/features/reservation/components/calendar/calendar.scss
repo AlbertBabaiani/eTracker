@@ -1,0 +1,442 @@
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  --grid-border: #e0e0e0;
+  --weekend-bg: #fafafa;
+  --today-color: var(--primary);
+  --hover-bg: #f5f5f5;
+  --chip-radius: 4px;
+}
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* --- Header --- */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: white;
+  border-bottom: 1px solid var(--grid-border);
+  z-index: 10;
+
+  .month-navigator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .current-label {
+    margin: 0;
+    min-width: 200px;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+/* --- Year View --- */
+.year-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 16px;
+  padding: 24px;
+  flex-grow: 1;
+
+  .month-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-radius: 8px;
+    border: 1px solid var(--grid-border);
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: var(--hover-bg);
+      border-color: var(--today-color);
+      color: var(--today-color);
+    }
+
+    &.selected-month {
+      background-color: var(--today-color);
+      color: white;
+      border-color: var(--today-color);
+    }
+
+    /* Actual Today's Month (Outlined) */
+    &.current-month:not(.selected-month) {
+      border: 2px solid var(--today-color);
+      color: var(--today-color);
+      font-weight: 700;
+    }
+  }
+}
+
+/* --- Days Header --- */
+.days-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 12px 0;
+  background-color: white;
+  border-bottom: 1px solid var(--grid-border);
+
+  &.hide-header {
+    display: none;
+  }
+
+  .day-name {
+    text-align: center;
+    font-weight: 600;
+    color: #757575;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    &:nth-child(6),
+    &:nth-child(7) {
+      color: var(--today-color);
+    }
+  }
+}
+
+/* --- Calendar Grid --- */
+.calendar-grid {
+  display: grid;
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: white;
+
+  &.month {
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 1fr;
+  }
+
+  &.week {
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr;
+  }
+
+  &.day {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    padding: 24px;
+  }
+}
+
+/* --- Day Cell --- */
+.day-cell {
+  border-right: 1px solid var(--grid-border);
+  border-bottom: 1px solid var(--grid-border);
+  padding: 4px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-height: 100px;
+
+  &:nth-child(7n) {
+    border-right: none;
+  }
+
+  &.empty {
+    background-color: #fbfbfb !important;
+    cursor: default;
+  }
+
+  &:hover:not(.empty) {
+    background-color: var(--hover-bg);
+  }
+
+  /* Weekend Styling */
+  .calendar-grid.month &:nth-child(7n-1),
+  .calendar-grid.month &:nth-child(7n),
+  .calendar-grid.week &:nth-child(7n-1),
+  .calendar-grid.week &:nth-child(7n) {
+    background-color: var(--weekend-bg);
+  }
+}
+
+.cell-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  padding: 4px;
+}
+
+.day-number {
+  font-weight: 500;
+  font-size: 0.95rem;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.day-cell.today .day-number {
+  background-color: var(--today-color);
+  color: white;
+  box-shadow: 0 2px 4px rgba(var(--primary), 0.3);
+}
+
+.day-cell.past .day-number {
+  color: #bdbdbd;
+}
+
+/* --- Timeline View --- */
+.day-timeline-container {
+  display: flex;
+  flex-grow: 1;
+  overflow-y: auto;
+  position: relative;
+}
+.time-labels {
+  width: 60px;
+  border-right: 1px solid var(--grid-border);
+  background: #fafafa;
+}
+.time-label {
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #757575;
+  transform: translateY(-50%);
+  span {
+    margin-top: -10px;
+    background: #fafafa;
+    padding: 0 4px;
+  }
+}
+.timeline-grid {
+  flex-grow: 1;
+  position: relative;
+  height: 1440px;
+}
+.grid-line {
+  height: 60px;
+  border-bottom: 1px solid #f0f0f0;
+  box-sizing: border-box;
+}
+.timeline-event {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  border-radius: 6px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+
+  .event-time {
+    font-size: 0.8rem;
+    font-weight: 500;
+    opacity: 0.8;
+    margin-bottom: 4px;
+  }
+  .event-guest {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+}
+.current-time-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: red;
+  z-index: 10;
+  &::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: -4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: red;
+  }
+}
+
+/* --- Guest Chips --- */
+.reservations-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.guest-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #333;
+  overflow: hidden;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: transform 0.1s;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.02);
+    z-index: 2;
+  }
+
+  &.chip-start {
+    margin-left: 8px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-left: 3px solid rgba(0, 0, 0, 0.2);
+  }
+  &.chip-end {
+    margin-right: 8px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-right: 3px solid rgba(0, 0, 0, 0.2);
+    opacity: 0.8;
+  }
+  &.chip-stay {
+    margin: 0 0;
+    border-radius: 0;
+  }
+}
+
+.chip-content {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  overflow: hidden;
+}
+.chip-time {
+  font-size: 0.65rem;
+  opacity: 0.7;
+  margin-top: 1px;
+}
+
+.avatar-mini {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+.guest-name {
+  font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.tiny-icon {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  opacity: 0.6;
+  margin-left: auto;
+}
+
+/* --- Bottom Panel --- */
+.properties-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  background: white;
+  border-top: 1px solid var(--grid-border);
+  overflow-x: auto;
+  white-space: nowrap;
+
+  .panel-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #757575;
+  }
+
+  .prop-list {
+    display: flex;
+    gap: 8px;
+  }
+
+  .prop-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--grid-border);
+    background: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #555;
+    transition: all 0.2s;
+
+    .prop-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: #999;
+    }
+
+    &:hover {
+      background-color: var(--hover-bg);
+    }
+
+    &.active {
+      background-color: var(--today-color);
+      color: white;
+      border-color: var(--today-color);
+      .prop-icon {
+        color: white;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .calendar-header {
+    padding: 12px;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .current-label {
+    font-size: 1rem;
+  }
+  .today-btn {
+    display: none;
+  }
+  .guest-name {
+    display: none;
+  }
+  .day-cell {
+    min-height: 60px;
+  }
+  .properties-panel {
+    padding: 12px;
+  }
+}

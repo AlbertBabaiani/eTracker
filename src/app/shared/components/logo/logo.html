@@ -1,0 +1,12 @@
+<div
+  class="logo-container"
+  [class]="[vertical() ? 'vertical' : 'horizontal', logoLg() ? 'logo-lg' : 'logo-sm']"
+>
+  <img src="assets/images/logo.png" alt="Logo" />
+
+  @if(showLogo()){
+
+  <p class="logo-text"><span>e</span>Tracker</p>
+
+  }
+</div>

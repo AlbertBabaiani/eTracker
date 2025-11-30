@@ -1,0 +1,76 @@
+<section>
+  <div class="header-row">
+    <h1 class="page-title">
+      Your Properties <span>({{ properties().length }})</span>
+    </h1>
+
+    <a mat-flat-button color="primary" routerLink="/properties/add">
+      <mat-icon>add</mat-icon>
+      Add Property
+    </a>
+  </div>
+
+  <div class="property-list">
+    @for(property of properties(); track `${$index}-${property.id}`){
+
+    <mat-card class="property-card" appearance="outlined">
+      <mat-card-header class="card-header">
+        <span mat-card-avatar class="property-type-icon">
+          <mat-icon> home</mat-icon>
+        </span>
+
+        <mat-card-title class="card-title">
+          {{ property.name }} {{property.alias ? `(${property.alias})`: '' }}</mat-card-title
+        >
+
+        <mat-card-subtitle class="card-subtitle">
+          <mat-icon> location_on</mat-icon> {{ property.location }}</mat-card-subtitle
+        >
+      </mat-card-header>
+
+      <img
+        mat-card-image
+        src="https://material.angular.dev/assets/img/examples/shiba2.jpg"
+        alt="Photo of a Shiba Inu"
+      />
+
+      <mat-card-content>
+        <div class="additional-information-container">
+          <section class="additional-information">
+            <span class="additional-information-label">Rooms:</span>
+            <span class="additional-information-value">{{ property.rooms }}</span>
+          </section>
+
+          <section class="additional-information">
+            <span class="additional-information-label"> Floor:</span>
+            <span class="additional-information-value">{{ property.floor }}</span>
+          </section>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="action-buttons">
+        <button matButton="filled" [routerLink]="property.id">
+          <mat-icon>visibility</mat-icon> More
+        </button>
+        <button matButton [routerLink]="`${property.id}/edit`">
+          <mat-icon>edit</mat-icon> Edit
+        </button>
+        <button matButton><mat-icon>share</mat-icon> Share</button>
+      </mat-card-actions>
+    </mat-card>
+
+    } @empty {
+    <mat-card
+      class="property-card empty-card"
+      appearance="outlined"
+      routerLink="/properties/add"
+      tabindex="0"
+    >
+      <div class="empty-state-content">
+        <mat-icon class="big-add-icon">add_circle_outline</mat-icon>
+        <span class="empty-text">Add Apartment</span>
+      </div>
+    </mat-card>
+    }
+  </div>
+</section>

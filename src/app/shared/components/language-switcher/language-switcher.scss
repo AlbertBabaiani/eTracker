@@ -1,0 +1,26 @@
+:host {
+  display: inline-block;
+}
+
+.lang-switcher-container {
+  display: flex;
+  align-items: center;
+}
+
+.lang-label {
+  border: none;
+  background: transparent;
+  padding: var(--spacing-1) var(--spacing-2);
+
+  font-size: var(--fs-base);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  user-select: none;
+
+  &.active {
+    color: var(--primary);
+    font-weight: var(--fw-bold);
+  }
+}

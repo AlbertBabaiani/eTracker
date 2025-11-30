@@ -1,0 +1,55 @@
+// :root {
+//   --black: #211a1dff;
+//   --primary: #6320eeff;
+//   --secondary: #8075ffff;
+//   --white: #f8f0fbff;
+//   --gray: #cad5caff;
+// }
+
+:root {
+  --black: #444545;
+  --primary: #2fb38b;
+  --secondary: #c5e0d8;
+  --white: #f8f0fbff;
+  --text-secondary: #a8a0a0;
+  --silver: #c9c9c9;
+  --rose: #ceabb1;
+
+  --success: #2e7d32;
+  --warning: #ed6c02;
+  --error: #a30027;
+
+  --border-color: var(--text-secondary);
+
+  --radius-sm: 0.25rem; /* 4px  - Small inputs, checkboxes */
+  --radius-md: 0.5rem; /* 8px  - Cards, standard buttons */
+  --radius-lg: 0.75rem; /* 12px - Modals, large containers */
+  --radius-xl: 1rem; /* 16px - Floating elements */
+  --radius-full: 9999px;
+
+  --facebook-blue: #1877f2;
+  --instagram-gradient: #d6249f;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.95rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.25rem;
+  --fs-2xl: 1.5rem;
+  --fs-3xl: 1.875rem;
+
+  /* Font Weights */
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+
+  /* Spacing */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-7: 1.75rem;
+  --spacing-8: 2rem;
+}
