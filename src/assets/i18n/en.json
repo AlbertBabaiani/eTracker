@@ -81,11 +81,11 @@
       "SUCCESS": "Success",
       "ERROR": "Error",
       "CLOSE": "Close",
+      "WELCOME_BACK": "Welcome back, {{name}}!",
       "EMAIL_IN_USE": "This email address is already in use.",
       "EMAIL_NOT_VERIFIED": "Email not verified. Please check your inbox.",
       "INVALID_CREDENTIALS": "Incorrect email or password.",
       "USER_REGISTERED": "Registration successful! Verification email sent.",
-      "WELCOME_BACK": "Welcome back, {{name}}!",
       "GENERIC_ERROR": "Something went wrong. Please try again."
     }
   }

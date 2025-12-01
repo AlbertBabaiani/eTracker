@@ -7,7 +7,7 @@ export interface IUser {
   location: string;
   createdAt: string;
 
-  emailVerified: boolean;
+  // emailVerified: boolean;
 
   email: string;
   firstName: string;

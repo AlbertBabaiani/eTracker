@@ -11,7 +11,7 @@ import {
   signOut,
   user,
 } from '@angular/fire/auth';
-import { doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
+import { doc, docData, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, firstValueFrom, Observable, of, switchMap } from 'rxjs';
 import { LoadingService } from './loading-service';
@@ -34,7 +34,7 @@ export class AuthService {
   private fireStore = inject(Firestore);
   private router = inject(Router);
   private loading = inject(LoadingService);
-  private error = inject(Notification);
+  private notification = inject(Notification);
 
   private authUser$ = user(this.firebaseAuth);
 
@@ -90,7 +90,7 @@ export class AuthService {
       const locationData = await this.fetchLocationData();
       const userDoc = doc(this.fireStore, `users/${uid}`);
 
-      const profile: any = {
+      const profile: IUser = {
         // Security
         uid: uid,
         ip: locationData.ip,
@@ -101,10 +101,11 @@ export class AuthService {
 
         // Personal Information
         email: form.email,
+        firstName: form.firstName,
+        lastName: form.lastName,
         displayName: form.displayName,
         photoURL: '',
         phoneNumber: form.phoneNumber,
-        emailVerified: false,
         properties: [],
       };
 
@@ -125,16 +126,30 @@ export class AuthService {
 
   async signin(email: string, pass: string) {
     try {
+      this.loading.startProcess();
       const credential = await signInWithEmailAndPassword(this.firebaseAuth, email, pass);
 
+      // 1. Check Email Verification
       if (!credential.user.emailVerified) {
         await signOut(this.firebaseAuth);
+        this.notification.showError('AUTH.TOAST.EMAIL_NOT_VERIFIED');
         throw new Error('auth/email-not-verified');
       }
 
-      console.log('Logged In');
+      // 2. Get User Name for Welcome Message
+      const userDocRef = doc(this.fireStore, `users/${credential.user.uid}`);
+      const userSnap = await getDoc(userDocRef);
+      const userData = userSnap.data() as IUser;
+      const name = userData?.firstName || email.split('@')[0];
+
+      this.notification.showSuccess('AUTH.TOAST.WELCOME_BACK', { name });
+      this.router.navigate(['/dashboard']);
+      return true;
     } catch (error: any) {
-      this.error.showError(error);
+      this.notification.handleAuthError(error);
+      return false;
+    } finally {
+      this.loading.stopProcess();
     }
   }
 

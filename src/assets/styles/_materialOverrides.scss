@@ -54,9 +54,9 @@
 
 // Inputs End
 
-//  Toast Start
+//  Snackbar Start
 
-.error-toast {
+.error-snackbar {
   .mdc-snackbar__surface {
     background-color: var(--error) !important;
   }
@@ -71,7 +71,7 @@
   }
 }
 
-.success-toast {
+.success-snackbar {
   .mdc-snackbar__surface {
     background-color: var(--primary) !important;
   }
@@ -86,7 +86,7 @@
   }
 }
 
-//  Toast End
+//  Snackbar End
 
 // Primary Btn Start
 
@@ -130,6 +130,7 @@ $primaryBtnHeight: 3.25rem;
     (
       unselected-icon-color: var(--text-secondary),
       selected-icon-color: var(--primary),
+      selected-hover-icon-color: var(--primary),
       selected-focus-icon-color: var(--primary),
     )
   );

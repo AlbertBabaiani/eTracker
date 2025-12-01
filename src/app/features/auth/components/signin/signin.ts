@@ -4,13 +4,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../../../../core/services/auth-service';
-import { Router, RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { Logo } from '../../../../shared/components/logo/logo';
 import { LanguageSwitcher } from '../../../../shared/components/language-switcher/language-switcher';
-import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
+import { TranslocoDirective } from '@jsverse/transloco';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -18,14 +17,13 @@ import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
     LanguageSwitcher,
     Logo,
     ReactiveFormsModule,
-    RouterLink,
     TranslocoDirective,
+    RouterLink,
     MatIconModule,
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
     MatCardModule,
-    MatSnackBarModule,
   ],
   templateUrl: './signin.html',
   styleUrl: './signin.scss',
@@ -33,9 +31,6 @@ import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 export class Signin {
   private fb = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
-  private router = inject(Router);
-  private snackBar = inject(MatSnackBar);
-  private transloco = inject(TranslocoService);
 
   form = this.fb.group({
     email: [
@@ -49,27 +44,10 @@ export class Signin {
     if (this.form.valid) {
       const { email, password } = this.form.value;
 
-      const closeLabel = this.transloco.translate('AUTH.TOAST.CLOSE');
-
       try {
         await this.authService.signin(email!, password!);
-
-        const successMsg = this.transloco.translate('AUTH.TOAST.SUCCESS');
-
-        this.snackBar.open(successMsg, closeLabel, {
-          duration: 3000,
-          panelClass: ['success-toast'],
-        });
-
-        this.router.navigate(['/dashboard']);
       } catch (err) {
-        const errorMsg = this.transloco.translate('AUTH.TOAST.FAILURE');
         this.form.reset();
-
-        this.snackBar.open(errorMsg, closeLabel, {
-          duration: 3000,
-          panelClass: ['error-toast'],
-        });
       }
     }
   }
