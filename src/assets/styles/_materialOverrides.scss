@@ -1,3 +1,15 @@
+@use '@angular/material' as mat;
+
+// Spinner Start
+:root {
+  @include mat.progress-spinner-overrides(
+    (
+      active-indicator-color: var(--primary),
+    )
+  );
+}
+// Spinner End
+
 // Inputs Start
 
 .mdc-text-field--outlined:not(.mdc-text-field--invalid) {
@@ -5,6 +17,12 @@
   .mdc-notched-outline__notch,
   .mdc-notched-outline__trailing {
     border-color: var(--text-secondary) !important;
+  }
+
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: var(--text-secondary) !important;
+    border-left-color: transparent !important;
   }
 
   .mdc-floating-label {
@@ -19,9 +37,19 @@
     border-color: var(--primary) !important;
   }
 
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-left-color: transparent !important;
+  }
+
   .mdc-floating-label {
     color: var(--primary) !important;
   }
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: var(--spacing-4);
 }
 
 // Inputs End
@@ -59,3 +87,52 @@
 }
 
 //  Toast End
+
+// Primary Btn Start
+
+.primary-btn {
+  letter-spacing: 0.5px;
+
+  transition: all 0.2s ease !important;
+}
+
+.primary-btn-100 {
+  width: 100%;
+}
+
+$primaryBtnHeight: 3.25rem;
+
+:root {
+  @include mat.button-overrides(
+    (
+      filled-container-color: var(--primary),
+      filled-label-text-size: var(--fs-lg),
+      filled-container-height: $primaryBtnHeight,
+      filled-container-shape: var(--radius-lg),
+      filled-label-text-weight: var(--fw-medium),
+      //
+      text-label-text-color: var(--primary),
+      text-container-height: $primaryBtnHeight,
+      text-horizontal-padding: 1.5rem,
+      text-container-shape: var(--radius-lg),
+      text-state-layer-color: var(--primary),
+      text-ripple-color: var(--primary),
+    )
+  );
+}
+
+// Primary Btn End
+
+// Checkbox Start
+
+:root {
+  @include mat.checkbox-overrides(
+    (
+      unselected-icon-color: var(--text-secondary),
+      selected-icon-color: var(--primary),
+      selected-focus-icon-color: var(--primary),
+    )
+  );
+}
+
+// Checkbox End

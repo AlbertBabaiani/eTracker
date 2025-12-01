@@ -5,32 +5,88 @@
       "NO_ACCOUNT": "Don't have an account?",
       "SIGN_UP": "Sign up"
     },
+    "SIGNUP": {
+      "TITLE": "Create Account",
+      "BUTTON": "Complete Registration",
+      "HAVE_ACCOUNT": "Already have an account?",
+      "LOGIN": "Login",
+      "STEPS": {
+        "PERSONAL": "Personal Info",
+        "ACCOUNT": "Account Details",
+        "CONFIRM": "Confirmation"
+      },
+      "CONFIRM_TEXT": "Please review your details. By clicking the button, an account will be created and a verification email will be sent to:",
+      "VERIFICATION_SENT": {
+        "TITLE": "Verify your email",
+        "MESSAGE": "We have sent a verification link to {{email}}. Please check your inbox and spam folder.",
+        "GO_TO_LOGIN": "Go to Login"
+      }
+    },
     "FORM": {
+      "FIRST_NAME": {
+        "LABEL": "First Name",
+        "PLACEHOLDER": "John",
+        "ERROR": {
+          "REQUIRED": "First name is required",
+          "MIN_LENGTH": "First name must be at least {{length}} characters long.",
+          "MAX_LENGTH": "First name exceed {{length}} characters."
+        }
+      },
+      "LAST_NAME": {
+        "LABEL": "Last Name",
+        "PLACEHOLDER": "Doe",
+        "ERROR": {
+          "REQUIRED": "Last name is required",
+          "MIN_LENGTH": "Last name must be at least {{length}} characters long.",
+          "MAX_LENGTH": "Last name exceed {{length}} characters."
+        }
+      },
+      "PHONE": {
+        "LABEL": "Phone Number",
+        "ERROR": {
+          "REQUIRED": "Phone number is required",
+          "PATTERN": "Invalid format"
+        }
+      },
       "EMAIL": {
         "LABEL": "Email Address",
         "PLACEHOLDER": "Enter your email",
         "ERROR": {
           "REQUIRED": "Email is required.",
           "INVALID": "Please enter a valid email address.",
-          "MIN_LENGTH": "Email must be at least {{length}} characters long.",
           "MAX_LENGTH": "Email cannot exceed {{length}} characters."
         }
       },
       "PASSWORD": {
         "LABEL": "Password",
         "PLACEHOLDER": "Enter your password",
+        "Show": "Show Password",
+        "HINT": "Must contain: Uppercase, Number, Special Symbol",
         "ERROR": {
           "REQUIRED": "Password is required.",
           "MIN_LENGTH": "Password must be at least {{length}} characters long.",
-          "MAX_LENGTH": "Password cannot exceed {{length}} characters."
+          "MAX_LENGTH": "Password cannot exceed {{length}} characters.",
+          "PATTERN": "Missing uppercase, number, or special char"
+        }
+      },
+      "REPEAT_PASSWORD": {
+        "LABEL": "Repeat Password",
+        "ERROR": {
+          "MISMATCH": "Passwords do not match"
         }
       },
       "FORGOT_PASSWORD": "Forgot Password?"
     },
     "TOAST": {
-      "SUCCESS": "Welcome back!",
-      "FAILURE": "Login failed. Check credentials.",
-      "CLOSE": "Close"
+      "SUCCESS": "Success",
+      "ERROR": "Error",
+      "CLOSE": "Close",
+      "EMAIL_IN_USE": "This email address is already in use.",
+      "EMAIL_NOT_VERIFIED": "Email not verified. Please check your inbox.",
+      "INVALID_CREDENTIALS": "Incorrect email or password.",
+      "USER_REGISTERED": "Registration successful! Verification email sent.",
+      "WELCOME_BACK": "Welcome back, {{name}}!",
+      "GENERIC_ERROR": "Something went wrong. Please try again."
     }
   }
 }

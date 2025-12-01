@@ -1,44 +1,162 @@
-.auth-container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f5f5f5;
-  padding: 16px;
+// Language Start
+.language-container {
+  position: absolute;
+  right: 2.5rem;
+  top: 2.5rem;
+  z-index: 2;
 }
-.auth-card {
-  width: 100%;
-  max-width: 400px;
-  padding: 24px 16px;
-}
-mat-card-header {
-  margin-bottom: 24px;
-  text-align: center;
-  justify-content: center;
-}
-.full-width {
-  width: 100%;
-  margin-bottom: 8px;
-}
-.actions {
+
+// Success State Start
+.success-state {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-8) var(--spacing-4);
+  text-align: center;
+
+  .large-icon {
+    font-size: 5rem;
+    width: 5rem;
+    height: 5rem;
+    color: var(--primary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  p {
+    margin-block: var(--spacing-6);
+    font-size: var(--fs-base);
+  }
 }
-.actions button {
-  height: 48px;
-  font-size: 1rem;
+
+// Success State End
+
+// Header Start
+.center-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--spacing-4);
+  text-align: center;
+
+  .brand-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-6);
+  }
+
+  .title {
+    color: var(--text-secondary);
+    font-weight: var(--fw-medium);
+  }
 }
+
+// Stepper Start
+
+::ng-deep .mat-stepper-vertical,
+.mat-stepper-horizontal {
+  background: transparent;
+}
+
+::ng-deep .mat-step-icon {
+  background: var(--secondary) !important;
+}
+
+::ng-deep .mat-step-icon-selected {
+  background: var(--primary) !important;
+}
+
+::ng-deep {
+  .mat-horizontal-content-container {
+    padding: 0 !important;
+  }
+}
+
+/* Override Mat Stepper Header to fit better */
+::ng-deep .mat-step-header {
+  padding: 0 16px !important;
+}
+
+/* --- RESPONSIVE STEPPER FIX --- */
+/* On small screens, hide labels for inactive steps to prevent overlap */
+@media (max-width: 600px) {
+  ::ng-deep .mat-step-label {
+    display: none !important;
+  }
+
+  /* Only show the label if the step is currently selected */
+  ::ng-deep .mat-step-header.mat-step-header-selected .mat-step-label {
+    display: block !important;
+  }
+
+  /* Reduce padding on mobile to save even more space */
+  ::ng-deep .mat-step-header {
+    padding: 0 8px !important;
+  }
+}
+
+.step-content {
+  padding-top: var(--spacing-4);
+
+  .step-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-3);
+    margin-top: var(--spacing-4);
+  }
+}
+
+/* Confirm Step Styling */
+.confirm-step {
+  align-items: center;
+  text-align: center;
+
+  .email-icon {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+    color: var(--primary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .confirm-email-display {
+    font-size: var(--fs-xl);
+    color: var(--primary);
+    font-weight: var(--fw-bold);
+    margin: var(--spacing-4) 0 3rem;
+  }
+}
+
+// Stepper End
+
+.checkbox-container {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+// Footer Start
 .auth-footer {
   text-align: center;
-  padding-top: 16px;
-  margin-top: 16px;
+  padding-top: var(--spacing-4);
+  margin-top: var(--spacing-4);
   border-top: 1px solid #eee;
+
+  p {
+    color: var(--text-secondary);
+  }
 }
+
 a {
   color: var(--primary);
   text-decoration: none;
-  font-weight: 500;
-}
-a:hover {
-  text-decoration: underline;
+  font-weight: 600;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }

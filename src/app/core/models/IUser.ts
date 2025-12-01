@@ -7,10 +7,23 @@ export interface IUser {
   location: string;
   createdAt: string;
 
+  emailVerified: boolean;
+
   email: string;
+  firstName: string;
+  lastName: string;
   displayName: string;
   photoURL?: string;
-  phoneNumber?: string;
+  phoneNumber: string;
 
   properties: string[];
+}
+
+export interface signUpFormData {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  displayName: string;
+  phoneNumber: string;
 }

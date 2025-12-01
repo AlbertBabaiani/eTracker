@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { IUser } from '../models/IUser';
+import { IUser, signUpFormData } from '../models/IUser';
 import {
+  applyActionCode,
   Auth,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
   signInWithEmailAndPassword,
   signOut,
   user,
@@ -12,6 +14,8 @@ import {
 import { doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, firstValueFrom, Observable, of, switchMap } from 'rxjs';
+import { LoadingService } from './loading-service';
+import { Notification } from './notification';
 
 interface IpApiResponse {
   ip: string;
@@ -29,10 +33,11 @@ export class AuthService {
   private firebaseAuth = inject(Auth);
   private fireStore = inject(Firestore);
   private router = inject(Router);
+  private loading = inject(LoadingService);
+  private error = inject(Notification);
 
   private authUser$ = user(this.firebaseAuth);
 
-  // Signal that holds the full DB profile (User interface)
   currentUser = toSignal(
     this.authUser$.pipe(
       switchMap((fUser) => {
@@ -50,6 +55,7 @@ export class AuthService {
     )
   );
 
+  // Computed helper for guards
   isAuthenticated = () => !!this.currentUser();
 
   private async fetchLocationData() {
@@ -72,49 +78,63 @@ export class AuthService {
     }
   }
 
-  async signUp(email: string, pass: string, displayName: string) {
+  async signup(form: signUpFormData) {
     try {
-      // 1. Create Auth User
-      const credential = await createUserWithEmailAndPassword(this.firebaseAuth, email, pass);
+      this.loading.startProcess();
+      const credential = await createUserWithEmailAndPassword(
+        this.firebaseAuth,
+        form.email,
+        form.password
+      );
       const uid = credential.user.uid;
-
-      // 2. Fetch Metadata
       const locationData = await this.fetchLocationData();
-
-      // 3. Create Firestore Profile
       const userDoc = doc(this.fireStore, `users/${uid}`);
 
-      const profile: IUser = {
+      const profile: any = {
+        // Security
         uid: uid,
-        email: email,
-        displayName: displayName,
-        photoURL: '',
-        phoneNumber: '',
-        createdAt: new Date().toISOString(),
-        properties: [],
-        // Location Data
         ip: locationData.ip,
         lat: locationData.lat,
         long: locationData.long,
         location: locationData.location,
+        createdAt: new Date().toISOString(),
+
+        // Personal Information
+        email: form.email,
+        displayName: form.displayName,
+        photoURL: '',
+        phoneNumber: form.phoneNumber,
+        emailVerified: false,
+        properties: [],
       };
 
       await setDoc(userDoc, profile);
-      this.router.navigate(['/dashboard']);
-      console.log('User created and profile saved');
+
+      if (this.firebaseAuth.currentUser) {
+        await sendEmailVerification(this.firebaseAuth.currentUser);
+      }
     } catch (error: any) {
-      console.error('Sign Up Error:', error);
-      throw error; // Re-throw so components can handle UI feedback
+    } finally {
+      this.loading.stopProcess();
     }
+  }
+
+  async verifyEmail(code: string) {
+    return applyActionCode(this.firebaseAuth, code);
   }
 
   async signin(email: string, pass: string) {
     try {
-      await signInWithEmailAndPassword(this.firebaseAuth, email, pass);
+      const credential = await signInWithEmailAndPassword(this.firebaseAuth, email, pass);
+
+      if (!credential.user.emailVerified) {
+        await signOut(this.firebaseAuth);
+        throw new Error('auth/email-not-verified');
+      }
+
       console.log('Logged In');
     } catch (error: any) {
-      console.error('Sign In Error:', error);
-      throw error;
+      this.error.showError(error);
     }
   }
 
@@ -125,16 +145,13 @@ export class AuthService {
   }
 
   async resetPassword(email: string): Promise<void> {
-    // Note: requires sendPasswordResetEmail import from @angular/fire/auth
     throw new Error('Method not implemented yet.');
   }
 
   async updateProfile(data: Partial<IUser>): Promise<void> {
     const current = this.currentUser();
     if (!current) throw new Error('No user logged in');
-
     const userDoc = doc(this.fireStore, `users/${current.uid}`);
-    // Merge update
     await setDoc(userDoc, data, { merge: true });
   }
 }
