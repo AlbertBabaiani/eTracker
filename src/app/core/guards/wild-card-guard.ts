@@ -1,14 +1,16 @@
 import { inject } from '@angular/core';
-import { CanMatchFn, Router } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth-service';
 
-export const authGuard: CanMatchFn = (route, state) => {
+export const wildcardGuard: CanActivateFn = (route, state) => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
+  console.log('gg');
+
   if (auth.isAuthenticated()) {
-    return true;
+    return router.createUrlTree(['/dashboard']);
   }
 
-  return router.createUrlTree(['/signin']);
+  return true;
 };
