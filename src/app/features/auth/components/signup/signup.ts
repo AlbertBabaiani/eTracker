@@ -5,7 +5,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { LanguageSwitcher } from '../../../../shared/components/language-switcher/language-switcher';
@@ -28,7 +27,6 @@ import { signUpFormData } from '../../../../core/models/IUser';
     MatInputModule,
     MatFormFieldModule,
     MatCardModule,
-    MatSnackBarModule,
     MatIconModule,
     MatStepperModule,
     MatCheckboxModule,
@@ -39,7 +37,6 @@ import { signUpFormData } from '../../../../core/models/IUser';
 export class Signup {
   private fb = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
-  private snackBar = inject(MatSnackBar);
 
   // Signal to toggle password visibility
   hidePassword = signal<boolean>(true);
@@ -117,10 +114,9 @@ export class Signup {
 
         this.sentEmailAddress.set(account.email);
         this.emailSent.set(true);
-
-        this.snackBar.open('Account created successfully!', 'Close', { duration: 3000 });
       } catch (err) {
-        this.snackBar.open('Signup failed. Please try again.', 'Close', { duration: 3000 });
+        this.sentEmailAddress.set('');
+        this.emailSent.set(false);
       }
     }
   }

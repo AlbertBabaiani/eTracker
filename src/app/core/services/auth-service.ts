@@ -11,7 +11,17 @@ import {
   signOut,
   user,
 } from '@angular/fire/auth';
-import { doc, docData, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
+import {
+  collection,
+  doc,
+  docData,
+  Firestore,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from '@angular/fire/firestore';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, firstValueFrom, Observable, of, switchMap } from 'rxjs';
 import { LoadingService } from './loading-service';
@@ -81,6 +91,18 @@ export class AuthService {
   async signup(form: signUpFormData) {
     try {
       this.loading.startProcess();
+
+      const usersRef = collection(this.fireStore, 'users');
+      const q = query(usersRef, where('email', '==', form.email));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const error: any = new Error('Email already in use');
+        error.code = 'auth/email-already-in-use';
+        this.notification.handleAuthError(error);
+        throw error;
+      }
+
       const credential = await createUserWithEmailAndPassword(
         this.firebaseAuth,
         form.email,
@@ -115,6 +137,13 @@ export class AuthService {
         await sendEmailVerification(this.firebaseAuth.currentUser);
       }
     } catch (error: any) {
+      if (error.code === 'auth/email-already-in-use') {
+        this.notification.showError('AUTH.TOAST.EMAIL_IN_USE');
+      } else {
+        this.notification.handleAuthError(error);
+      }
+
+      throw error;
     } finally {
       this.loading.stopProcess();
     }
@@ -124,7 +153,7 @@ export class AuthService {
     return applyActionCode(this.firebaseAuth, code);
   }
 
-  async signin(email: string, pass: string) {
+  async signin(email: string, pass: string): Promise<boolean> {
     try {
       this.loading.startProcess();
       const credential = await signInWithEmailAndPassword(this.firebaseAuth, email, pass);
@@ -133,7 +162,7 @@ export class AuthService {
       if (!credential.user.emailVerified) {
         await signOut(this.firebaseAuth);
         this.notification.showError('AUTH.TOAST.EMAIL_NOT_VERIFIED');
-        throw new Error('auth/email-not-verified');
+        return false;
       }
 
       // 2. Get User Name for Welcome Message
@@ -156,7 +185,6 @@ export class AuthService {
   async logout() {
     await signOut(this.firebaseAuth);
     this.router.navigate(['/login']);
-    console.log('Signed Out');
   }
 
   async resetPassword(email: string): Promise<void> {
