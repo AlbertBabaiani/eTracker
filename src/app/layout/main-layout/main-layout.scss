@@ -1,0 +1,202 @@
+:host {
+  display: block;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.app-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  height: 100%;
+}
+
+/* --- SIDEBAR (Desktop) --- */
+.main-nav {
+  width: var(--nav-width);
+  background: #fff;
+  border-right: 1px solid #eee;
+  padding: var(--spacing-8) var(--spacing-6);
+
+  position: relative;
+  z-index: 100;
+
+  display: flex;
+  flex-direction: column;
+
+  .nav-brand {
+    display: flex;
+    justify-content: center;
+
+    margin-bottom: var(--spacing-8);
+  }
+
+  .nav-links {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--spacing-2);
+  }
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #666;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  mat-icon {
+    color: #999;
+    transition: color 0.2s;
+  }
+
+  &:hover {
+    background-color: #f5f5f5;
+    color: #333;
+    mat-icon {
+      color: #666;
+    }
+  }
+
+  &.active {
+    background-color: #f0ebfa; /* Light primary tint */
+    color: var(--primary-color);
+    mat-icon {
+      color: var(--primary-color);
+    }
+  }
+}
+
+/* Profile Circle */
+.profile-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.profile-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nav-item.profile-item {
+  margin-top: auto; /* Push to bottom on desktop */
+  border-top: 1px solid #f0f0f0;
+  border-radius: 0;
+  padding-top: 16px;
+  margin-top: 16px;
+}
+.nav-item.profile-item.active .profile-circle {
+  border-color: var(--primary-color);
+}
+
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  position: relative;
+}
+
+/* --- MOBILE (Floating Pill) --- */
+@media (max-width: 768px) {
+  .app-container {
+    display: block; /* Remove flex layout */
+  }
+
+  .nav-brand {
+    display: none;
+  } /* Hide logo on mobile nav */
+
+  .main-nav {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: auto;
+    min-width: 300px;
+    max-width: 90%;
+    height: var(--pill-height);
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly; /* Spread items evenly */
+
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 50px; /* Pill shape */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+    padding: 0 8px;
+    margin: 0;
+  }
+
+  .nav-links {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    gap: 0;
+  }
+
+  .nav-item {
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 12px;
+    border-radius: 16px;
+    font-size: 0.7rem;
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Hide text labels on very small screens if needed, or keep them */
+    .label {
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    &.active {
+      background-color: transparent; /* Remove BG on mobile pill */
+      color: var(--primary-color);
+
+      /* Optional: Add a small dot indicator */
+      position: relative;
+    }
+
+    &.profile-item {
+      margin-top: 0;
+      border-top: none;
+      padding-top: 8px;
+    }
+  }
+
+  /* Adjust profile circle size for mobile */
+  .profile-circle {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Adjust content area to ensure bottom scrolling isn't blocked by pill */
+  .content-area {
+    height: 100vh;
+    padding-bottom: 100px; /* Space for the pill */
+  }
+}
