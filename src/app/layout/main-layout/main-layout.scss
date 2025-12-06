@@ -12,15 +12,17 @@
 
 /* --- SIDEBAR (Desktop) --- */
 .main-nav {
+  display: flex;
+
   width: var(--nav-width);
   background: #fff;
   border-right: 1px solid #eee;
-  padding: var(--spacing-8) var(--spacing-6);
+  padding: 4rem var(--spacing-6) var(--spacing-8);
 
   position: relative;
   z-index: 100;
+  overflow: hidden;
 
-  display: flex;
   flex-direction: column;
 
   .nav-brand {
@@ -29,113 +31,104 @@
 
     margin-bottom: var(--spacing-8);
   }
+}
 
-  .nav-links {
-    height: 100%;
+.nav-links {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &-block {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: var(--spacing-2);
+    gap: var(--spacing-4);
   }
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: 12px;
+  gap: var(--spacing-3);
+
+  width: 14rem;
+
+  padding: var(--spacing-4) var(--spacing-6);
+
+  border-radius: var(--radius-lg);
+
   text-decoration: none;
-  color: #666;
+  color: var(--text-secondary);
   font-weight: 500;
+
   transition: all 0.2s ease;
 
-  mat-icon {
-    color: #999;
+  .nav-icon {
+    color: var(--text-secondary);
     transition: color 0.2s;
   }
 
-  &:hover {
-    background-color: #f5f5f5;
-    color: #333;
-    mat-icon {
-      color: #666;
-    }
-  }
-
+  &:hover,
   &.active {
-    background-color: #f0ebfa; /* Light primary tint */
-    color: var(--primary-color);
-    mat-icon {
-      color: var(--primary-color);
+    background-color: var(--primary);
+    color: var(--white);
+
+    .nav-icon {
+      color: var(--white);
     }
   }
 }
 
+.spacer {
+  border-top: 1px solid #f0f0f0;
+  transform: scaleX(150%);
+}
+
 /* Profile Circle */
 .profile-circle {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #e0e0e0;
+  width: 2.5rem;
+  aspect-ratio: 1;
+  border-radius: var(--radius-full);
+  background: var(--secondary);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #555;
-  border: 2px solid transparent;
+  color: var(--primary);
+  border: 3px solid var(--primary);
   transition: border-color 0.2s;
-}
-.profile-circle img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
-.nav-item.profile-item {
-  margin-top: auto; /* Push to bottom on desktop */
-  border-top: 1px solid #f0f0f0;
-  border-radius: 0;
-  padding-top: 16px;
-  margin-top: 16px;
-}
-.nav-item.profile-item.active .profile-circle {
-  border-color: var(--primary-color);
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .content-area {
   flex: 1;
   overflow-y: auto;
-  padding: 0;
+  padding: var(--spacing-8);
   position: relative;
 }
 
 /* --- MOBILE (Floating Pill) --- */
 @media (max-width: 768px) {
-  .app-container {
-    display: block; /* Remove flex layout */
-  }
-
-  .nav-brand {
-    display: none;
-  } /* Hide logo on mobile nav */
-
   .main-nav {
+    display: flex;
     position: fixed;
-    bottom: 24px;
+    bottom: var(--spacing-4);
     left: 50%;
     transform: translateX(-50%);
 
     width: auto;
-    min-width: 300px;
     max-width: 90%;
-    height: var(--pill-height);
 
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly; /* Spread items evenly */
+    justify-content: center;
 
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -143,23 +136,37 @@
     border-radius: 50px; /* Pill shape */
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 
-    padding: 0 8px;
+    padding: var(--spacing-2);
     margin: 0;
+
+    .nav-brand {
+      display: none;
+    }
   }
 
   .nav-links {
     flex-direction: row;
     width: 100%;
-    justify-content: space-evenly;
-    gap: 0;
+    justify-content: space-between;
+    gap: var(--spacing-2);
+
+    &-block {
+      flex-direction: row;
+      gap: var(--spacing-2);
+    }
   }
 
   .nav-item {
+    width: 4rem;
+    height: 4rem;
+    padding: 0;
+    background: var(--secondary);
+
     flex-direction: column;
-    gap: 4px;
-    padding: 8px 12px;
-    border-radius: 16px;
-    font-size: 0.7rem;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: var(--radius-full);
 
     mat-icon {
       font-size: 24px;
@@ -167,36 +174,29 @@
       height: 24px;
     }
 
-    /* Hide text labels on very small screens if needed, or keep them */
     .label {
-      font-size: 0.65rem;
-      font-weight: 600;
-    }
-
-    &.active {
-      background-color: transparent; /* Remove BG on mobile pill */
-      color: var(--primary-color);
-
-      /* Optional: Add a small dot indicator */
-      position: relative;
-    }
-
-    &.profile-item {
-      margin-top: 0;
-      border-top: none;
-      padding-top: 8px;
+      display: none;
     }
   }
 
-  /* Adjust profile circle size for mobile */
-  .profile-circle {
-    width: 28px;
-    height: 28px;
+  .profile-item {
+    padding: 0;
+
+    .profile-circle {
+      width: 3.5rem;
+      height: 3.5rem;
+    }
   }
 
-  /* Adjust content area to ensure bottom scrolling isn't blocked by pill */
+  .spacer {
+    display: none;
+  }
+
   .content-area {
     height: 100vh;
-    padding-bottom: 100px; /* Space for the pill */
+    height: 100dvh;
+
+    padding: var(--spacing-4);
+    padding-bottom: 7rem;
   }
 }

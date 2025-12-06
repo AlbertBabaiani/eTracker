@@ -1,42 +1,42 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../../../../core/services/auth-service';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { LanguageSwitcher } from '../../../../shared/components/language-switcher/language-switcher';
+import { Logo } from '../../../../shared/components/logo/logo';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-reset-password',
   imports: [
+    LanguageSwitcher,
+    Logo,
+    TranslocoDirective,
     FormsModule,
     RouterLink,
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
     MatCardModule,
-    MatSnackBarModule,
   ],
   templateUrl: './reset-password.html',
   styleUrl: './reset-password.scss',
 })
 export class ResetPassword {
   private authService = inject(AuthService);
-  private router = inject(Router);
-  private snackBar = inject(MatSnackBar);
 
-  email = '';
+  email = signal<string>('');
 
   async onSubmit() {
     if (this.email) {
       try {
-        await this.authService.resetPassword(this.email);
-        this.snackBar.open('Password reset email sent!', 'Close', { duration: 5000 });
-        this.router.navigate(['/login']);
+        await this.authService.resetPassword(this.email());
       } catch (err) {
-        this.snackBar.open('Error sending email.', 'Close', { duration: 3000 });
+        this.email.set('');
       }
     }
   }

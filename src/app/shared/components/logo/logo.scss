@@ -12,14 +12,14 @@
   }
 
   &.logo-sm {
-    gap: var(--spacing-2);
+    gap: var(--spacing-3);
 
     .logo-text {
-      font-size: var(--fs-xl);
+      font-size: var(--fs-2xl);
     }
 
     img {
-      width: 2rem;
+      width: 3rem;
     }
   }
 
@@ -27,10 +27,10 @@
     gap: var(--spacing-5);
 
     .logo-text {
-      font-size: var(--fs-3xl);
+      font-size: var(--fs-4xl);
     }
     img {
-      width: 3.5rem;
+      width: 5rem;
     }
   }
 
@@ -40,10 +40,17 @@
 }
 
 .logo-text {
-  font-weight: var(--fw-bold);
+  font-weight: var(--fw-medium);
+
   color: var(--primary);
+
+  padding-top: 0.6rem;
 
   span {
     color: var(--secondary);
+  }
+
+  &.white {
+    color: var(--white);
   }
 }

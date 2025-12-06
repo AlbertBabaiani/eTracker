@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Property } from '../../../../core/models/Property';
+import { Property } from '../../../../shared/models/Property';
 import { PropertyService } from '../../../../core/services/property-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatSnackBar } from '@angular/material/snack-bar';

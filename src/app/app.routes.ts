@@ -1,9 +1,12 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard-guard';
+import { Signin } from './features/auth/components/signin/signin';
+import { wildcardGuard } from './core/guards/wild-card-guard';
 
 export const routes: Routes = [
   {
     path: '',
+    canActivate: [wildcardGuard],
     loadChildren: () => import('./features/auth/auth.routes').then((r) => r.AUTH_ROUTES),
   },
   {
@@ -31,7 +34,7 @@ export const routes: Routes = [
 
   {
     path: '**',
-    redirectTo: 'properties',
-    pathMatch: 'full',
+    canActivate: [wildcardGuard],
+    component: Signin,
   },
 ];

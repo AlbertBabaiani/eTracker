@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { IUser, signUpFormData } from '../models/IUser';
+import { IUser, signUpFormData } from '../../shared/models/IUser';
 import {
   applyActionCode,
   Auth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   user,
@@ -112,6 +113,11 @@ export class AuthService {
       const locationData = await this.fetchLocationData();
       const userDoc = doc(this.fireStore, `users/${uid}`);
 
+      function firstLetterToUpperCase(_word: string): string {
+        const word = _word.split(' ');
+        return word.map((n) => n[0].toUpperCase() + n.slice(1)).join(' ');
+      }
+
       const profile: IUser = {
         // Security
         uid: uid,
@@ -123,11 +129,11 @@ export class AuthService {
 
         // Personal Information
         email: form.email,
-        firstName: form.firstName,
-        lastName: form.lastName,
-        displayName: form.displayName,
+        firstName: firstLetterToUpperCase(form.firstName),
+        lastName: firstLetterToUpperCase(form.lastName),
+        displayName: firstLetterToUpperCase(form.displayName),
         photoURL: '',
-        phoneNumber: form.phoneNumber,
+        phone: form.phone,
         properties: [],
       };
 
@@ -188,7 +194,17 @@ export class AuthService {
   }
 
   async resetPassword(email: string): Promise<void> {
-    throw new Error('Method not implemented yet.');
+    try {
+      this.loading.startProcess();
+      await sendPasswordResetEmail(this.firebaseAuth, email);
+      this.notification.showSuccess('AUTH.TOAST.RESET_SENT');
+      this.router.navigate(['/signin']);
+    } catch (error: any) {
+      this.notification.showError('AUTH.TOAST.ERROR_RESET');
+      throw error;
+    } finally {
+      this.loading.stopProcess();
+    }
   }
 
   async updateProfile(data: Partial<IUser>): Promise<void> {

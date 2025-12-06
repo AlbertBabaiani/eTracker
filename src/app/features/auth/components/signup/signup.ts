@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth-service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -10,16 +10,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { LanguageSwitcher } from '../../../../shared/components/language-switcher/language-switcher';
 import { Logo } from '../../../../shared/components/logo/logo';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { confirmPasswordValidator } from './validators/passowrdMatchValidator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
-import { signUpFormData } from '../../../../core/models/IUser';
+import {
+  signUpFormData,
+  UserAccountFormFields,
+  UserPersonalFormFields,
+} from '../../../../shared/models/IUser';
+import { UserPersonalForm } from '../../../../shared/components/user-personal-form/user-personal-fields';
+import { CustomValidators } from '../../../../shared/validators/passowrdMatchValidator';
+import { UserAccountFields } from '../../../../shared/components/user-account-fields/user-account-fields';
 
 @Component({
   selector: 'app-signup',
   imports: [
     LanguageSwitcher,
     Logo,
+    UserPersonalForm,
     TranslocoDirective,
     ReactiveFormsModule,
     RouterLink,
@@ -30,6 +37,7 @@ import { signUpFormData } from '../../../../core/models/IUser';
     MatIconModule,
     MatStepperModule,
     MatCheckboxModule,
+    UserAccountFields,
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.scss',
@@ -37,9 +45,6 @@ import { signUpFormData } from '../../../../core/models/IUser';
 export class Signup {
   private fb = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
-
-  // Signal to toggle password visibility
-  hidePassword = signal<boolean>(true);
 
   // Signals to manage the success state after submission
   emailSent = signal<boolean>(false);
@@ -49,8 +54,36 @@ export class Signup {
   form = this.fb.group({
     // Step 1: Personal Info
     personal: this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
+      firstName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+          CustomValidators.noWhitespace,
+          CustomValidators.maxWords(2),
+        ],
+      ],
+      lastName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+          CustomValidators.noWhitespace,
+          CustomValidators.maxWords(1),
+        ],
+      ],
+      displayName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(100),
+          CustomValidators.noWhitespace,
+          CustomValidators.maxWords(2),
+        ],
+      ],
       phone: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
     }),
 
@@ -67,16 +100,16 @@ export class Signup {
           Validators.pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/),
         ],
       ],
-      repeatPassword: ['', [Validators.required, confirmPasswordValidator]],
+      repeatPassword: ['', [Validators.required, CustomValidators.confirmPasswordValidator]],
     }),
   });
 
   // Helper getters for template access
   get personalGroup() {
-    return this.form.get('personal') as any;
+    return this.form.get('personal') as FormGroup<UserPersonalFormFields>;
   }
   get accountGroup() {
-    return this.form.get('account') as any;
+    return this.form.get('account') as FormGroup<UserAccountFormFields>;
   }
 
   constructor() {
@@ -98,15 +131,20 @@ export class Signup {
       const personal = formData.personal;
       const account = formData.account;
 
-      const displayName = `${personal.firstName} ${personal.lastName}`;
+      const displayName = `${personal.firstName.trim()} ${personal.lastName.trim()}`;
+
+      const email = account.email.trim();
+      const password = account.password.trim();
+      const firstName = personal.firstName.trim();
+      const lastName = personal.lastName.trim();
 
       const form: signUpFormData = {
-        email: account.email,
-        password: account.password,
-        firstName: personal.firstName,
-        lastName: personal.lastName,
+        email,
+        password,
+        firstName,
+        lastName,
         displayName,
-        phoneNumber: personal.phone,
+        phone: personal.phone,
       };
 
       try {

@@ -1,0 +1,75 @@
+<div class="fields-container" *transloco="let f; prefix: 'AUTH.FORM'">
+  <!-- Email -->
+  <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
+    <mat-label>{{ f('EMAIL.LABEL') }}</mat-label>
+    <input
+      matInput
+      [formControl]="group().controls.email"
+      type="email"
+      [placeholder]="f('EMAIL.PLACEHOLDER')"
+    />
+    <mat-icon matPrefix class="email-icon">email</mat-icon>
+    <mat-error>
+      @if (group().controls.email.hasError('required')) {
+      {{ f('EMAIL.ERROR.REQUIRED') }}
+      } @else if (group().controls.email.hasError('email')) {
+      {{ f('EMAIL.ERROR.INVALID') }}
+      } @else if (group().controls.email.hasError('maxlength')) {
+      {{ f('EMAIL.ERROR.MAX_LENGTH') }}
+      }
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Password -->
+
+  <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
+    <mat-label>{{ f('PASSWORD.LABEL') }}</mat-label>
+    <input
+      matInput
+      [formControl]="group().controls.password"
+      [type]="hidePassword() ? 'password' : 'text'"
+    />
+    <mat-hint>{{ f('PASSWORD.HINT') }}</mat-hint>
+    <mat-error>
+      @if (group().controls.password.hasError('required')) {
+      {{ f('PASSWORD.ERROR.REQUIRED') }}
+      } @else if (group().controls.password.hasError('minlength')) {
+      {{ f('PASSWORD.ERROR.MIN_LENGTH', { length: 6 }) }}
+      } @else if (group().controls.password.hasError('maxlength')) {
+      {{ f('PASSWORD.ERROR.MAX_LENGTH', { length: 50 }) }}
+      } @else if (group().controls.password.hasError('pattern')) {
+      {{ f('PASSWORD.ERROR.PATTERN') }}
+      }
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Only render if input property is true AND the control exists in the group -->
+  @if (showConfirmPassword() && group().controls.repeatPassword) {
+  <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
+    <mat-label>{{ f('REPEAT_PASSWORD.LABEL') }}</mat-label>
+    <input
+      matInput
+      [formControl]="group().controls.repeatPassword!"
+      [type]="hidePassword() ? 'password' : 'text'"
+    />
+    <mat-error>
+      @if (group().controls.repeatPassword?.hasError('required')) {
+      {{ f('PASSWORD.ERROR.REQUIRED') }}
+      } @else if(group().controls.repeatPassword?.hasError('mismatch')){
+      {{ f('REPEAT_PASSWORD.ERROR.MISMATCH') }}
+      }
+    </mat-error>
+  </mat-form-field>
+  }
+
+  <!-- Show Password Checkbox -->
+  <div class="checkbox-container">
+    <mat-checkbox
+      [checked]="!hidePassword()"
+      (change)="hidePassword.set(!$event.checked)"
+      color="primary"
+    >
+      {{ f('PASSWORD.Show') }}
+    </mat-checkbox>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { LanguageService } from '../../../core/services/language-service';
-import { Lang } from '../../../core/models/Language';
+import { Lang } from '../../models/Language';
 
 @Component({
   selector: 'app-language-switcher',

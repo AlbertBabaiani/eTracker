@@ -1,3 +1,5 @@
+import { FormControl } from '@angular/forms';
+
 export interface IUser {
   // Security
   uid: string;
@@ -14,7 +16,7 @@ export interface IUser {
   lastName: string;
   displayName: string;
   photoURL?: string;
-  phoneNumber: string;
+  phone: string;
 
   properties: string[];
 }
@@ -25,5 +27,20 @@ export interface signUpFormData {
   firstName: string;
   lastName: string;
   displayName: string;
-  phoneNumber: string;
+  phone: string;
+}
+
+// Fields
+
+export interface UserPersonalFormFields {
+  firstName: FormControl<string>;
+  lastName: FormControl<string>;
+  displayName: FormControl<string>;
+  phone: FormControl<string>;
+}
+
+export interface UserAccountFormFields {
+  email: FormControl<string>;
+  password: FormControl<string>;
+  repeatPassword?: FormControl<string>;
 }

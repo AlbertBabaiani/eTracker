@@ -7,28 +7,37 @@
 // }
 
 :root {
+  --primary: #3062d4;
+  --primary-dark: #234eb0;
+
+  --secondary: #dcecfc;
+
   --black: #444545;
-  --primary: #2fb38b;
-  --secondary: #c5e0d8;
-  --white: #f8f0fbff;
+
   --text-secondary: #a8a0a0;
-  --silver: #c9c9c9;
-  --rose: #ceabb1;
+  --text-on-primary: rgba(255, 255, 255, 0.9);
 
-  --success: #2e7d32;
-  --warning: #ed6c02;
-  --error: #a30027;
+  --white: #ffffff;
+  --white-hover: #f8faff;
 
-  --border-color: var(--text-secondary);
+  --red: #ef4444;
+  --green: #10b981;
+  --orange: #f59e0b;
+
+  --success: var(--green);
+  --warning: var(--orange);
+  --error: var(--red);
+
+  --border-color: #e2e8f0;
+
+  --facebook-blue: #1877f2;
+  --instagram-gradient: #d6249f;
 
   --radius-sm: 0.25rem; /* 4px  - Small inputs, checkboxes */
   --radius-md: 0.5rem; /* 8px  - Cards, standard buttons */
   --radius-lg: 0.75rem; /* 12px - Modals, large containers */
   --radius-xl: 1rem; /* 16px - Floating elements */
   --radius-full: 9999px;
-
-  --facebook-blue: #1877f2;
-  --instagram-gradient: #d6249f;
 
   --fs-xs: 0.75rem;
   --fs-sm: 0.95rem;
@@ -37,6 +46,7 @@
   --fs-xl: 1.25rem;
   --fs-2xl: 1.5rem;
   --fs-3xl: 1.875rem;
+  --fs-4xl: 2rem;
 
   /* Font Weights */
   --fw-normal: 400;

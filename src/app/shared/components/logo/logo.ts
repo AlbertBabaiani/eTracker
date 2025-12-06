@@ -10,4 +10,5 @@ export class Logo {
   vertical = input<boolean>(false);
   logoLg = input<boolean>(false);
   showLogo = input<boolean>(true);
+  white = input<boolean>(false);
 }

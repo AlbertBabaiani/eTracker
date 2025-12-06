@@ -1,0 +1,83 @@
+<div class="fields-container" *transloco="let f; prefix: 'AUTH.FORM'">
+  <!-- First Name -->
+  <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
+    <input
+      matInput
+      [formControl]="group().controls.firstName"
+      [placeholder]="f('FIRST_NAME.PLACEHOLDER')"
+    />
+    <mat-error>
+      @if (group().controls.firstName.hasError('required')) {
+      {{ f('FIRST_NAME.ERROR.REQUIRED') }}
+      } @else if (group().controls.firstName.hasError('minlength')) {
+      {{ f('FIRST_NAME.ERROR.MIN_LENGTH', { length: 2 }) }}
+      } @else if (group().controls.firstName.hasError('maxlength')) {
+      {{ f('FIRST_NAME.ERROR.MAX_LENGTH', { length: 50 }) }}
+      } @else if (group().controls.firstName.hasError('whitespace')) {
+      {{ f('FIRST_NAME.ERROR.WHITESPACE') }}
+      } @else if (group().controls.firstName.hasError('maxWords')) {
+      {{ f('FIRST_NAME.ERROR.MAX_WORDS', { required: 2 }) }}
+      }
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Last Name -->
+  <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
+    <mat-label>{{ f('LAST_NAME.LABEL') }}</mat-label>
+    <input
+      matInput
+      [formControl]="group().controls.lastName"
+      [placeholder]="f('LAST_NAME.PLACEHOLDER')"
+    />
+    <mat-error>
+      @if (group().controls.lastName.hasError('required')) {
+      {{ f('LAST_NAME.ERROR.REQUIRED') }}
+      } @else if (group().controls.lastName.hasError('minlength')) {
+      {{ f('LAST_NAME.ERROR.MIN_LENGTH', { length: 2 }) }}
+      } @else if (group().controls.lastName.hasError('maxlength')) {
+      {{ f('LAST_NAME.ERROR.MAX_LENGTH', { length: 50 }) }}
+      } @else if (group().controls.lastName.hasError('whitespace')) {
+      {{ f('LAST_NAME.ERROR.WHITESPACE') }}
+      } @else if (group().controls.lastName.hasError('maxWords')) {
+      {{ f('LAST_NAME.ERROR.MAX_WORDS', { required: 1 }) }}
+      }
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Display Name -->
+  <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
+    <mat-label>{{ f('DISPLAY_NAME.LABEL') }}</mat-label>
+    <input
+      matInput
+      [formControl]="group().controls.displayName"
+      [placeholder]="f('DISPLAY_NAME.PLACEHOLDER')"
+    />
+    <mat-error>
+      @if (group().controls.displayName.hasError('required')) {
+      {{ f('DISPLAY_NAME.ERROR.REQUIRED') }}
+      } @else if (group().controls.displayName.hasError('minlength')) {
+      {{ f('DISPLAY_NAME.ERROR.MIN_LENGTH', { length: 2 }) }}
+      } @else if (group().controls.displayName.hasError('maxlength')) {
+      {{ f('DISPLAY_NAME.ERROR.MAX_LENGTH', { length: 100 }) }}
+      } @else if (group().controls.displayName.hasError('whitespace')) {
+      {{ f('DISPLAY_NAME.ERROR.WHITESPACE') }}
+      } @else if (group().controls.displayName.hasError('maxWords')) {
+      {{ f('DISPLAY_NAME.ERROR.MAX_WORDS', { required: 2 }) }}
+      }
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Phone (Shared Logic) -->
+  <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
+    <mat-label>{{ f('PHONE.LABEL') }}</mat-label>
+    <span matTextPrefix>+995 &nbsp;</span>
+    <input matInput type="tel" [formControl]="group().controls.phone" placeholder="555123456" />
+    <mat-error>
+      @if (group().controls.phone.hasError('required')) {
+      {{ f('PHONE.ERROR.REQUIRED') }}
+      } @else if (group().controls.phone.hasError('pattern')) {
+      {{ f('PHONE.ERROR.PATTERN') }}
+      }
+    </mat-error>
+  </mat-form-field>
+</div>

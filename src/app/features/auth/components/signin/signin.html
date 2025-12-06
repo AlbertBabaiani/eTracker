@@ -1,87 +1,96 @@
-<div class="shell auth-container" *transloco="let t; prefix: 'AUTH'">
-  <mat-card class="auth-card">
-    <div class="language-container">
-      <app-language-switcher />
+<div class="shell" *transloco="let t; prefix: 'AUTH'">
+  <section class="side side-left">
+    <div class="brand-logo">
+      <app-logo [white]="true" />
     </div>
-
-    <mat-card-header class="center-header">
-      <div class="brand-logo">
-        <app-logo [logoLg]="true" [vertical]="true" />
+  </section>
+  <section class="side side-right">
+    <mat-card class="card">
+      <div class="language-container">
+        <app-language-switcher />
       </div>
-    </mat-card-header>
 
-    <mat-card-content *transloco="let f; prefix: 'AUTH.FORM'">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
-          <mat-label>{{ f('EMAIL.LABEL') }}</mat-label>
-          <input
-            matInput
-            formControlName="email"
-            type="email"
-            [placeholder]="f('EMAIL.PLACEHOLDER')"
-          />
-          <mat-icon matPrefix>email</mat-icon>
+      <mat-card-header class="center-header">
+        <div class="brand-logo">
+          <app-logo [logoLg]="true" />
+        </div>
+      </mat-card-header>
 
-          <mat-error>
-            @if (form.get('email')?.hasError('required')) {
-            {{ f('EMAIL.ERROR.REQUIRED') }}
-            } @else if (form.get('email')?.hasError('email')) {
-            {{ f('EMAIL.ERROR.INVALID') }}
-            } @else if (form.get('email')?.hasError('minlength')) {
-            {{ f('EMAIL.ERROR.MIN_LENGTH', { length: form.get('email')?.errors?.['minlength']?.requiredLength  }) }}
-            } @else if (form.get('email')?.hasError('maxlength')) {
-            {{ f('EMAIL.ERROR.MAX_LENGTH', { length: form.get('email')?.errors?.['maxlength']?.requiredLength  }) }}
-            }
-          </mat-error>
-        </mat-form-field>
+      <mat-card-content *transloco="let f; prefix: 'AUTH.FORM'">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <mat-form-field
+            appearance="outline"
+            [hideRequiredMarker]="true"
+            class="full-width .blue-border-input"
+          >
+            <input
+              matInput
+              formControlName="email"
+              type="email"
+              [placeholder]="f('EMAIL.PLACEHOLDER')"
+            />
+            <mat-icon matPrefix>email</mat-icon>
 
-        <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
-          <mat-label>{{ f('PASSWORD.LABEL') }}</mat-label>
-          <input
-            matInput
-            formControlName="password"
-            type="password"
-            [placeholder]="f('PASSWORD.PLACEHOLDER')"
-          />
-          <mat-icon matPrefix>lock</mat-icon>
+            <mat-error>
+              @if (form.get('email')?.hasError('required')) {
+              {{ f('EMAIL.ERROR.REQUIRED') }}
+              } @else if (form.get('email')?.hasError('email')) {
+              {{ f('EMAIL.ERROR.INVALID') }}
+              } @else if (form.get('email')?.hasError('minlength')) {
+              {{ f('EMAIL.ERROR.MIN_LENGTH', { length: form.get('email')?.errors?.['minlength']?.requiredLength  }) }}
+              } @else if (form.get('email')?.hasError('maxlength')) {
+              {{ f('EMAIL.ERROR.MAX_LENGTH', { length: form.get('email')?.errors?.['maxlength']?.requiredLength  }) }}
+              }
+            </mat-error>
+          </mat-form-field>
 
-          <mat-error>
-            @if (form.get('password')?.hasError('required')) {
-            {{ f('PASSWORD.ERROR.REQUIRED') }}
-            } @else if (form.get('password')?.hasError('minlength')) {
-            {{ f('PASSWORD.ERROR.MIN_LENGTH', { 
+          <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
+            <input
+              matInput
+              formControlName="password"
+              type="password"
+              [placeholder]="f('PASSWORD.PLACEHOLDER')"
+            />
+            <mat-icon matPrefix>lock</mat-icon>
+
+            <mat-error>
+              @if (form.get('password')?.hasError('required')) {
+              {{ f('PASSWORD.ERROR.REQUIRED') }}
+              } @else if (form.get('password')?.hasError('minlength')) {
+              {{ f('PASSWORD.ERROR.MIN_LENGTH', { 
                   length: form.get('password')?.errors?.['minlength']?.requiredLength 
               }) }}
-            } @else if (form.get('password')?.hasError('maxlength')) {
-            {{ f('PASSWORD.ERROR.MAX_LENGTH', { 
+              } @else if (form.get('password')?.hasError('maxlength')) {
+              {{ f('PASSWORD.ERROR.MAX_LENGTH', { 
                   length: form.get('password')?.errors?.['maxlength']?.requiredLength 
               }) }}
-            }
-          </mat-error>
-        </mat-form-field>
+              }
+            </mat-error>
+          </mat-form-field>
 
-        <div class="forgot-pass">
-          <a routerLink="/reset-password">{{ f('FORGOT_PASSWORD') }}</a>
-        </div>
+          <div class="forgot-pass">
+            <a routerLink="/reset-password">{{ f('FORGOT_PASSWORD') }}</a>
+          </div>
 
-        <div class="actions">
-          <button
-            mat-flat-button
-            color="primary"
-            type="submit"
-            class="primary-btn primary-btn-100"
-            [disabled]="form.invalid"
-          >
-            {{ t('SIGNIN.BUTTON') }}
-          </button>
-        </div>
-      </form>
-    </mat-card-content>
+          <div class="actions">
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              class="primary-btn primary-btn-100"
+              [disabled]="form.invalid"
+            >
+              {{ t('SIGNIN.BUTTON') }}
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
 
-    <mat-card-footer class="auth-footer">
-      <p>
-        {{ t('SIGNIN.NO_ACCOUNT') }} <a routerLink="/signup">{{ t('SIGNIN.SIGN_UP') }}</a>
-      </p>
-    </mat-card-footer>
-  </mat-card>
+      <mat-card-footer class="auth-footer">
+        <p>
+          {{ t('SIGNIN.NO_ACCOUNT') }} <a routerLink="/signup">{{ t('SIGNIN.SIGN_UP') }}</a>
+        </p>
+      </mat-card-footer>
+    </mat-card>
+  </section>
 </div>

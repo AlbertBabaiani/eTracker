@@ -6,8 +6,6 @@ export const wildcardGuard: CanActivateFn = (route, state) => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  console.log('gg');
-
   if (auth.isAuthenticated()) {
     return router.createUrlTree(['/dashboard']);
   }

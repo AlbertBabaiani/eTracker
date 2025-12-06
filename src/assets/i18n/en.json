@@ -22,6 +22,15 @@
         "GO_TO_LOGIN": "Go to Login"
       }
     },
+    "RESET_PASSWORD": {
+      "TITLE": "Reset Password",
+      "SUBTITLE": "Enter your email to receive instructions",
+      "EMAIL": "Email Address",
+      "ERROR_MESSAGE": "Enter valid email",
+      "BUTTON": "Send Reset Link",
+      "REMEMBERED": "Remembered it?",
+      "LOGIN": "Login"
+    },
     "FORM": {
       "FIRST_NAME": {
         "LABEL": "First Name",
@@ -29,7 +38,9 @@
         "ERROR": {
           "REQUIRED": "First name is required",
           "MIN_LENGTH": "First name must be at least {{length}} characters long.",
-          "MAX_LENGTH": "First name exceed {{length}} characters."
+          "MAX_LENGTH": "First name cannot exceed {{length}} characters.",
+          "WHITESPACE": "First name cannot consist of empty spaces",
+          "MAX_WORDS": "First name cannot exceed {{required}} words"
         }
       },
       "LAST_NAME": {
@@ -38,14 +49,27 @@
         "ERROR": {
           "REQUIRED": "Last name is required",
           "MIN_LENGTH": "Last name must be at least {{length}} characters long.",
-          "MAX_LENGTH": "Last name exceed {{length}} characters."
+          "MAX_LENGTH": "Last name cannot exceed {{length}} characters.",
+          "WHITESPACE": "Last name cannot consist of empty spaces",
+          "MAX_WORDS": "Last name cannot exceed {{required}} word"
+        }
+      },
+      "DISPLAY_NAME": {
+        "LABEL": "Display Name",
+        "PLACEHOLDER": "John Doe",
+        "ERROR": {
+          "REQUIRED": "Display name is required",
+          "MIN_LENGTH": "Display name must be at least {{length}} characters long.",
+          "MAX_LENGTH": "Display name cannot exceed {{length}} characters.",
+          "WHITESPACE": "Display name cannot consist of empty spaces",
+          "MAX_WORDS": "Display name cannot exceed {{required}} words"
         }
       },
       "PHONE": {
         "LABEL": "Phone Number",
         "ERROR": {
           "REQUIRED": "Phone number is required",
-          "PATTERN": "Invalid format"
+          "PATTERN": "Phone number must be exactly 9 digits"
         }
       },
       "EMAIL": {
@@ -66,7 +90,8 @@
           "REQUIRED": "Password is required.",
           "MIN_LENGTH": "Password must be at least {{length}} characters long.",
           "MAX_LENGTH": "Password cannot exceed {{length}} characters.",
-          "PATTERN": "Missing uppercase, number, or special char"
+          "PATTERN": "Missing uppercase, number, or special char",
+          "MAX_WORDS": "Password cannot contain spaces"
         }
       },
       "REPEAT_PASSWORD": {
@@ -75,7 +100,11 @@
           "MISMATCH": "Passwords do not match"
         }
       },
-      "FORGOT_PASSWORD": "Forgot Password?"
+      "FORGOT_PASSWORD": "Forgot Password?",
+      "STEP_BUTTONS": {
+        "NEXT": "Next",
+        "BACK": "Back"
+      }
     },
     "TOAST": {
       "SUCCESS": "Success",
@@ -86,6 +115,8 @@
       "EMAIL_NOT_VERIFIED": "Email not verified. Please check your inbox.",
       "INVALID_CREDENTIALS": "Incorrect email or password.",
       "USER_REGISTERED": "Registration successful! Verification email sent.",
+      "RESET_SENT": "Password reset email sent!",
+      "ERROR_RESET": "Error sending email",
       "GENERIC_ERROR": "Something went wrong. Please try again."
     }
   }

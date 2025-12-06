@@ -15,11 +15,11 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { PropertyService } from '../../../../core/services/property-service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Property } from '../../../../core/models/Property';
+import { Property } from '../../../../shared/models/Property';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
-import { IUser } from '../../../../core/models/IUser';
+import { IUser } from '../../../../shared/models/IUser';
 
 @Component({
   selector: 'app-edit-property',

@@ -1,23 +1,94 @@
-.profile-container {
-  padding: 24px;
-  display: flex;
+.header {
   justify-content: center;
+
+  .title {
+    font-size: var(--fs-2xl);
+    color: var(--primary);
+    font-weight: var(--fw-bold);
+  }
 }
-.profile-card {
-  width: 100%;
-  max-width: 500px;
-  padding: 24px;
+
+.section-title {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  margin: var(--spacing-6) 0 var(--spacing-4);
+  font-weight: 600;
 }
-mat-card-header {
-  margin-bottom: 24px;
+
+.spacer {
+  margin: 2rem 0 1rem;
 }
-.full-width {
-  width: 100%;
-  margin-bottom: 12px;
+
+/* Property Chips */
+.property-chips {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
 }
+
+.prop-chip {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-2);
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
+  padding-right: var(--spacing-2);
+
+  &:hover {
+    border-color: var(--primary);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+
+  .chip-img {
+    width: 2.5rem;
+    aspect-ratio: 1;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    margin-right: var(--spacing-3);
+  }
+
+  .chip-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    line-height: 1.2;
+
+    .prop-name {
+      font-weight: 500;
+      color: var(--black);
+      font-size: var(--fs-base) !important;
+    }
+
+    .prop-loc {
+      font-size: var(--fs-xs);
+      color: var(--text-secondary);
+    }
+  }
+
+  .delete-btn {
+    width: 3rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .delete-icon {
+      width: 1.5rem;
+      height: 1rem;
+      color: var(--red);
+    }
+  }
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 16px;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
 }

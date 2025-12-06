@@ -1,101 +1,166 @@
-.profile-container {
-  padding: 24px;
-  display: flex;
-  justify-content: center;
-}
-.profile-card {
-  width: 100%;
-  max-width: 500px;
-  padding: 24px;
+.card {
+  max-width: 38rem;
+
+  padding: 2.5rem 2rem 2rem;
+  border-radius: var(--radius-lg);
+
+  @media (max-width: 500px) {
+    padding: 1.5rem 1rem 1rem;
+  }
 }
 
+/* --- Header --- */
 .profile-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 32px;
-}
-.avatar-large {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: #e0e0e0;
-  color: #555;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
-  font-weight: bold;
-  overflow: hidden;
-  margin-bottom: 16px;
-  border: 4px solid white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-.avatar-large img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--black);
-}
-.email {
-  margin: 4px 0 0;
-  color: var(--text-muted);
+  padding-bottom: var(--spacing-6);
+  text-align: center;
+
+  .avatar-large {
+    width: 100px;
+    aspect-ratio: 1;
+    border-radius: var(--radius-full);
+    background: #e0e0e0;
+    color: #757575;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border: 4px solid white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .display-name {
+    font-size: var(--fs-2xl);
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .email {
+    margin-block: var(--spacing-3);
+    color: var(--text-secondary);
+    font-size: var(--fs-sm);
+  }
 }
 
-.info-row {
+/* --- Content Sections --- */
+.section-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  margin: 1.5rem 0 1rem;
+  font-weight: 600;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-6);
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.info-item {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 12px 0;
-  border-bottom: 1px solid #f0f0f0;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+
+  .icon-muted {
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  .info-content {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-size: var(--fs-xs);
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+    }
+
+    span {
+      font-size: var(--fs-base);
+      color: var(--black);
+      font-weight: 500;
+      word-break: break-word;
+    }
+  }
 }
-.info-row mat-icon {
-  color: var(--primary);
-  opacity: 0.8;
+
+/* --- Property List (Chips) --- */
+
+.spacer {
+  margin-block: var(--spacing-6);
 }
-.info {
+
+.property-chip-list {
   display: flex;
   flex-direction: column;
-}
-.info label {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.info span {
-  font-size: 1rem;
-  color: var(--black);
+  gap: 12px;
 }
 
-.verified {
-  color: green;
-  font-weight: 500;
-}
-.unverified {
-  color: orange;
-  font-weight: 500;
+.property-chip {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+
+  &:hover {
+    background-color: #fafafa;
+    border-color: var(--primary);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .prop-name {
+    margin-left: 16px;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #333;
+    flex-grow: 1;
+  }
+
+  .chip-arrow {
+    color: #bdbdbd;
+    margin-right: 8px;
+  }
 }
 
+/* --- Footer Actions --- */
 .actions {
   display: flex;
-  justify-content: space-between;
-  margin-top: 24px;
-  padding: 0 !important;
-}
-.actions button,
-.actions a {
-  flex: 1;
-  margin: 0 8px;
-}
-.actions a:first-child {
-  margin-left: 0;
-}
-.actions button:last-child {
-  margin-right: 0;
+  justify-content: center;
+  padding: var(--spacing-6) 0 0 !important;
+  margin-top: var(--spacing-4);
 }

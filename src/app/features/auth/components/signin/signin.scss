@@ -1,40 +1,50 @@
+$topPadding: 3rem;
+
+// Main Layout Start
+.shell {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.side {
+  display: flex;
+  height: 100%;
+}
+
+.side-left {
+  background: var(--primary);
+  padding: $topPadding;
+}
+
+.side-right {
+  background: var(--surface-white);
+}
+
+// Main Layout End
+
 // Language Start
 
 .language-container {
   position: absolute;
-  right: 2.5rem;
-  top: 2.5rem;
+  right: $topPadding;
+  top: $topPadding;
 }
 
 // Language End
 
-// Logo Start
+// Header Start
+
+// Header End
 
 .center-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  margin-bottom: 1.5rem;
-
-  text-align: center;
-
-  .brand-logo {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1rem;
-  }
+  margin-bottom: 3rem;
 }
-
-// Logo End
 
 // Icons inside inputs
-mat-icon[matPrefix] {
-  color: var(--text-secondary);
-}
 
 .forgot-pass {
   text-align: right;
+  margin-top: calc(-1px * var(--spacing-6));
   margin-bottom: var(--spacing-6);
 
   a {
@@ -52,9 +62,7 @@ mat-icon[matPrefix] {
 // Footer Start
 .auth-footer {
   text-align: center;
-  margin-top: var(--spacing-4);
-  padding-top: var(--spacing-4);
-  border-top: 1px solid #eee;
+  margin-top: var(--spacing-8);
 
   p {
     color: var(--text-secondary);
@@ -69,6 +77,9 @@ a {
   &:hover {
     text-decoration: underline;
   }
+}
+.primary-btn {
+  border-radius: var(--radius-full);
 }
 // Footer End
 

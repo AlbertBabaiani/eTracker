@@ -1,14 +1,9 @@
-$bg-gradient-start: #c5e0d8; // Your secondary
-$bg-gradient-end: #f8f0fb; // Your white/rose tint
-
 .shell {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   min-height: 100vh;
-
-  background: linear-gradient(135deg, $bg-gradient-start 0%, $bg-gradient-end 100%);
 }
 
 .container {
@@ -21,28 +16,21 @@ $bg-gradient-end: #f8f0fb; // Your white/rose tint
 
 $card-radius: 1.5rem;
 
-.auth-container {
-  padding: var(--spacing-6);
-}
-
-.auth-card {
+.card {
   width: 100%;
-  max-width: 35rem;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   padding: 2.5rem 2rem 2rem;
-  border-radius: $card-radius;
 
-  box-shadow: 0 12px 40px rgba(47, 179, 139, 0.15);
-  background-color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-}
+  // box-shadow: 0px 1.4px 2.2px rgba(0, 0, 0, 0.02), 0px 3.3px 5.3px rgba(0, 0, 0, 0.028),
+  //   0px 6.3px 10px rgba(0, 0, 0, 0.035), 0px 11.2px 17.9px rgba(0, 0, 0, 0.042),
+  //   0px 20.9px 33.4px rgba(0, 0, 0, 0.05), 0px 50px 80px rgba(0, 0, 0, 0.07) !important;
 
-@media (max-width: 500px) {
-  .auth-container {
-    padding: var(--spacing-2);
-  }
-
-  .auth-card {
+  @media (max-width: 500px) {
     padding: 2rem 1rem;
   }
 }

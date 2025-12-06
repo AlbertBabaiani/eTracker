@@ -1,32 +1,53 @@
-<div class="profile-container">
-  <mat-card class="profile-card">
-    <mat-card-header>
-      <mat-card-title>Edit Profile</mat-card-title>
+<div class="shell" *transloco="let t; prefix: 'AUTH.FORM'">
+  <mat-card class="card">
+    <mat-card-header class="header">
+      <mat-card-title class="title">Edit Profile</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
-      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Display Name</mat-label>
-          <input matInput formControlName="displayName" />
-        </mat-form-field>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <!-- Name Section -->
+        <h3 class="section-title">Personal Info</h3>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Photo URL</mat-label>
-          <input matInput formControlName="photoURL" placeholder="https://..." />
-        </mat-form-field>
+        <app-user-personal-form [group]="form" />
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Phone Number</mat-label>
-          <input matInput formControlName="phoneNumber" />
-        </mat-form-field>
+        <!-- Contact Section -->
+        <h3 class="section-title">Contact & Media</h3>
 
-        <!-- Email is usually read-only or requires re-auth to change -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Email</mat-label>
-          <input matInput [value]="currentUser()?.email" disabled />
-          <mat-hint>Email cannot be changed directly</mat-hint>
-        </mat-form-field>
+        <!-- Manage Properties Section -->
+        @if (userProperties().length > 0) {
+        <mat-divider class="spacer"></mat-divider>
+
+        <div class="property-chips">
+          @for (prop of userProperties(); track prop.id) {
+          <div class="prop-chip">
+            <!-- Placeholder Image -->
+            <img
+              src="https://material.angular.dev/assets/img/examples/shiba2.jpg"
+              alt="Prop"
+              class="chip-img"
+            />
+
+            <div class="chip-info">
+              <span class="prop-name">{{
+                prop.alias || prop.name | titlecase | slice : 0 : 40
+              }}</span>
+              <span class="prop-loc">{{ prop.location | titlecase | slice : 0 : 40 }}</span>
+            </div>
+
+            <button
+              mat-icon-button
+              color="warn"
+              class="delete-btn"
+              (click)="deleteProperty(prop.id, $event)"
+              type="button"
+            >
+              <mat-icon class="delete-icon">delete</mat-icon>
+            </button>
+          </div>
+          }
+        </div>
+        }
 
         <div class="actions">
           <button mat-button type="button" routerLink="/profile">Cancel</button>
@@ -34,7 +55,7 @@
             mat-flat-button
             color="primary"
             type="submit"
-            [disabled]="profileForm.invalid || profileForm.pristine"
+            [disabled]="form.invalid || form.pristine"
           >
             Save Changes
           </button>

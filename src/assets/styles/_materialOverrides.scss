@@ -11,41 +11,134 @@
 // Spinner End
 
 // Inputs Start
+mat-icon[matPrefix] {
+  color: var(--text-secondary);
+}
 
-.mdc-text-field--outlined:not(.mdc-text-field--invalid) {
-  .mdc-notched-outline__leading,
-  .mdc-notched-outline__notch,
-  .mdc-notched-outline__trailing {
-    border-color: var(--text-secondary) !important;
+/* Target the specific form field */
+.blue-border-input {
+  /* 1. The border color when the input is NOT focused */
+  --mdc-outlined-text-field-outline-color: blue;
+
+  /* 2. The border color when the input IS focused */
+  --mdc-outlined-text-field-focus-outline-color: blue;
+
+  /* 3. The border color when hovering */
+  --mdc-outlined-text-field-hover-outline-color: darkblue;
+
+  /* Optional: Change the label and caret color to match */
+  --mdc-outlined-text-field-focus-label-text-color: blue;
+  --mdc-outlined-text-field-caret-color: blue;
+}
+
+.mat-mdc-form-field {
+  .mat-mdc-text-field-wrapper {
+    .mat-mdc-form-field-icon-prefix mat-icon {
+      color: var(--primary) !important;
+    }
+
+    .mat-mdc-form-field-infix {
+      z-index: 2;
+    }
+    .mat-mdc-input-element {
+      color: var(--black) !important;
+      z-index: 1;
+    }
+
+    .mat-mdc-notch-piece {
+      border-color: transparent !important;
+      background: var(--secondary);
+      z-index: 2;
+
+      &.mdc-notched-outline__leading {
+      }
+
+      &.mdc-notched-outline__trailing {
+      }
+
+      &.mdc-notched-outline__notch {
+      }
+    }
   }
 
-  .mdc-notched-outline__notch,
-  .mdc-notched-outline__trailing {
-    border-color: var(--text-secondary) !important;
-    border-left-color: transparent !important;
+  &.mat-focused:not(.mat-form-field-invalid) {
+    .mdc-text-field--focused {
+      .mat-mdc-notch-piece {
+        border-color: var(--primary) !important;
+
+        &.mdc-notched-outline__leading {
+          border-right-color: transparent !important;
+        }
+
+        &.mdc-notched-outline__trailing {
+          border-left-color: transparent !important;
+        }
+
+        &.mdc-notched-outline__notch {
+          border-top-color: transparent !important;
+        }
+      }
+    }
   }
 
-  .mdc-floating-label {
-    color: var(--text-secondary) !important;
+  &.mat-form-field-invalid {
+    .mat-mdc-form-field-icon-prefix mat-icon {
+      color: var(--red) !important;
+    }
+
+    .mat-mdc-notch-piece {
+      border-color: var(--red) !important;
+
+      &.mdc-notched-outline__leading {
+        border-right-color: transparent !important;
+      }
+
+      &.mdc-notched-outline__trailing {
+        border-left-color: transparent !important;
+      }
+
+      &.mdc-notched-outline__notch {
+        border-top-color: transparent !important;
+      }
+    }
   }
 }
 
-.mdc-text-field--outlined:not(.mdc-text-field--invalid) .mdc-notched-outline--notched {
-  .mdc-notched-outline__leading,
-  .mdc-notched-outline__notch,
-  .mdc-notched-outline__trailing {
-    border-color: var(--primary) !important;
-  }
+// .mdc-text-field--focused .mdc-notched-outline--no-label:not(.mdc-text-field--invalid) {
+//   .mdc-notched-outline__leading,
+//   .mdc-notched-outline__notch,
+//   .mdc-notched-outline__trailing {
+//     border: 2px solid var(--primary) !important;
+//     // background: var(--secondary);
 
-  .mdc-notched-outline__notch,
-  .mdc-notched-outline__trailing {
-    border-left-color: transparent !important;
-  }
+//     &::placeholder {
+//       background: red !important;
+//     }
+//   }
 
-  .mdc-floating-label {
-    color: var(--primary) !important;
-  }
-}
+//   .mat-mdc-input-element {
+//     color: red !important;
+//   }
+
+//   .mdc-notched-outline__notch,
+//   .mdc-notched-outline__trailing {
+//     border-color: var(--text-secondary) !important;
+//     border-left-color: transparent !important;
+//   }
+
+//   .mdc-notched-outline--notched {
+//     .mdc-notched-outline__leading,
+//     .mdc-notched-outline__notch,
+//     .mdc-notched-outline__trailing {
+//       border-color: var(--primary) !important;
+//     }
+
+//     .mdc-notched-outline__notch,
+//     .mdc-notched-outline__trailing {
+//       border-left-color: transparent !important;
+//     }
+//   }
+// }
 
 .full-width {
   width: 100%;
@@ -116,7 +209,14 @@ $primaryBtnHeight: 3.25rem;
       text-horizontal-padding: 1.5rem,
       text-container-shape: var(--radius-lg),
       text-state-layer-color: var(--primary),
-      text-ripple-color: var(--primary),
+      text-ripple-color: var(--secondary),
+      //
+      outlined-label-text-color: var(--primary),
+      outlined-container-height: $primaryBtnHeight,
+      outlined-horizontal-padding: 1.5rem,
+      outlined-container-shape: var(--radius-lg),
+      outlined-state-layer-color: var(--primary),
+      outlined-ripple-color: var(--secondary),
     )
   );
 }
@@ -137,3 +237,16 @@ $primaryBtnHeight: 3.25rem;
 }
 
 // Checkbox End
+
+// Card Start
+:root {
+  @include mat.card-overrides(
+    (
+      elevated-container-color: var(--white),
+      elevated-container-elevation: none,
+      elevated-container-shape: none,
+    )
+  );
+}
+
+// Card End

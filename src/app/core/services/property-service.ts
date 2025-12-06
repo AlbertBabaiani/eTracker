@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { AuthService } from './auth-service';
-import { Property } from '../models/Property';
+import { Property } from '../../shared/models/Property';
 import {
   addDoc,
   collection,
@@ -14,7 +14,8 @@ import {
 } from '@angular/fire/firestore';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { of, switchMap } from 'rxjs';
-import { IUser } from '../models/IUser';
+import { IUser } from '../../shared/models/IUser';
+import { LoadingService } from './loading-service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,11 +23,11 @@ import { IUser } from '../models/IUser';
 export class PropertyService {
   private firestore = inject(Firestore);
   private authService = inject(AuthService);
+  private loading = inject(LoadingService);
 
   properties = toSignal(
     toObservable(this.authService.currentUser).pipe(
       switchMap((user) => {
-        console.log('Fetching properties for user:', user);
         if (!user) {
           return of([] as Property[]);
         }

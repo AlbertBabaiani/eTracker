@@ -1,34 +1,89 @@
-<div class="profile-container">
-  <mat-card class="profile-card">
+<div class="shell">
+  @if (user(); as currentUser) {
+  <mat-card class="card">
+    <!-- Header: Avatar & Main Identity -->
     <div class="profile-header">
       <div class="avatar-large">
-        @if (user()?.photoURL) {
-        <img [src]="user()?.photoURL" alt="Profile" />
+        @if (currentUser.photoURL) {
+        <img [src]="currentUser.photoURL" alt="Profile" />
         } @else {
-        <span>{{ getInitials(user()?.displayName) }}</span>
+        <span>{{
+          getInitials(currentUser.displayName, currentUser.firstName, currentUser.lastName)
+        }}</span>
         }
       </div>
-      <h1>{{ user()?.displayName || 'User' }}</h1>
-      <p class="email">{{ user()?.email }}</p>
+
+      <h1 class="display-name">{{ currentUser.displayName }}</h1>
+      <p class="email">{{ currentUser.email }}</p>
+
+      <button matButton="text" routerLink="/profile/edit">
+        <mat-icon>edit</mat-icon> Edit Profile
+      </button>
     </div>
 
     <mat-card-content>
-      <div class="info-row">
-        <mat-icon>badge</mat-icon>
-        <div class="info">
-          <label>User ID</label>
-          <span>{{ user()?.uid }}</span>
+      <mat-divider></mat-divider>
+      <!-- Section 1: Personal Information -->
+      <h3 class="section-title">Personal Details</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <mat-icon class="icon-muted">person</mat-icon>
+          <div class="info-content">
+            <label>Full Name</label>
+            <span>{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <mat-icon class="icon-muted">phone</mat-icon>
+          <div class="info-content">
+            <label>Phone</label>
+            <span>{{ currentUser.phone || 'Not set' }}</span>
+          </div>
         </div>
       </div>
+
+      <!-- Section 2: Account & Location -->
+      <h3 class="section-title">Account & Security</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <mat-icon class="icon-muted">calendar_today</mat-icon>
+          <div class="info-content">
+            <label>Member Since</label>
+            <span>{{ currentUser.createdAt | date : 'mediumDate' }}</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <mat-icon class="icon-muted">location_on</mat-icon>
+          <div class="info-content">
+            <label>Location</label>
+            <span>{{ currentUser.location || 'Unknown' }}</span>
+          </div>
+        </div>
+      </div>
+
+      @if (properties().length > 0) {
+      <mat-divider class="spacer"></mat-divider>
+      <h3 class="section-title">My Properties ({{ properties().length }})</h3>
+
+      <div class="property-chip-list">
+        @for (prop of properties(); track prop.id) {
+        <a class="property-chip" [routerLink]="['/properties', prop.id]">
+          <img src="https://material.angular.dev/assets/img/examples/shiba2.jpg" alt="Property" />
+          <span class="prop-name">{{ prop.alias || prop.name | titlecase | slice : 0 : 40 }}</span>
+          <mat-icon class="chip-arrow">chevron_right</mat-icon>
+        </a>
+        }
+      </div>
+      }
     </mat-card-content>
 
     <mat-card-actions class="actions">
-      <a mat-stroked-button color="primary" routerLink="/profile/edit">
-        <mat-icon>edit</mat-icon> Edit Profile
-      </a>
-      <button mat-flat-button color="warn" (click)="logout()">
-        <mat-icon>logout</mat-icon> Logout
+      <button mat-flat-button color="warn" class="primary-btn primary-btn-100" (click)="logout()">
+        <mat-icon>logout</mat-icon> Sign Out
       </button>
     </mat-card-actions>
   </mat-card>
+  }
 </div>

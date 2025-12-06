@@ -2,11 +2,11 @@
   class="logo-container"
   [class]="[vertical() ? 'vertical' : 'horizontal', logoLg() ? 'logo-lg' : 'logo-sm']"
 >
-  <img src="assets/images/logo.png" alt="Logo" />
+  <img src="assets/images/{{ white() ? 'logo-white.png' : 'logo.png' }}" alt="Logo" />
 
   @if(showLogo()){
 
-  <p class="logo-text"><span>e</span>Tracker</p>
+  <p class="logo-text" [class.white]="white()"><span>e</span>Tracker</p>
 
   }
 </div>
