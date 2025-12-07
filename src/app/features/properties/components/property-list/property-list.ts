@@ -4,10 +4,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { MatDivider } from '@angular/material/divider';
+import { TruncatePipe } from '../../../../shared/pipes/truncate-pipe';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-property-list',
-  imports: [RouterLink, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [
+    RouterLink,
+    TruncatePipe,
+    TitleCasePipe,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatDivider,
+  ],
   templateUrl: './property-list.html',
   styleUrl: './property-list.scss',
 })

@@ -1,76 +1,102 @@
-<section>
-  <div class="header-row">
-    <h1 class="page-title">
-      Your Properties <span>({{ properties().length }})</span>
-    </h1>
-
-    <a mat-flat-button color="primary" routerLink="/properties/add">
-      <mat-icon>add</mat-icon>
-      Add Property
-    </a>
+<!-- Header Section -->
+<section class="header-row">
+  <div class="title-group">
+    <h1 class="page-title">Your Properties</h1>
+    <span class="count-badge">{{ properties().length }} units</span>
   </div>
 
-  <div class="property-list">
-    @for(property of properties(); track `${$index}-${property.id}`){
+  <a mat-flat-button color="primary" routerLink="/properties/add" class="add-btn">
+    <mat-icon>add</mat-icon>
+    Add Property
+  </a>
+</section>
 
-    <mat-card class="property-card" appearance="outlined">
-      <mat-card-header class="card-header">
-        <span mat-card-avatar class="property-type-icon">
-          <mat-icon> home</mat-icon>
-        </span>
-
-        <mat-card-title class="card-title">
-          {{ property.name }} {{property.alias ? `(${property.alias})`: '' }}</mat-card-title
-        >
-
-        <mat-card-subtitle class="card-subtitle">
-          <mat-icon> location_on</mat-icon> {{ property.location }}</mat-card-subtitle
-        >
-      </mat-card-header>
-
+<section class="property-grid">
+  <!-- Property Cards -->
+  @for(property of properties(); track property.id) {
+  <mat-card class="property-card" appearance="outlined">
+    <div class="image-container" [routerLink]="['/properties', property.id]">
       <img
-        mat-card-image
         src="https://material.angular.dev/assets/img/examples/shiba2.jpg"
-        alt="Photo of a Shiba Inu"
+        alt="{{ property.name }}"
       />
+    </div>
 
-      <mat-card-content>
-        <div class="additional-information-container">
-          <section class="additional-information">
-            <span class="additional-information-label">Rooms:</span>
-            <span class="additional-information-value">{{ property.rooms }}</span>
-          </section>
+    <!-- Card Body -->
+    <mat-card-header class="card-header" [routerLink]="['/properties', property.id]">
+      <mat-card-title class="card-title">
+        {{ property.name | titlecase | truncate : 30 }}
+      </mat-card-title>
+      <mat-card-subtitle class="card-subtitle">
+        <mat-icon class="tiny-icon">location_on</mat-icon>
+        <span>{{ property.location | titlecase | truncate : 30 }}</span>
+      </mat-card-subtitle>
+    </mat-card-header>
 
-          <section class="additional-information">
-            <span class="additional-information-label"> Floor:</span>
-            <span class="additional-information-value">{{ property.floor }}</span>
-          </section>
+    <mat-card-content>
+      <div class="features-row">
+        <div class="feature-item" title="Rooms">
+          <mat-icon>meeting_room</mat-icon>
+          <span>{{ property.rooms }}</span>
         </div>
-      </mat-card-content>
-
-      <mat-card-actions class="action-buttons">
-        <button matButton="filled" [routerLink]="property.id">
-          <mat-icon>visibility</mat-icon> More
-        </button>
-        <button matButton [routerLink]="`${property.id}/edit`">
-          <mat-icon>edit</mat-icon> Edit
-        </button>
-        <button matButton><mat-icon>share</mat-icon> Share</button>
-      </mat-card-actions>
-    </mat-card>
-
-    } @empty {
-    <mat-card
-      class="property-card empty-card"
-      appearance="outlined"
-      routerLink="/properties/add"
-      tabindex="0"
-    >
-      <div class="empty-state-content">
-        <mat-icon class="big-add-icon">add_circle_outline</mat-icon>
-        <span class="empty-text">Add Apartment</span>
+        <div class="feature-item" title="Max Guests">
+          <mat-icon>group</mat-icon>
+          <span>{{ property.maxGuests }}</span>
+        </div>
+        <div class="feature-item" title="Floor">
+          <mat-icon>layers</mat-icon>
+          <span>{{ property.floor }}</span>
+        </div>
+        @if(property.alias) {
+        <div class="feature-item alias-badge" title="Alias">
+          <span>{{ property.alias | truncate : 10 }}</span>
+        </div>
+        }
       </div>
-    </mat-card>
-    }
-  </div>
+    </mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <!-- Actions Footer -->
+    <mat-card-actions class="card-actions">
+      <button
+        class="details-btn"
+        mat-button
+        color="primary"
+        [routerLink]="['/properties', property.id]"
+      >
+        Details
+      </button>
+
+      <div class="right-actions">
+        <button
+          mat-icon-button
+          [routerLink]="['/properties', property.id, 'edit']"
+          matTooltip="Edit"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Share">
+          <mat-icon>share</mat-icon>
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+  }
+
+  <!-- Empty State / Add New Card -->
+  <mat-card
+    class="property-card add-new-card"
+    appearance="outlined"
+    routerLink="/properties/add"
+    mat-ripple
+  >
+    <div class="add-content">
+      <div class="icon-circle">
+        <mat-icon>add</mat-icon>
+      </div>
+      <h3>Add New Property</h3>
+      <p>List a new apartment for rent</p>
+    </div>
+  </mat-card>
 </section>

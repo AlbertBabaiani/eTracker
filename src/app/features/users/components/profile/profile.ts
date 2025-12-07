@@ -5,8 +5,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth-service';
 import { MatDividerModule } from '@angular/material/divider';
-import { DatePipe, SlicePipe, TitleCasePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { PropertyService } from '../../../../core/services/property-service';
+import { TruncatePipe } from '../../../../shared/pipes/truncate-pipe';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,7 @@ import { PropertyService } from '../../../../core/services/property-service';
     MatCardModule,
     MatDividerModule,
     TitleCasePipe,
-    SlicePipe,
+    TruncatePipe,
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',

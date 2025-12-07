@@ -57,7 +57,9 @@
     <div class="timeline-grid">
       @for (hour of hours; track hour) {
       <div class="grid-line"></div>
-      } @for (slot of getCurrentDayReservations(); track slot.reservation.id) {
+      }
+      <!--  -->
+      @for (slot of getCurrentDayReservations(); track slot.reservation.id) {
       <div
         class="timeline-event"
         [style.top.%]="calculateTop(slot.reservation)"

@@ -71,7 +71,7 @@
         @for (prop of properties(); track prop.id) {
         <a class="property-chip" [routerLink]="['/properties', prop.id]">
           <img src="https://material.angular.dev/assets/img/examples/shiba2.jpg" alt="Property" />
-          <span class="prop-name">{{ prop.alias || prop.name | titlecase | slice : 0 : 40 }}</span>
+          <span class="prop-name">{{ prop.alias || prop.name | titlecase | truncate : 40 }}</span>
           <mat-icon class="chip-arrow">chevron_right</mat-icon>
         </a>
         }

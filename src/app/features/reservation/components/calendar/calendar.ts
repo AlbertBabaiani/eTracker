@@ -47,8 +47,8 @@ export class Calendar {
   // Expose properties for the bottom panel
   properties = this.propertyService.properties;
 
-  weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  months = [
+  readonly weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  readonly months = [
     'January',
     'February',
     'March',

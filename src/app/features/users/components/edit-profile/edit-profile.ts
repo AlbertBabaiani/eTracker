@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,9 +13,9 @@ import { AuthService } from '../../../../core/services/auth-service';
 import { PropertyService } from '../../../../core/services/property-service';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { UserPersonalForm } from '../../../../shared/components/user-personal-form/user-personal-fields';
-import { UserAccountFormFields, UserPersonalFormFields } from '../../../../shared/models/IUser';
 import { CustomValidators } from '../../../../shared/validators/passowrdMatchValidator';
-import { SlicePipe, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
+import { TruncatePipe } from '../../../../shared/pipes/truncate-pipe';
 
 @Component({
   selector: 'app-edit-profile',
@@ -32,7 +32,7 @@ import { SlicePipe, TitleCasePipe } from '@angular/common';
     MatChipsModule,
     TranslocoDirective,
     UserPersonalForm,
-    SlicePipe,
+    TruncatePipe,
     TitleCasePipe,
   ],
   templateUrl: './edit-profile.html',
