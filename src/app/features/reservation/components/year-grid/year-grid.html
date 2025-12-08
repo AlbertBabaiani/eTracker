@@ -1,0 +1,12 @@
+<div class="year-grid">
+  @for (month of months; track $index) {
+  <div
+    class="month-cell"
+    [class.selected-month]="isSelectedMonth($index)"
+    [class.current-month]="isActualCurrentMonth($index)"
+    (click)="selectMonth($index)"
+  >
+    {{ month }}
+  </div>
+  }
+</div>

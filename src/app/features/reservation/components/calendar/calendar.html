@@ -1,46 +1,19 @@
 <div class="calendar-container">
-  <!-- 1. Header & Controls -->
-  <header class="calendar-header">
-    <div class="month-navigator">
-      <button mat-icon-button (click)="navigate(-1)">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-
-      <h2 class="current-label">{{ currentLabel() }}</h2>
-
-      <button mat-icon-button (click)="navigate(1)">
-        <mat-icon>chevron_right</mat-icon>
-      </button>
-
-      <button mat-stroked-button class="today-btn" (click)="goToToday()">Today</button>
-    </div>
-
-    <mat-button-toggle-group
-      [value]="view()"
-      (change)="view.set($event.value)"
-      appearance="standard"
-    >
-      <mat-button-toggle value="day">Day</mat-button-toggle>
-      <mat-button-toggle value="week">Week</mat-button-toggle>
-      <mat-button-toggle value="month">Month</mat-button-toggle>
-      <mat-button-toggle value="year">Year</mat-button-toggle>
-    </mat-button-toggle-group>
-  </header>
+  <app-calendar-controls
+    [label]="currentLabel()"
+    [currentView]="view()"
+    (navigate)="navigate($event)"
+    (viewChange)="view.set($event)"
+    (today)="goToToday()"
+  />
 
   <!-- 2. Year View Grid -->
   @if (view() === 'year') {
-  <div class="year-grid">
-    @for (month of months; track $index) {
-    <div
-      class="month-cell"
-      [class.selected-month]="isSelectedMonth($index)"
-      [class.current-month]="isActualCurrentMonth($index)"
-      (click)="selectMonth($index)"
-    >
-      {{ month }}
-    </div>
-    }
-  </div>
+  <app-year-grid
+    [currentDate]="currentDate()"
+    [selectedDate]="selectedDate()"
+    (monthSelection)="monthSelection($event)"
+  />
   }
 
   <!-- 3. Day (Timeline) View -->
@@ -64,7 +37,6 @@
         class="timeline-event"
         [style.top.%]="calculateTop(slot.reservation)"
         [style.height.%]="calculateHeight(slot.reservation)"
-        [style.background-color]="slot.reservation.color"
       >
         <div class="event-content">
           <div class="event-time">
@@ -93,7 +65,7 @@
     }
   </div>
 
-  <div class="calendar-grid" [ngClass]="view()">
+  <div class="calendar-grid" [class]="view()">
     @for (day of calendarDays(); track $index) {
     <div
       class="day-cell"
@@ -117,7 +89,6 @@
           [class.chip-start]="slot.type === 'start'"
           [class.chip-end]="slot.type === 'end'"
           [class.chip-stay]="slot.type === 'stay'"
-          [style.background-color]="slot.reservation.color || '#e3f2fd'"
         >
           <div class="avatar-mini">{{ getInitials(slot.reservation.guestId) }}</div>
           <div class="chip-content">

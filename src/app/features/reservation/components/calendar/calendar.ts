@@ -4,29 +4,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { Reservation } from '../../models/Reservation';
-import { DatePipe, NgClass, TitleCasePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { PropertyService } from '../../../../core/services/property-service';
-
-interface CalendarDay {
-  date: Date | null;
-  isToday: boolean;
-  isPast: boolean;
-  dayNumber: number;
-  slots: DaySlot[];
-}
-
-interface DaySlot {
-  reservation: Reservation;
-  type: 'start' | 'end' | 'stay' | 'single-day';
-  timeLabel?: string;
-}
-
-type CalendarView = 'year' | 'month' | 'week' | 'day';
+import { MatDialog } from '@angular/material/dialog';
+import { AddReservation } from '../add-reservation/add-reservation';
+import { CalendarControls } from '../calendar-controls/calendar-controls';
+import { CalendarDay, CalendarView, DaySlot } from '../../models/Calendar';
+import { YearGrid } from '../year-grid/year-grid';
 
 @Component({
   selector: 'app-calendar',
   imports: [
-    NgClass,
+    CalendarControls,
+    YearGrid,
     DatePipe,
     TitleCasePipe,
     MatButtonModule,
@@ -39,30 +29,19 @@ type CalendarView = 'year' | 'month' | 'week' | 'day';
 export class Calendar {
   private reservationService = inject(ReservationService);
   private propertyService = inject(PropertyService);
+  private dialog = inject(MatDialog);
 
   view = signal<CalendarView>('month');
   currentDate = signal(new Date());
+  selectedDate = signal(new Date());
   selectedPropertyId = signal<string | null>(null);
 
   // Expose properties for the bottom panel
   properties = this.propertyService.properties;
 
   readonly weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  readonly months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-  hours = Array.from({ length: 24 }, (_, i) => i);
+
+  readonly hours = Array.from({ length: 24 }, (_, i) => i);
 
   currentLabel = computed(() => {
     const date = this.currentDate();
@@ -170,7 +149,7 @@ export class Calendar {
     }));
   }
 
-  // --- NAVIGATION & SELECTION ---
+  // --- NAVIGATION & SELECTION START ---
 
   toggleProperty(id: string | null) {
     // If clicking same property, deselect (go back to All)
@@ -189,36 +168,26 @@ export class Calendar {
     else if (view === 'week') newDate.setDate(newDate.getDate() + delta * 7);
     else if (view === 'day') newDate.setDate(newDate.getDate() + delta);
     this.currentDate.set(newDate);
+    this.selectedDate.set(newDate);
   }
 
   goToToday() {
     this.currentDate.set(new Date());
+    this.selectedDate.set(new Date());
   }
 
-  // --- YEAR VIEW HIGHLIGHT LOGIC ---
-
-  // Is this month selected in the view? (e.g. "Nov 2025" when viewed)
-  isSelectedMonth(index: number): boolean {
-    return this.currentDate().getMonth() === index;
-  }
-
-  // Is this the ACTUAL current month? (e.g. Today is Nov, highlight Nov)
-  isActualCurrentMonth(index: number): boolean {
-    const today = new Date();
-    return today.getMonth() === index && today.getFullYear() === this.currentDate().getFullYear();
-  }
-
-  selectMonth(index: number) {
-    const newDate = new Date(this.currentDate());
-    newDate.setMonth(index);
-    this.currentDate.set(newDate);
-    this.view.set('month');
-  }
+  // --- NAVIGATION & SELECTION END ---
 
   onDayClick(day: CalendarDay) {
     if (!day.date) return;
     this.currentDate.set(day.date);
     this.view.set('day');
+  }
+
+  monthSelection(selectedDate: Date): void {
+    this.currentDate.set(selectedDate);
+    this.selectedDate.set(selectedDate);
+    this.view.set('month');
   }
 
   // --- HELPERS ---
@@ -264,4 +233,14 @@ export class Calendar {
       .toUpperCase()
       .substring(0, 2);
   }
+
+  // --- ADD RESERVATION START
+
+  openAddReservation() {
+    this.dialog.open(AddReservation, {
+      width: '500px',
+      // Pass data if needed, e.g. pre-selected date
+    });
+  }
+  // --- ADD RESERVATION END
 }

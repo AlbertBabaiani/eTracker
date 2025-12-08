@@ -1,0 +1,26 @@
+<header class="calendar-header">
+  <div class="month-navigator">
+    <button mat-icon-button (click)="onNavigate(-1)">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <h2 class="current-label">{{ label() }}</h2>
+
+    <button mat-icon-button (click)="onNavigate(1)">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+
+    <button mat-stroked-button class="today-btn" (click)="onToday()">Today</button>
+  </div>
+
+  <mat-button-toggle-group
+    [value]="currentView()"
+    (change)="onChangeView($event.value)"
+    appearance="standard"
+  >
+    <mat-button-toggle value="day">Day</mat-button-toggle>
+    <mat-button-toggle value="week">Week</mat-button-toggle>
+    <mat-button-toggle value="month">Month</mat-button-toggle>
+    <mat-button-toggle value="year">Year</mat-button-toggle>
+  </mat-button-toggle-group>
+</header>

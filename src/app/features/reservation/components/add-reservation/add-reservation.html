@@ -1,0 +1,115 @@
+<h2 mat-dialog-title>Add New Reservation</h2>
+
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="form">
+    <!-- PROPERTY SELECT -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Property</mat-label>
+      <mat-select formControlName="propertyId">
+        @for (prop of properties(); track prop.id) {
+        <mat-option [value]="prop.id">{{ prop.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div class="divider"></div>
+
+    <!-- GUEST SECTION -->
+    <div class="guest-header">
+      <h3>Guest Details</h3>
+      <mat-slide-toggle
+        color="primary"
+        [checked]="isNewGuest()"
+        (change)="isNewGuest.set($event.checked)"
+      >
+        New Guest
+      </mat-slide-toggle>
+    </div>
+
+    @if (!isNewGuest()) {
+    <!-- Existing Guest Search -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Search Guest</mat-label>
+      <input type="text" matInput formControlName="guestSearch" [matAutocomplete]="auto" />
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        [displayWith]="displayGuestFn"
+        (optionSelected)="selectGuest($event.option.value)"
+      >
+        @for (guest of filteredGuests(); track guest.id) {
+        <mat-option [value]="guest">
+          <span>{{ guest.firstName }} {{ guest.lastName }}</span>
+          <small *ngIf="guest.phone"> | {{ guest.phone }}</small>
+        </mat-option>
+        }
+      </mat-autocomplete>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    } @else {
+    <!-- New Guest Fields -->
+    <div class="row-2">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="guestFirstName" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="guestLastName" />
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="guestPhone" />
+    </mat-form-field>
+    }
+
+    <div class="divider"></div>
+
+    <!-- DATE & TIME SECTION -->
+    <h3>Dates</h3>
+
+    <!-- Start Date/Time -->
+    <div class="date-time-row">
+      <mat-form-field appearance="outline" class="date-field">
+        <mat-label>Check-in Date</mat-label>
+        <input matInput [matDatepicker]="pickerStart" formControlName="startDate" />
+        <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="time-field">
+        <mat-label>Time</mat-label>
+        <input matInput type="time" formControlName="startTime" />
+      </mat-form-field>
+    </div>
+
+    <!-- End Date/Time -->
+    <div class="date-time-row">
+      <mat-form-field appearance="outline" class="date-field">
+        <mat-label>Check-out Date</mat-label>
+        <input matInput [matDatepicker]="pickerEnd" formControlName="endDate" />
+        <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="time-field">
+        <mat-label>Time</mat-label>
+        <input matInput type="time" formControlName="endTime" />
+      </mat-form-field>
+    </div>
+
+    <!-- PRICE -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Total Price</mat-label>
+      <span matTextPrefix>$&nbsp;</span>
+      <input matInput type="number" formControlName="price" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="form.invalid">
+    Save Reservation
+  </button>
+</mat-dialog-actions>

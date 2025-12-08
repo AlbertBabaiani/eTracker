@@ -1,0 +1,24 @@
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-4) var(--spacing-6);
+  background: var(--white);
+  border-bottom: 1px solid var(--grid-border-color);
+  z-index: 10;
+
+  .month-navigator {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+  }
+
+  .current-label {
+    margin: 0;
+    min-width: 12.5rem;
+    text-align: center;
+    font-size: var(--fs-xl);
+    font-weight: 600;
+    color: var(--black);
+  }
+}

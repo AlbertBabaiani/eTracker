@@ -1,0 +1,55 @@
+.dialog-content {
+  min-width: 400px;
+  max-width: 90vw;
+  padding-top: 10px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.guest-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #555;
+  }
+}
+
+.date-time-row {
+  display: flex;
+  gap: 12px;
+
+  .date-field {
+    flex: 2;
+  }
+  .time-field {
+    flex: 1;
+  }
+}
+
+.divider {
+  height: 1px;
+  background-color: #eee;
+  margin: 16px 0;
+}
+
+h3 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: #888;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
