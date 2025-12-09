@@ -1,10 +1,13 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Reservation } from '../models/Reservation';
+import { addDoc, collection, Firestore, Timestamp } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReservationService {
+  private firestore = inject(Firestore);
+
   private _reservations = signal<Reservation[]>([
     {
       id: 'res_1',
@@ -16,7 +19,6 @@ export class ReservationService {
       endDate: new Date(new Date().getFullYear(), new Date().getMonth(), 8, 11, 0),
       price: 300,
       status: 'confirmed',
-      color: '#e3f2fd', // Blue
     },
     {
       id: 'res_2',
@@ -28,7 +30,6 @@ export class ReservationService {
       endDate: new Date(new Date().getFullYear(), new Date().getMonth(), 12, 10, 0),
       price: 600,
       status: 'confirmed',
-      color: '#f3e5f5', // Purple
     },
     {
       id: 'res_3',
@@ -40,7 +41,6 @@ export class ReservationService {
       endDate: new Date(new Date().getFullYear(), new Date().getMonth(), 12, 10, 0),
       price: 600,
       status: 'confirmed',
-      color: '#f3e5f5', // Purple
     },
   ]);
 
@@ -72,15 +72,16 @@ export class ReservationService {
     return 'stay';
   }
 
-  isStartDate(date: Date, reservation: Reservation): boolean {
-    const checkDate = new Date(date).setHours(0, 0, 0, 0);
-    const start = new Date(reservation.startDate).setHours(0, 0, 0, 0);
-    return checkDate === start;
-  }
+  async addReservation(reservation: Omit<Reservation, 'id'>): Promise<void> {
+    const reservationsRef = collection(this.firestore, 'reservations');
 
-  isEndDate(date: Date, reservation: Reservation): boolean {
-    const checkDate = new Date(date).setHours(0, 0, 0, 0);
-    const end = new Date(reservation.endDate).setHours(0, 0, 0, 0);
-    return checkDate === end;
+    // Convert Dates to Firestore Timestamps if needed, or keep as Date objects
+    // Firestore accepts Date objects directly in newer SDKs
+    await addDoc(reservationsRef, {
+      ...reservation,
+      startDate: Timestamp.fromDate(reservation.startDate),
+      endDate: Timestamp.fromDate(reservation.endDate),
+      status: 'confirmed', // Default status
+    });
   }
 }

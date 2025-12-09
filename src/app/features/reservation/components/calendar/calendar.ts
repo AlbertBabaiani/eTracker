@@ -4,21 +4,24 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { Reservation } from '../../models/Reservation';
-import { DatePipe, TitleCasePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { PropertyService } from '../../../../core/services/property-service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddReservation } from '../add-reservation/add-reservation';
 import { CalendarControls } from '../calendar-controls/calendar-controls';
 import { CalendarDay, CalendarView, DaySlot } from '../../models/Calendar';
-import { YearGrid } from '../year-grid/year-grid';
+import { YearView } from '../year-view/year-view';
+import { DayView } from '../day-view/day-view';
+import { InitialsPipe } from '../../../../shared/pipes/initials-pipe';
 
 @Component({
   selector: 'app-calendar',
   imports: [
     CalendarControls,
-    YearGrid,
+    YearView,
+    DayView,
     DatePipe,
-    TitleCasePipe,
+    InitialsPipe,
     MatButtonModule,
     MatIconModule,
     MatButtonToggleModule,
@@ -40,8 +43,6 @@ export class Calendar {
   properties = this.propertyService.properties;
 
   readonly weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-  readonly hours = Array.from({ length: 24 }, (_, i) => i);
 
   currentLabel = computed(() => {
     const date = this.currentDate();
@@ -191,48 +192,6 @@ export class Calendar {
   }
 
   // --- HELPERS ---
-  formatHour(hour: number): string {
-    return `${hour.toString().padStart(2, '0')}:00`;
-  }
-  calculateTop(res: Reservation): number {
-    /* Same as before */
-    const current = this.currentDate();
-    const start = new Date(res.startDate);
-    if (start.getDate() !== current.getDate() || start.getMonth() !== current.getMonth()) return 0;
-    return ((start.getHours() * 60 + start.getMinutes()) / 1440) * 100;
-  }
-  calculateHeight(res: Reservation): number {
-    /* Same as before */
-    const current = this.currentDate();
-    const start = new Date(res.startDate);
-    const end = new Date(res.endDate);
-    let s = 0,
-      e = 1440;
-    if (start.getDate() === current.getDate()) s = start.getHours() * 60 + start.getMinutes();
-    if (end.getDate() === current.getDate()) e = end.getHours() * 60 + end.getMinutes();
-    return ((e - s) / 1440) * 100;
-  }
-  calculateCurrentTimeTop(): number {
-    const now = new Date();
-    return ((now.getHours() * 60 + now.getMinutes()) / 1440) * 100;
-  }
-  isToday(date: Date): boolean {
-    const today = new Date();
-    return (
-      date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
-    );
-  }
-  getInitials(name: string): string {
-    if (!name) return '?';
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase()
-      .substring(0, 2);
-  }
 
   // --- ADD RESERVATION START
 

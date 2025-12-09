@@ -15,7 +15,6 @@ import {
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { of, switchMap } from 'rxjs';
 import { IUser } from '../../shared/models/IUser';
-import { LoadingService } from './loading-service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +22,6 @@ import { LoadingService } from './loading-service';
 export class PropertyService {
   private firestore = inject(Firestore);
   private authService = inject(AuthService);
-  private loading = inject(LoadingService);
 
   properties = toSignal(
     toObservable(this.authService.currentUser).pipe(
@@ -49,10 +47,6 @@ export class PropertyService {
     return this.properties().find((p) => p.id === id);
   }
 
-  /**
-   * Adds a new property to Firestore.
-   * Automatically adds the currently logged-in user to the 'ownerIds' list.
-   */
   async addProperty(newProperty: Property): Promise<void> {
     const user = this.authService.currentUser();
 
@@ -83,9 +77,6 @@ export class PropertyService {
     });
   }
 
-  /**
-   * Updates an existing property document in Firestore.
-   */
   async updateProperty(updatedProperty: Property): Promise<void> {
     if (!updatedProperty.id) {
       throw new Error('Property ID is required for updates.');
@@ -102,10 +93,6 @@ export class PropertyService {
     await updateDoc(docRef, sanitizedData);
   }
 
-  /**
-   * Searches for users in Firestore by their display name.
-   * Used for the "Add Owner" autocomplete functionality.
-   */
   async searchUsers(term: string): Promise<IUser[]> {
     if (!term) return [];
 

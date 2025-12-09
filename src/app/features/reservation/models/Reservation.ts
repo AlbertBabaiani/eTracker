@@ -5,6 +5,6 @@ export interface Reservation {
   startDate: Date;
   endDate: Date;
   price: number;
-  status: 'confirmed' | 'pending' | 'cancelled';
-  color?: string;
+  bePrice?: number;
+  status: 'confirmed' | 'pending';
 }

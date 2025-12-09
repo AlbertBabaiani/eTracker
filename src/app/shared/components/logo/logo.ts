@@ -9,6 +9,6 @@ import { Component, input } from '@angular/core';
 export class Logo {
   vertical = input<boolean>(false);
   logoLg = input<boolean>(false);
-  showLogo = input<boolean>(true);
+  showText = input<boolean>(true);
   white = input<boolean>(false);
 }

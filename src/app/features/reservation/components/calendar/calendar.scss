@@ -1,5 +1,3 @@
-$dayViewCellHeight: 3.75rem;
-
 :host {
   height: 100%;
   display: flex;
@@ -14,93 +12,6 @@ $dayViewCellHeight: 3.75rem;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-base);
   overflow: hidden;
-}
-
-/* --- Timeline View --- */
-.day-timeline-container {
-  display: grid;
-  grid-template-columns: auto 1fr;
-
-  overflow-y: auto;
-
-  height: calc($dayViewCellHeight * 24);
-}
-
-.time-labels {
-  width: $dayViewCellHeight;
-  border-right: 1px solid var(--grid-border-color);
-  background: #fafafa;
-}
-
-.time-label {
-  height: $dayViewCellHeight;
-  display: flex;
-  justify-content: center;
-  font-size: var(--fs-xs);
-  color: var(--text-secondary);
-
-  span {
-    background: #fafafa;
-    border-bottom: 1px solid var(--grid-border-color);
-    padding: 0 4px;
-    width: 100%;
-    text-align: center;
-  }
-}
-
-.timeline-grid {
-  flex-grow: 1;
-  position: relative;
-}
-.grid-line {
-  height: $dayViewCellHeight;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-//
-
-.timeline-event {
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  border-radius: var(--radius-lg);
-
-  padding: var(--spacing-4);
-  overflow: hidden;
-
-  background: var(--secondary);
-
-  .event-time {
-    font-size: var(--fs-lg);
-    font-weight: 500;
-    color: var(--black);
-    margin-bottom: var(--spacing-2);
-  }
-  .event-guest {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-2);
-    font-weight: 600;
-    font-size: var(--fs-base);
-  }
-}
-.current-time-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: red;
-  z-index: 10;
-  &::before {
-    content: '';
-    position: absolute;
-    left: -6px;
-    top: -4px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: red;
-  }
 }
 
 /* --- Days Header --- */

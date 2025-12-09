@@ -21,7 +21,7 @@ export const routes: Routes = [
       import('./features/properties/properties.routes').then((r) => r.PROPERTIES_ROUTES),
   },
   {
-    path: 'reservations',
+    path: 'calendar',
     canActivate: [authGuard],
     loadChildren: () =>
       import('./features/reservation/reservations.routes').then((r) => r.RESERVATIONS_ROUTES),
