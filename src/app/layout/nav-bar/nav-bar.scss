@@ -1,0 +1,256 @@
+$nav-width: 16.25rem;
+$nav-width-collapsed: 5.5rem;
+
+:host {
+  display: flex;
+  height: 100%;
+}
+
+/* --- DESKTOP STYLES --- */
+.main-nav {
+  display: flex;
+  flex-direction: column;
+
+  width: $nav-width;
+  padding: 5rem 1.5rem 2rem;
+
+  background: var(--white);
+  border-right: 1px solid #eee;
+
+  position: relative;
+  z-index: 100;
+
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), padding 0.3s ease;
+  overflow: hidden;
+
+  &.closed {
+    width: $nav-width-collapsed;
+    padding: 4rem 0.75rem 2rem;
+
+    .toggle-btn {
+      right: 50%;
+      transform: translateX(50%);
+    }
+
+    .nav-brand {
+      margin-bottom: 0.5rem;
+    }
+
+    .logo-wrapper {
+      &.text {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      &.icon {
+        opacity: 1;
+      }
+    }
+
+    .nav-item {
+      padding-left: 1.15rem;
+      transition: all 0.3s ease;
+
+      .label {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+    }
+  }
+}
+
+.toggle-btn {
+  position: absolute;
+  top: var(--spacing-4);
+  right: var(--spacing-4);
+  color: var(--text-secondary);
+  transition: right 0.3s ease, transform 0.3s ease;
+}
+
+.nav-brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+  position: relative;
+  height: 7rem;
+  transition: height 0.3s;
+}
+
+.logo-wrapper {
+  position: absolute;
+  transition: transform 0.3s ease, opacity 0.1s ease;
+
+  &.text {
+    opacity: 1;
+    transform: scale(1);
+  }
+  &.icon {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* Navigation Links */
+.nav-links {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  width: 100%;
+  height: 3rem;
+  padding: 0 1rem;
+
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+
+  white-space: nowrap;
+  overflow: hidden;
+
+  transition: background-color 0.2s, color 0.2s;
+
+  .nav-icon {
+    flex-shrink: 0;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+  }
+
+  .label {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition-delay: 0.05s;
+  }
+
+  &:hover,
+  &.active {
+    background-color: var(--primary);
+    color: var(--white);
+
+    .nav-icon {
+      color: var(--white);
+    }
+  }
+}
+
+.spacer {
+  border-top: 1px solid #f0f0f0;
+  margin: 1rem 0;
+  transform: scaleX(200%);
+  width: 100%;
+}
+
+.profile-circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--secondary);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.profile-item {
+  height: auto;
+  padding: var(--spacing-2);
+  gap: var(--spacing-3);
+}
+
+/* --- MOBILE (Floating Pill) --- */
+@media (max-width: 1000px) {
+  .main-nav {
+    /* Reset Desktop styles */
+    width: auto !important;
+    height: auto !important;
+    padding: 0.5rem !important;
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    flex-direction: row;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 50px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+    &.closed {
+      width: auto;
+      padding: var(--spacing-2);
+    }
+  }
+
+  .toggle-btn,
+  .nav-brand {
+    display: none;
+  }
+
+  .nav-links {
+    flex-direction: row;
+    width: auto;
+    gap: var(--spacing-2);
+
+    &-block {
+      flex-direction: row;
+      gap: var(--spacing-2);
+    }
+  }
+
+  .nav-item {
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+    background: transparent;
+
+    .label {
+      display: none;
+    }
+
+    &.active {
+      background-color: var(--primary, #6200ea);
+    }
+  }
+
+  .profile-item {
+    padding: 0;
+    .profile-circle {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-width: 2px;
+    }
+  }
+
+  .spacer {
+    display: none;
+  }
+}

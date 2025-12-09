@@ -1,46 +1,5 @@
 <div class="app-container">
-  <nav class="main-nav">
-    <div class="nav-brand">
-      <app-logo [vertical]="true" />
-    </div>
-
-    <!-- Nav Links -->
-    <div class="nav-links">
-      <div class="nav-links-block">
-        <a routerLink="/reservations" routerLinkActive="active" class="nav-item">
-          <mat-icon class="nav-icon">calendar_today</mat-icon>
-          <span class="label">Reservations</span>
-        </a>
-
-        <a routerLink="/guests" routerLinkActive="active" class="nav-item">
-          <mat-icon>group</mat-icon>
-          <span class="label">Guests</span>
-        </a>
-
-        <a routerLink="/properties" routerLinkActive="active" class="nav-item">
-          <mat-icon>apartment</mat-icon>
-          <span class="label">Properties</span>
-        </a>
-      </div>
-
-      <div class="nav-links-block">
-        <div class="spacer"></div>
-
-        <!-- Profile Link (Circle Image) -->
-        <a routerLink="/profile" routerLinkActive="active" class="nav-item profile-item">
-          <div class="profile-circle">
-            <!-- @if (user()?.photoURL) {
-                        <img [src]="user()?.photoURL" alt="Me" />
-                        } @else { -->
-            <span>{{ getInitials('abc def') }}</span>
-            <!-- } -->
-          </div>
-          <span class="label">Profile</span>
-        </a>
-      </div>
-    </div>
-  </nav>
-
+  <app-nav-bar />
   <!-- CONTENT AREA -->
   <main class="content-area">
     <router-outlet></router-outlet>

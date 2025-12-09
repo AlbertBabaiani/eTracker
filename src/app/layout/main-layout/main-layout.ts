@@ -1,24 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterModule, RouterLink, RouterLinkActive } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { Logo } from '../../shared/components/logo/logo';
+import { RouterOutlet } from '@angular/router';
+import { NavBar } from '../nav-bar/nav-bar';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [Logo, RouterModule, RouterLink, RouterLinkActive, MatIconModule, MatButtonModule],
+  imports: [RouterOutlet, NavBar],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
 })
-export class MainLayout {
-  getInitials(name?: string): string {
-    if (!name) return '?';
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase()
-      .substring(0, 2);
-  }
-}
+export class MainLayout {}
