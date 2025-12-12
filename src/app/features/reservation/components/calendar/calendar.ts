@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { Reservation } from '../../models/Reservation';
-import { DatePipe } from '@angular/common';
 import { PropertyService } from '../../../../core/services/property-service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddReservation } from '../add-reservation/add-reservation';
@@ -12,7 +11,7 @@ import { CalendarControls } from '../calendar-controls/calendar-controls';
 import { CalendarDay, CalendarView, DaySlot } from '../../models/Calendar';
 import { YearView } from '../year-view/year-view';
 import { DayView } from '../day-view/day-view';
-import { InitialsPipe } from '../../../../shared/pipes/initials-pipe';
+import { WeekMonthView } from '../week-view/week-month-view';
 
 @Component({
   selector: 'app-calendar',
@@ -20,8 +19,7 @@ import { InitialsPipe } from '../../../../shared/pipes/initials-pipe';
     CalendarControls,
     YearView,
     DayView,
-    DatePipe,
-    InitialsPipe,
+    WeekMonthView,
     MatButtonModule,
     MatIconModule,
     MatButtonToggleModule,
@@ -41,8 +39,6 @@ export class Calendar {
 
   // Expose properties for the bottom panel
   properties = this.propertyService.properties;
-
-  readonly weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   currentLabel = computed(() => {
     const date = this.currentDate();

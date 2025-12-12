@@ -30,6 +30,19 @@ export class DayView implements OnDestroy {
     }
   }
 
+  getReservationStatusClasses(res: Reservation) {
+    const currentDay = new Date(this.currentDate()).setHours(0, 0, 0, 0);
+    const startDay = new Date(res.startDate).setHours(0, 0, 0, 0);
+    const endDay = new Date(res.endDate).setHours(0, 0, 0, 0);
+
+    return {
+      'starts-today': startDay === currentDay,
+      'ends-today': endDay === currentDay,
+      'continues-from-prev': startDay < currentDay,
+      'continues-to-next': endDay > currentDay,
+    };
+  }
+
   formatHour(hour: number): string {
     return `${hour.toString().padStart(2, '0')}:00`;
   }

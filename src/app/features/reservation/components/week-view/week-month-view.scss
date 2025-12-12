@@ -1,0 +1,206 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.days-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: var(--spacing-3) 0;
+  background-color: var(--white);
+  border-bottom: 1px solid var(--grid-border-color);
+
+  .day-name {
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-secondary);
+
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    &:nth-child(6),
+    &:nth-child(7) {
+      color: var(--primary);
+    }
+  }
+}
+
+.calendar-grid {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  overflow-y: auto;
+  background-color: var(--white);
+
+  &.month {
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 1fr;
+  }
+
+  &.week {
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr;
+  }
+}
+
+.day-cell {
+  border-right: 1px solid var(--grid-border-color);
+  border-bottom: 1px solid var(--grid-border-color);
+
+  position: relative;
+
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: var(--spacing-1);
+  cursor: pointer;
+
+  overflow: hidden;
+
+  transition: background-color 0.2s;
+
+  &:nth-child(7n) {
+    border-right: none;
+  }
+
+  &.empty {
+    background-color: #fbfbfb !important;
+    cursor: default;
+  }
+
+  &:hover:not(.empty) {
+    background-color: var(--hover-bg);
+    overflow: visible;
+  }
+
+  &.last-week {
+    border-bottom: none;
+  }
+
+  .calendar-grid.month &:nth-child(7n-1),
+  .calendar-grid.month &:nth-child(7n),
+  .calendar-grid.week &:nth-child(7n-1),
+  .calendar-grid.week &:nth-child(7n) {
+    background-color: var(--weekend-bg);
+
+    &:hover:not(.empty) {
+      background-color: var(--hover-bg);
+    }
+  }
+}
+
+.cell-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-1);
+}
+
+.day-number {
+  font-weight: 500;
+  font-size: 0.95rem;
+  width: var(--spacing-7);
+  height: var(--spacing-7);
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+
+  color: var(--black);
+
+  .day-cell.today & {
+    background-color: var(--primary);
+    color: var(--white);
+  }
+
+  .day-cell.past & {
+    color: var(--text-secondary);
+  }
+}
+
+.reservations-stack {
+  position: absolute;
+  left: 0;
+  top: 2.5rem;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.guest-chip {
+  height: 2.1rem;
+
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+  gap: 6px;
+  padding: 3px 6px;
+  font-size: 0.75rem;
+  color: var(--black);
+  overflow: hidden;
+  white-space: nowrap;
+
+  transition: transform 0.1s;
+  cursor: pointer;
+
+  border: 1px solid transparent;
+  border-top-color: var(--grid-border-color);
+  border-bottom-color: var(--grid-border-color);
+
+  &:hover {
+    transform: scale(1.02);
+    z-index: 2;
+  }
+
+  &.chip-start {
+    margin-left: var(--spacing-2);
+    border-top-left-radius: var(--radius-md);
+    border-bottom-left-radius: var(--radius-md);
+    border-left: 3px solid rgba(0, 0, 0, 0.2);
+  }
+  &.chip-end {
+    margin-right: var(--spacing-2);
+    border-top-right-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);
+    border-right: 3px solid rgba(0, 0, 0, 0.2);
+  }
+  &.chip-stay {
+    margin: 0 0;
+    border-radius: 0;
+  }
+}
+
+.chip-content {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  overflow: hidden;
+  gap: 0.1rem;
+}
+.chip-time {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-top: 1px;
+}
+
+.guest-name {
+  font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.tiny-icon {
+  font-size: var(--spacing-4);
+  width: var(--spacing-4);
+  height: var(--spacing-4);
+  opacity: 0.6;
+  color: var(--text-secondary);
+  margin-left: auto;
+}

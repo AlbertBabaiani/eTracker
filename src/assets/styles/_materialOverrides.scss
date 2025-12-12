@@ -194,6 +194,7 @@ mat-icon[matPrefix] {
 }
 
 $primaryBtnHeight: 3.25rem;
+$primaryBtnHeightDesktop: 2.75rem;
 
 :root {
   @include mat.button-overrides(
@@ -219,6 +220,18 @@ $primaryBtnHeight: 3.25rem;
       outlined-ripple-color: var(--secondary),
     )
   );
+}
+
+@media (max-width: 1000px) {
+  :root {
+    @include mat.button-overrides(
+      (
+        filled-container-height: $primaryBtnHeightDesktop,
+        text-container-height: $primaryBtnHeightDesktop,
+        outlined-container-height: $primaryBtnHeightDesktop,
+      )
+    );
+  }
 }
 
 // Primary Btn End
@@ -250,3 +263,23 @@ $primaryBtnHeight: 3.25rem;
 }
 
 // Card End
+
+// Button Group Start
+
+:root {
+  @include mat.button-toggle-overrides(
+    (
+      height: $primaryBtnHeight,
+    )
+  );
+}
+
+@media (max-width: 1000px) {
+  :root {
+    @include mat.button-toggle-overrides(
+      (
+        height: $primaryBtnHeightDesktop,
+      )
+    );
+  }
+}

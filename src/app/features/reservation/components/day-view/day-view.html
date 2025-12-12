@@ -14,6 +14,7 @@
   @for (slot of reservations(); track slot.reservation.id) {
   <div
     class="timeline-event"
+    [class]="getReservationStatusClasses(slot.reservation)"
     [style.top.%]="calculateTop(slot.reservation)"
     [style.height.%]="calculateHeight(slot.reservation)"
   >
