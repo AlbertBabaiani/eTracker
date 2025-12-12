@@ -56,6 +56,10 @@ $nav-width-collapsed: 5.5rem;
         transform: translateX(-10px);
       }
     }
+
+    .profile-item {
+      padding-left: 0.75rem;
+    }
   }
 }
 
@@ -91,7 +95,6 @@ $nav-width-collapsed: 5.5rem;
   }
 }
 
-/* Navigation Links */
 .nav-links {
   height: 100%;
   display: flex;
@@ -108,11 +111,11 @@ $nav-width-collapsed: 5.5rem;
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--spacing-4);
 
   width: 100%;
   height: 3rem;
-  padding: 0 1rem;
+  padding: 0 var(--spacing-4);
 
   border-radius: 12px;
   text-decoration: none;
@@ -122,7 +125,7 @@ $nav-width-collapsed: 5.5rem;
   white-space: nowrap;
   overflow: hidden;
 
-  transition: background-color 0.2s, color 0.2s;
+  transition: all 0.2s;
 
   .nav-icon {
     flex-shrink: 0;
@@ -186,12 +189,11 @@ $nav-width-collapsed: 5.5rem;
 /* --- MOBILE (Floating Pill) --- */
 @media (max-width: 1000px) {
   .main-nav {
-    /* Reset Desktop styles */
     width: auto !important;
     height: auto !important;
     padding: 0.5rem !important;
     position: fixed;
-    bottom: 1rem;
+    bottom: var(--spacing-4);
     left: 50%;
     transform: translateX(-50%);
 
@@ -237,7 +239,7 @@ $nav-width-collapsed: 5.5rem;
     }
 
     &.active {
-      background-color: var(--primary, #6200ea);
+      background-color: var(--primary);
     }
   }
 
