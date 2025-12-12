@@ -75,10 +75,6 @@
     overflow: visible;
   }
 
-  &.last-week {
-    border-bottom: none;
-  }
-
   .calendar-grid.month &:nth-child(7n-1),
   .calendar-grid.month &:nth-child(7n),
   .calendar-grid.week &:nth-child(7n-1),

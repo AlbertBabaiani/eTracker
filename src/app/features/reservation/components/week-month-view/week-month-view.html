@@ -16,17 +16,16 @@
     [class.empty]="!day.date"
     [class.today]="day.isToday"
     [class.past]="day.isPast"
-    [class.last-week]="isLastWeek($index)"
   >
     <!-- (click)="onDayClick(day)" -->
     @if (day.date) {
     <div class="cell-header">
       <span class="day-number">{{ day.dayNumber }} </span>
-      <!-- <span class="day-number">{{ $index }} {{ isLastWeek($last) }}</span> -->
     </div>
 
     <div class="reservations-stack">
       @for (slot of day.slots; track slot.reservation.id) {
+
       <div
         class="guest-chip"
         [class.chip-start]="slot.type === 'start'"
@@ -50,4 +49,17 @@
     }
   </div>
   }
+
+  <!--  -->
+
+  @if(lastDay()?.getDay() !== 0){
+  <!--  -->
+  @for(day of nextMonthPadding(); track $index){
+
+  <div class="day-cell empty past">
+    <div class="cell-header">
+      <span class="day-number">{{ day }} </span>
+    </div>
+  </div>
+  } }
 </div>

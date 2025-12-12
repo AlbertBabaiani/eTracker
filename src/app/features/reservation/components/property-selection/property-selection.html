@@ -1,0 +1,22 @@
+<footer class="properties-panel">
+  <span class="panel-label">Filter by:</span>
+  <div class="prop-list">
+    <button
+      class="prop-chip"
+      [class.active]="selectedPropertyId() === null"
+      (click)="chooseProperty(null)"
+    >
+      All
+    </button>
+    @for (prop of properties(); track prop.id) {
+    <button
+      class="prop-chip"
+      [class.active]="selectedPropertyId() === prop.id"
+      (click)="chooseProperty(prop.id!)"
+    >
+      <mat-icon class="prop-icon">home</mat-icon>
+      {{ prop.alias || prop.name | truncate : 10 }}
+    </button>
+    }
+  </div>
+</footer>

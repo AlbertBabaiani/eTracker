@@ -11,7 +11,8 @@ import { CalendarControls } from '../calendar-controls/calendar-controls';
 import { CalendarDay, CalendarView, DaySlot } from '../../models/Calendar';
 import { YearView } from '../year-view/year-view';
 import { DayView } from '../day-view/day-view';
-import { WeekMonthView } from '../week-view/week-month-view';
+import { WeekMonthView } from '../week-month-view/week-month-view';
+import { PropertySelection } from '../property-selection/property-selection';
 
 @Component({
   selector: 'app-calendar',
@@ -20,6 +21,7 @@ import { WeekMonthView } from '../week-view/week-month-view';
     YearView,
     DayView,
     WeekMonthView,
+    PropertySelection,
     MatButtonModule,
     MatIconModule,
     MatButtonToggleModule,
@@ -37,7 +39,6 @@ export class Calendar {
   selectedDate = signal(new Date());
   selectedPropertyId = signal<string | null>(null);
 
-  // Expose properties for the bottom panel
   properties = this.propertyService.properties;
 
   currentLabel = computed(() => {
@@ -148,15 +149,6 @@ export class Calendar {
 
   // --- NAVIGATION & SELECTION START ---
 
-  toggleProperty(id: string | null) {
-    // If clicking same property, deselect (go back to All)
-    if (this.selectedPropertyId() === id && id !== null) {
-      this.selectedPropertyId.set(null);
-    } else {
-      this.selectedPropertyId.set(id);
-    }
-  }
-
   navigate(delta: number) {
     const view = this.view();
     const newDate = new Date(this.currentDate());
@@ -186,8 +178,6 @@ export class Calendar {
     this.selectedDate.set(selectedDate);
     this.view.set('month');
   }
-
-  // --- HELPERS ---
 
   // --- ADD RESERVATION START
 

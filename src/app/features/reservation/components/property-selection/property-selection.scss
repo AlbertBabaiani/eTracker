@@ -1,0 +1,53 @@
+.properties-panel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-6);
+  background: var(--white);
+  overflow-x: auto;
+  white-space: nowrap;
+
+  .panel-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .prop-list {
+    display: flex;
+    gap: var(--spacing-2);
+  }
+
+  .prop-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--grid-border-color);
+    background: var(--white);
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+
+    .prop-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: var(--text-secondary);
+    }
+
+    &:hover {
+      background-color: var(--hover-bg);
+    }
+
+    &.active {
+      background-color: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
+      .prop-icon {
+        color: var(--white);
+      }
+    }
+  }
+}

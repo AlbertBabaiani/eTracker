@@ -28,25 +28,8 @@
 }
 
 <!-- 5. Bottom Panel: Properties List -->
-<!-- <footer class="properties-panel">
-    <span class="panel-label">Filter by:</span>
-    <div class="prop-list">
-      <button
-        class="prop-chip"
-        [class.active]="selectedPropertyId() === null"
-        (click)="toggleProperty(null)"
-      >
-        All
-      </button>
-      @for (prop of properties(); track prop.id) {
-      <button
-        class="prop-chip"
-        [class.active]="selectedPropertyId() === prop.id"
-        (click)="toggleProperty(prop.id)"
-      >
-        <mat-icon class="prop-icon">home</mat-icon>
-        {{ prop.alias || prop.name }}
-      </button>
-      }
-    </div>
-  </footer> -->
+<app-property-selection
+  [properties]="properties()"
+  [selectedPropertyId]="selectedPropertyId()"
+  (selectProperty)="selectedPropertyId.set($event)"
+/>
