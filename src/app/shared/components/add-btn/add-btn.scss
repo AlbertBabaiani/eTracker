@@ -1,0 +1,28 @@
+.add-btn {
+  width: 3.6rem;
+  aspect-ratio: 1;
+
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--primary);
+  color: var(--white);
+
+  font-size: var(--fs-4xl);
+
+  cursor: pointer;
+
+  box-shadow: var(--shadow-base);
+
+  transition: all 0.3s ease;
+
+  &.reverse {
+    background: var(--white);
+    color: var(--primary);
+  }
+
+  &:hover {
+    background: var(--secondary);
+    color: var(--primary);
+    transform: scale(1.1);
+  }
+}
