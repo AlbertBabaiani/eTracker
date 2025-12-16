@@ -167,9 +167,9 @@ export class Calendar {
 
   // --- NAVIGATION & SELECTION END ---
 
-  onDayClick(day: CalendarDay) {
-    if (!day.date) return;
-    this.currentDate.set(day.date);
+  onDayClick(day: Date) {
+    if (!day) return;
+    this.currentDate.set(day);
     this.view.set('day');
   }
 

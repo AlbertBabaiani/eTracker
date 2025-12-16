@@ -7,6 +7,8 @@
   overflow-x: auto;
   white-space: nowrap;
 
+  position: relative;
+
   .panel-label {
     font-size: 0.9rem;
     color: var(--text-secondary);
@@ -49,5 +51,37 @@
         color: var(--white);
       }
     }
+  }
+}
+
+.add-btn {
+  position: absolute;
+  bottom: 0;
+  right: 3rem;
+  width: 3.6rem;
+  aspect-ratio: 1;
+
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--primary);
+  color: var(--white);
+
+  font-size: var(--fs-4xl);
+
+  cursor: pointer;
+
+  box-shadow: var(--shadow-base);
+
+  transition: all 0.3s ease;
+
+  @media (max-width: 1000px) {
+    bottom: 10rem;
+    right: 1.5rem;
+  }
+
+  &:hover {
+    background: var(--secondary);
+    color: var(--primary);
+    transform: scale(1.1);
   }
 }

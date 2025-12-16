@@ -23,7 +23,7 @@
 <!-- 4. Month / Week Grid -->
 @else {
 
-<app-week-month-view [view]="view()" [days]="calendarDays()" />
+<app-week-month-view [view]="view()" [days]="calendarDays()" (viewDate)="onDayClick($event)" />
 
 }
 
