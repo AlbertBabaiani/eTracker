@@ -122,5 +122,48 @@
       "RESET_SENT": "პაროლის აღდგენის მეილი გაიგზავნა!",
       "ERROR_RESET": "მეილის გაგზავნისას დაფიქსირდა შეცდომა"
     }
+  },
+  "CALENDAR": {
+    "CONTROLS": {
+      "TODAY_BTN": "დღეს",
+      "VIEWS": {
+        "DAY": "დღე",
+        "WEEK": "კვირა",
+        "MONTH": "თვე",
+        "YEAR": "წელი"
+      }
+    },
+    "WEEKDAY": {
+      "MONDAY": "ორშაბათი",
+      "TUESDAY": "სამშაბათი",
+      "WEDNESDAY": "ოთხშაბათი",
+      "THURSDAY": "ხუთშაბათი",
+      "FRIDAY": "პარასკევი",
+      "SATURDAY": "შაბათი",
+      "SUNDAY": "კვირა"
+    },
+    "WEEKDAY_SHORT": {
+      "MON": "ორშ",
+      "TUE": "სამ",
+      "WED": "ოთხ",
+      "THU": "ხუთ",
+      "FRI": "პარ",
+      "SAT": "შაბ",
+      "SUN": "კვი"
+    },
+    "MONTHS": {
+      "JANUARY": "იანვარი",
+      "FEBRUARY": "თებერვალი",
+      "MARCH": "მარტი",
+      "APRIL": "აპრილი",
+      "MAY": "მაისი",
+      "JUNE": "ივნისი",
+      "JULY": "ივლისი",
+      "AUGUST": "აგვისტო",
+      "SEPTEMBER": "სექტემბერი",
+      "OCTOBER": "ოქტომბერი",
+      "NOVEMBER": "ნოემბერი",
+      "DECEMBER": "დეკემბერი"
+    }
   }
 }

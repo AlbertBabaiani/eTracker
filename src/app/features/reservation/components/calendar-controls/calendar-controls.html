@@ -1,26 +1,32 @@
-<header class="calendar-header">
+<header class="calendar-header" *transloco="let t; prefix: 'CALENDAR'">
   <div class="month-navigator">
     <button mat-icon-button (click)="onNavigate(-1)">
       <mat-icon>chevron_left</mat-icon>
     </button>
 
-    <h2 class="current-label">{{ label() }}</h2>
+    <h2 class="current-label">
+      {{ currentView() === 'day' ? `${t(`WEEKDAY.${lbl()[0]}`)}, ${t(`MONTHS.${lbl()[1]}`)}
+      ${lbl()[2]}, ${lbl()[3]}` : currentView() === 'year' ? lbl() : `${t(`MONTHS.${lbl()[0]}`)} ${lbl()[1]}`}}
+    </h2>
 
     <button mat-icon-button (click)="onNavigate(1)">
       <mat-icon>chevron_right</mat-icon>
     </button>
 
-    <button mat-stroked-button class="today-btn" (click)="onToday()">Today</button>
+    <button mat-stroked-button class="today-btn" (click)="onToday()">
+      {{ t('CONTROLS.TODAY_BTN') }}
+    </button>
   </div>
 
   <mat-button-toggle-group
     [value]="currentView()"
     (change)="onChangeView($event.value)"
     appearance="standard"
+    *transloco="let v; prefix: 'CALENDAR.CONTROLS.VIEWS'"
   >
-    <mat-button-toggle value="day">Day</mat-button-toggle>
-    <mat-button-toggle value="week">Week</mat-button-toggle>
-    <mat-button-toggle value="month">Month</mat-button-toggle>
-    <mat-button-toggle value="year">Year</mat-button-toggle>
+    <mat-button-toggle value="day">{{ v('DAY') }}</mat-button-toggle>
+    <mat-button-toggle value="week">{{ v('WEEK') }}</mat-button-toggle>
+    <mat-button-toggle value="month">{{ v('MONTH') }}</mat-button-toggle>
+    <mat-button-toggle value="year">{{ v('YEAR') }}</mat-button-toggle>
   </mat-button-toggle-group>
 </header>

@@ -1,6 +1,6 @@
-<div class="days-header">
+<div class="days-header" *transloco="let t; prefix: 'CALENDAR.WEEKDAY_SHORT'">
   @for (day of weekDays; track day) {
-  <div class="day-name">{{ day }}</div>
+  <div class="day-name">{{ t(day) }}</div>
   }
 </div>
 

@@ -122,5 +122,48 @@
       "RESET_SENT": "Письмо для сброса пароля отправлено!",
       "ERROR_RESET": "Ошибка при отправке письма"
     }
+  },
+  "CALENDAR": {
+    "CONTROLS": {
+      "TODAY_BTN": "Сегодня",
+      "VIEWS": {
+        "DAY": "День",
+        "WEEK": "Неделя",
+        "MONTH": "Месяц",
+        "YEAR": "Год"
+      }
+    },
+    "WEEKDAY": {
+      "MONDAY": "Понедельник",
+      "TUESDAY": "Вторник",
+      "WEDNESDAY": "Среда",
+      "THURSDAY": "Четверг",
+      "FRIDAY": "Пятница",
+      "SATURDAY": "Суббота",
+      "SUNDAY": "Воскресенье"
+    },
+    "WEEKDAY_SHORT": {
+      "MON": "Пн",
+      "TUE": "Вт",
+      "WED": "Ср",
+      "THU": "Чт",
+      "FRI": "Пт",
+      "SAT": "Сб",
+      "SUN": "Вс"
+    },
+    "MONTHS": {
+      "JANUARY": "Январь",
+      "FEBRUARY": "Февраль",
+      "MARCH": "Март",
+      "APRIL": "Апрель",
+      "MAY": "Май",
+      "JUNE": "Июнь",
+      "JULY": "Июль",
+      "AUGUST": "Август",
+      "SEPTEMBER": "Сентябрь",
+      "OCTOBER": "Октябрь",
+      "NOVEMBER": "Ноябрь",
+      "DECEMBER": "Декабрь"
+    }
   }
 }

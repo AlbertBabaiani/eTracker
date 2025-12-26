@@ -67,8 +67,19 @@ $nav-width-collapsed: 5.5rem;
       .profile-item {
         padding-left: 0.75rem;
       }
+
+      .language-switcher {
+        opacity: 0;
+      }
     }
   }
+}
+
+.language-switcher {
+  margin-inline: auto;
+  opacity: 1;
+
+  transition: all 0.2s;
 }
 
 .toggle-btn {

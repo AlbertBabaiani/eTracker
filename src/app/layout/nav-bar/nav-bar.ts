@@ -4,10 +4,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../core/services/auth-service';
+import { LanguageSwitcher } from '../../shared/components/language-switcher/language-switcher';
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [Logo, RouterLink, RouterLinkActive, MatIconModule, MatButtonModule],
+  imports: [Logo, RouterLink, RouterLinkActive, MatIconModule, MatButtonModule, LanguageSwitcher],
   templateUrl: './nav-bar.html',
   styleUrl: './nav-bar.scss',
 })

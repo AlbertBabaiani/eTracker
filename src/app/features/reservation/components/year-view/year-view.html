@@ -1,4 +1,4 @@
-<div class="year-grid">
+<div class="year-grid" *transloco="let t; prefix: 'CALENDAR.MONTHS'">
   @for (month of months; track $index) {
   <div
     class="month-cell"
@@ -6,7 +6,7 @@
     [class.current-month]="isActualCurrentMonth($index)"
     (click)="selectMonth($index)"
   >
-    {{ month }}
+    {{ t(month) }}
   </div>
   }
 </div>

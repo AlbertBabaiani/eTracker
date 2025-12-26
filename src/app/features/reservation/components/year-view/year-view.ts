@@ -1,9 +1,10 @@
 import { Component, computed, input, output } from '@angular/core';
 import { AddBtn } from '../../../../shared/components/add-btn/add-btn';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-year-view',
-  imports: [AddBtn],
+  imports: [AddBtn, TranslocoDirective],
   templateUrl: './year-view.html',
   styleUrl: './year-view.scss',
 })
@@ -14,18 +15,18 @@ export class YearView {
   monthSelection = output<Date>();
 
   readonly months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+    'JANUARY',
+    'FEBRUARY',
+    'MARCH',
+    'APRIL',
+    'MAY',
+    'JUNE',
+    'JULY',
+    'AUGUST',
+    'SEPTEMBER',
+    'OCTOBER',
+    'NOVEMBER',
+    'DECEMBER',
   ];
 
   private viewYear = computed(() => this.currentDate().getFullYear());

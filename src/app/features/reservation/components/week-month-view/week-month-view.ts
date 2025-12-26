@@ -5,15 +5,16 @@ import { TitleCasePipe } from '@angular/common';
 import { InitialsPipe } from '../../../../shared/pipes/initials-pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { AddBtn } from '../../../../shared/components/add-btn/add-btn';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-week-month-view',
-  imports: [MatIcon, MatButtonModule, TitleCasePipe, InitialsPipe, AddBtn],
+  imports: [MatIcon, MatButtonModule, TitleCasePipe, InitialsPipe, AddBtn, TranslocoDirective],
   templateUrl: './week-month-view.html',
   styleUrl: './week-month-view.scss',
 })
 export class WeekMonthView {
-  readonly weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  readonly weekDays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
   view = input.required<CalendarView>();
   days = input.required<CalendarDay[]>();
