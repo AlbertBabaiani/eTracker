@@ -322,6 +322,14 @@
   }
 
   @media (max-width: 800px) {
+    gap: var(--spacing-1);
+
+    .action-btn {
+      transform: scale(0.9);
+    }
+  }
+
+  @media (max-width: 700px) {
     background: none;
     backdrop-filter: none;
 
@@ -330,7 +338,6 @@
     height: auto;
 
     flex-direction: column;
-    gap: var(--spacing-1);
 
     &.overlay-top {
       top: 2px;

@@ -1,6 +1,11 @@
 <nav class="main-nav" [class.closed]="isCollapsed()">
-  <button class="toggle-btn" mat-icon-button (click)="toggleMenu()">
-    <mat-icon>{{ isCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+  <button
+    class="toggle-btn toggle-btn-both"
+    [class.closed]="!isCollapsed()"
+    mat-icon-button
+    (click)="toggleMenu()"
+  >
+    <mat-icon>chevron_right</mat-icon>
   </button>
 
   <div class="nav-brand">
@@ -48,3 +53,5 @@
     </div>
   </div>
 </nav>
+
+<div class="shell" (click)="toggleMenu()"></div>

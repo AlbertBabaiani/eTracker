@@ -17,6 +17,20 @@
     [value]="currentView()"
     (change)="onChangeView($event.value)"
     appearance="standard"
+    class="view-changer-mobile"
+    hideSingleSelectionIndicator="true"
+  >
+    <mat-button-toggle value="day">Day</mat-button-toggle>
+    <mat-button-toggle value="week">Week</mat-button-toggle>
+    <mat-button-toggle value="month">Month</mat-button-toggle>
+    <mat-button-toggle value="year">Year</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <mat-button-toggle-group
+    [value]="currentView()"
+    (change)="onChangeView($event.value)"
+    appearance="standard"
+    class="view-changer-desktop"
   >
     <mat-button-toggle value="day">Day</mat-button-toggle>
     <mat-button-toggle value="week">Week</mat-button-toggle>

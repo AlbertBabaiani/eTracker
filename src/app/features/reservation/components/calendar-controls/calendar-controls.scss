@@ -50,3 +50,19 @@ $gap: var(--spacing-4);
     }
   }
 }
+
+.view-changer {
+  &-mobile {
+    display: none;
+  }
+
+  @media (max-width: 400px) {
+    &-mobile {
+      display: flex;
+    }
+
+    &-desktop {
+      display: none;
+    }
+  }
+}
