@@ -30,4 +30,8 @@ export class NavBar {
       .toUpperCase()
       .substring(0, 2);
   }
+
+  logout(): void {
+    this.authService.logout();
+  }
 }

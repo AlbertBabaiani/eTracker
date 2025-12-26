@@ -1,40 +1,51 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard-guard';
-import { Signin } from './features/auth/components/signin/signin';
 import { wildcardGuard } from './core/guards/wild-card-guard';
 
 export const routes: Routes = [
   {
     path: '',
-    canActivate: [wildcardGuard],
+    pathMatch: 'full',
+    redirectTo: 'feature',
+  },
+  {
+    path: 'auth',
     loadChildren: () => import('./features/auth/auth.routes').then((r) => r.AUTH_ROUTES),
   },
   {
-    path: 'profile',
-    canActivate: [authGuard],
-    loadChildren: () => import('./features/users/users.routes').then((r) => r.USERS_ROUTES),
-  },
-  {
-    path: 'properties',
-    canActivate: [authGuard],
-    loadChildren: () =>
-      import('./features/properties/properties.routes').then((r) => r.PROPERTIES_ROUTES),
-  },
-  {
-    path: 'calendar',
-    canActivate: [authGuard],
-    loadChildren: () =>
-      import('./features/reservation/reservations.routes').then((r) => r.RESERVATIONS_ROUTES),
-  },
-  {
-    path: 'dashboard',
-    canActivate: [authGuard],
-    loadComponent: () => import('./features/dashboard/dashboard').then((c) => c.Dashboard),
-  },
+    path: 'feature',
+    canMatch: [authGuard],
+    loadComponent: () => import('./layout/main-layout/main-layout').then((c) => c.MainLayout),
 
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'calendar',
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./features/users/users.routes').then((r) => r.USERS_ROUTES),
+      },
+      {
+        path: 'properties',
+        loadChildren: () =>
+          import('./features/properties/properties.routes').then((r) => r.PROPERTIES_ROUTES),
+      },
+      {
+        path: 'calendar',
+        loadChildren: () =>
+          import('./features/reservation/reservations.routes').then((r) => r.RESERVATIONS_ROUTES),
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./features/dashboard/dashboard').then((c) => c.Dashboard),
+      },
+    ],
+  },
   {
     path: '**',
     canActivate: [wildcardGuard],
-    component: Signin,
+    loadComponent: () => import('./features/auth/components/signin/signin').then((c) => c.Signin),
   },
 ];

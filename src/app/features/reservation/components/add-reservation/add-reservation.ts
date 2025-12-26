@@ -11,9 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
-import { ReservationService } from '../../services/reservation-service';
 import { PropertyService } from '../../../../core/services/property-service';
-import { GuestService } from '../../services/guest-service';
+import { GuestService } from '../../../../core/services/guest-service';
 import { Guest } from '../../models/Guest';
 
 @Component({
@@ -36,19 +35,15 @@ import { Guest } from '../../models/Guest';
 })
 export class AddReservation {
   private fb = inject(NonNullableFormBuilder);
-  private reservationService = inject(ReservationService);
   private propertyService = inject(PropertyService);
   private guestService = inject(GuestService);
   private dialogRef = inject(MatDialogRef<AddReservation>);
 
-  // Data Sources
-  properties = this.propertyService.properties; // Signal from PropertyService
+  properties = this.propertyService.properties;
   filteredGuests = signal<Guest[]>([]);
 
-  // State
   isNewGuest = signal(false);
 
-  // Default Times
   readonly DEFAULT_CHECKIN = '14:00';
   readonly DEFAULT_CHECKOUT = '11:00';
 
@@ -130,44 +125,30 @@ export class AddReservation {
   }
 
   async onSubmit() {
-    if (this.form.invalid) return;
-
-    const val = this.form.value;
-    let finalGuestId = val.selectedGuestId;
-
-    try {
-      // 1. Create Guest if New
-      if (this.isNewGuest()) {
-        const newGuest = {
-          firstName: val.guestFirstName!,
-          lastName: val.guestLastName!,
-          phone: val.guestPhone || '',
-          notes: '',
-        };
-        finalGuestId = await this.guestService.addGuest(newGuest);
-      }
-
-      if (!finalGuestId) throw new Error('Guest ID missing');
-
-      // 2. Combine Dates and Times
-      const startDateTime = this.combineDateTime(val.startDate!, val.startTime!);
-      const endDateTime = this.combineDateTime(val.endDate!, val.endTime!);
-
-      // 3. Create Reservation
-      await this.reservationService.addReservation({
-        propertyId: val.propertyId!,
-        guestId: finalGuestId,
-        startDate: startDateTime,
-        endDate: endDateTime,
-        price: Number(val.price),
-        status: 'confirmed',
-      });
-
-      this.dialogRef.close(true);
-    } catch (error) {
-      console.error(error);
-      // Handle error (show snackbar)
-    }
+    this.guestService.addGuest({ firstName: 'sffds', lastName: 'asddfsa' });
+    // if (this.form.invalid) return;
+    // const val = this.form.value;
+    // let finalGuestId = val.selectedGuestId;
+    // try {
+    //   // 1. Create Guest if New
+    //   if (this.isNewGuest()) {
+    //     const newGuest = {
+    //       firstName: val.guestFirstName!,
+    //       lastName: val.guestLastName!,
+    //       phone: val.guestPhone || '',
+    //       notes: '',
+    //     };
+    //     finalGuestId = await this.guestService.addGuest(newGuest);
+    //   }
+    //   if (!finalGuestId) throw new Error('Guest ID missing');
+    //   // 2. Combine Dates and Times
+    //   const startDateTime = this.combineDateTime(val.startDate!, val.startTime!);
+    //   const endDateTime = this.combineDateTime(val.endDate!, val.endTime!);
+    //   this.dialogRef.close(true);
+    // } catch (error) {
+    //   console.error(error);
+    //   // Handle error (show snackbar)
+    // }
   }
 
   private combineDateTime(date: Date, timeStr: string): Date {

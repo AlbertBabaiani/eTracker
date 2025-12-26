@@ -3,7 +3,7 @@
 <mat-dialog-content class="dialog-content">
   <form [formGroup]="form">
     <!-- PROPERTY SELECT -->
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
       <mat-label>Property</mat-label>
       <mat-select formControlName="propertyId">
         @for (prop of properties(); track prop.id) {
@@ -39,7 +39,7 @@
         @for (guest of filteredGuests(); track guest.id) {
         <mat-option [value]="guest">
           <span>{{ guest.firstName }} {{ guest.lastName }}</span>
-          <small *ngIf="guest.phone"> | {{ guest.phone }}</small>
+          <!-- <small *ngIf="guest.phone"> | {{ guest.phone }}</small> -->
         </mat-option>
         }
       </mat-autocomplete>
@@ -109,7 +109,8 @@
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="form.invalid">
+  <button mat-flat-button color="primary" (click)="onSubmit()">
+    <!-- [disabled]="form.invalid" -->
     Save Reservation
   </button>
 </mat-dialog-actions>

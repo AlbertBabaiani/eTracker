@@ -15,40 +15,44 @@ export class Notification {
     verticalPosition: 'bottom',
   };
 
-  showSuccess(messageKey: string, params?: any) {
-    this.show(messageKey, 'success-snackbar', params, 'AUTH.TOAST.SUCCESS');
+  private defaultErrorMessage = 'TOAST.GENERIC_ERROR';
+
+  showSuccess(messageKey: string = this.defaultErrorMessage, params?: any) {
+    this.show(messageKey, 'success-snackbar', params);
   }
 
-  showError(messageKey: string, params?: any) {
-    this.show(messageKey, 'error-snackbar', params, 'AUTH.TOAST.ERROR');
+  showError(messageKey: string = this.defaultErrorMessage, params?: any) {
+    this.show(messageKey, 'error-snackbar', params);
   }
 
-  private show(messageKey: string, panelClass: string, params: any = {}, actionLabelKey: string) {
+  private show(messageKey: string, typeOfNotification: string, params?: any) {
     const message = this.transloco.translate(messageKey, params);
-    const action = this.transloco.translate('AUTH.TOAST.CLOSE');
+    const action = this.transloco.translate('TOAST.CLOSE');
 
     this.snackBar.open(message, action, {
       ...this.defaultConfig,
-      panelClass: [panelClass],
+      panelClass: [typeOfNotification],
     });
   }
 
-  handleAuthError(error: any) {
-    let key = 'AUTH.TOAST.GENERIC_ERROR';
+  handleAuthError(code: string) {
+    let key = 'TOAST.GENERIC_ERROR';
 
-    if (error.code) {
-      switch (error.code) {
-        case 'auth/email-already-in-use':
-          key = 'AUTH.TOAST.EMAIL_IN_USE';
-          break;
-        case 'auth/invalid-credential':
-        case 'auth/wrong-password':
-        case 'auth/user-not-found':
-          key = 'AUTH.TOAST.INVALID_CREDENTIALS';
-          break;
-      }
-    } else if (error.message === 'auth/email-not-verified') {
-      key = 'AUTH.TOAST.EMAIL_NOT_VERIFIED';
+    switch (code) {
+      case 'auth/email-already-in-use':
+        key = 'AUTH.TOAST.EMAIL_IN_USE';
+        break;
+      case 'auth/invalid-credential':
+      case 'auth/wrong-password':
+      case 'auth/user-not-found':
+        key = 'AUTH.TOAST.INVALID_CREDENTIALS';
+        break;
+      case 'auth/email-not-verified':
+        key = 'AUTH.TOAST.EMAIL_NOT_VERIFIED';
+        break;
+      case 'auth/invalid-email':
+        key = 'AUTH.TOAST.INVALID_EMAIL';
+        break;
     }
 
     this.showError(key);

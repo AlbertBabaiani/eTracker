@@ -4,10 +4,11 @@ import { MatIcon } from '@angular/material/icon';
 import { TitleCasePipe } from '@angular/common';
 import { InitialsPipe } from '../../../../shared/pipes/initials-pipe';
 import { MatButtonModule } from '@angular/material/button';
+import { AddBtn } from '../../../../shared/components/add-btn/add-btn';
 
 @Component({
   selector: 'app-week-month-view',
-  imports: [MatIcon, MatButtonModule, TitleCasePipe, InitialsPipe],
+  imports: [MatIcon, MatButtonModule, TitleCasePipe, InitialsPipe, AddBtn],
   templateUrl: './week-month-view.html',
   styleUrl: './week-month-view.scss',
 })
@@ -18,6 +19,7 @@ export class WeekMonthView {
   days = input.required<CalendarDay[]>();
 
   viewDate = output<Date>();
+  startReservation = output<Date | null>();
 
   activeDate = signal<number | null>(null);
 
@@ -70,5 +72,11 @@ export class WeekMonthView {
     event.stopPropagation();
 
     this.viewDate.emit(date);
+  }
+
+  triggerAddReservation(event: Event, date?: Date): void {
+    event.stopPropagation();
+
+    this.startReservation.emit(date ?? null);
   }
 }

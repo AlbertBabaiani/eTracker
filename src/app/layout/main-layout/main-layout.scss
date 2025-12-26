@@ -10,6 +10,18 @@
   grid-template-columns: auto 1fr;
   height: 100%;
   width: 100%;
+
+  .navbar {
+    display: block;
+  }
+
+  &.auth-page {
+    grid-template-columns: 1fr;
+
+    .navbar {
+      display: none;
+    }
+  }
 }
 
 .content-area {
@@ -32,6 +44,6 @@
     height: 100dvh;
 
     padding: 0;
-    padding-bottom: 6rem;
+    padding-bottom: 5.2rem;
   }
 }

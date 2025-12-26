@@ -9,18 +9,34 @@ $topPadding: 3rem;
 .side {
   display: flex;
   height: 100%;
-}
 
-.side-left {
-  background: var(--primary);
-  padding: $topPadding;
-}
+  &-left {
+    background: var(--primary);
+    padding: $topPadding;
+  }
 
-.side-right {
-  background: var(--surface-white);
+  &-right {
+    background: var(--surface-white);
+  }
 }
 
 // Main Layout End
+
+.full-width {
+  position: relative;
+}
+
+.password {
+  padding-right: 2.5rem;
+}
+
+.show-password-button {
+  position: absolute;
+  right: -0.45rem;
+  top: 0.55rem;
+
+  z-index: 999;
+}
 
 // Language Start
 
@@ -34,13 +50,11 @@ $topPadding: 3rem;
 
 // Header Start
 
-// Header End
-
 .center-header {
   margin-bottom: 3rem;
 }
 
-// Icons inside inputs
+// Header End
 
 .forgot-pass {
   text-align: right;
@@ -78,14 +92,40 @@ a {
     text-decoration: underline;
   }
 }
+
 .primary-btn {
   border-radius: var(--radius-full);
+  height: 3.25rem;
 }
+
 // Footer End
+
+@media (max-width: 800px) {
+  .shell {
+    grid-template-columns: 1fr;
+    background: var(--primary);
+
+    padding: var(--spacing-2);
+  }
+
+  .side-left {
+    display: none;
+  }
+
+  .card {
+    border-radius: var(--radius-lg);
+  }
+}
 
 @media (max-width: 500px) {
   .language-container {
     right: 1.5rem;
     top: 2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .card {
+    padding-inline: 0.25rem;
   }
 }

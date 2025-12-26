@@ -23,7 +23,12 @@
 <!-- 4. Month / Week Grid -->
 @else {
 
-<app-week-month-view [view]="view()" [days]="calendarDays()" (viewDate)="onDayClick($event)" />
+<app-week-month-view
+  [view]="view()"
+  [days]="calendarDays()"
+  (viewDate)="onDayClick($event)"
+  (startReservation)="openAddReservation()"
+/>
 
 }
 

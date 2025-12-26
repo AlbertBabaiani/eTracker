@@ -119,8 +119,8 @@ export class EditProperty {
   addOwner(user: IUser) {
     if (user && user.uid) {
       // Add to local state (to be saved on submit)
-      this.currentOwnerIds.update((ids) => {
-        if (!ids.includes(user.uid)) {
+      this.currentOwnerIds.update((ids: any) => {
+        if (!ids.includes(user.uid!)) {
           return [...ids, user.uid];
         }
         return ids;

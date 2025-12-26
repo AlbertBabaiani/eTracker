@@ -2,7 +2,7 @@ import { FormControl } from '@angular/forms';
 
 export interface IUser {
   // Security
-  uid: string;
+  uid?: string;
   ip: string;
   lat: string;
   long: string;

@@ -25,9 +25,16 @@
         week: view() === 'week',
         month: view() === 'month'
       }"
+      [animate.enter]="'animation-fade-start'"
+      [animate.leave]="'animation-fade-end'"
     >
-      <button mat-mini-fab color="primary" class="action-btn add-btn" matTooltip="Add Reservation">
-        <!-- (click)="triggerAdd($event, day.date!)" -->
+      <button
+        mat-mini-fab
+        color="primary"
+        (click)="triggerAddReservation($event, day.date)"
+        class="action-btn add-btn"
+        matTooltip="Add Reservation"
+      >
         <mat-icon>add</mat-icon>
       </button>
       <button
@@ -107,3 +114,5 @@
   </div>
   } }
 </div>
+
+<app-add-btn class="add-reservation-btn" (click)="triggerAddReservation($event)" />

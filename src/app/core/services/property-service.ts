@@ -13,7 +13,7 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { of, switchMap } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { IUser } from '../../shared/models/IUser';
 
 @Injectable({
@@ -32,12 +32,9 @@ export class PropertyService {
 
         const propertiesCollection = collection(this.firestore, 'properties');
 
-        // Query: Select properties where the 'ownerIds' array contains the current user's UID
         const q = query(propertiesCollection, where('ownerIds', 'array-contains', user.uid));
 
-        // Return a real-time stream of data
-        // { idField: 'id' } maps the Firestore document ID to the 'id' property of the object
-        return collectionData(q, { idField: 'id' });
+        return collectionData(q, { idField: 'id' }) as Observable<Property[]>;
       })
     ),
     { initialValue: [] }
@@ -58,8 +55,8 @@ export class PropertyService {
 
     // Ensure the current user is an owner
     let owners = newProperty.ownerIds || [];
-    if (!owners.includes(user.uid)) {
-      owners = [...owners, user.uid];
+    if (!owners.includes(user.uid!)) {
+      owners = [...owners, user.uid!];
     }
 
     // Remove the 'id' field if it exists (Firestore generates a new unique ID)

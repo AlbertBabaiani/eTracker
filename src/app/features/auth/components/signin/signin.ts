@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -32,15 +32,16 @@ export class Signin {
   private fb = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
 
+  passwordShown = signal<boolean>(false);
+
   form = this.fb.group({
-    email: [
-      '',
-      [Validators.required, Validators.email, Validators.minLength(4), Validators.maxLength(50)],
-    ],
+    email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
     password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
   });
 
   async onSubmit() {
+    this.form.markAllAsTouched();
+
     if (this.form.valid) {
       const { email, password } = this.form.value;
 

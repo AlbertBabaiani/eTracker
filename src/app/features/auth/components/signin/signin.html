@@ -4,6 +4,7 @@
       <app-logo [white]="true" />
     </div>
   </section>
+
   <section class="side side-right">
     <mat-card class="card">
       <div class="language-container">
@@ -46,12 +47,22 @@
 
           <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
             <input
+              class="password"
               matInput
               formControlName="password"
-              type="password"
+              [type]="passwordShown() ? 'text' : 'password'"
               [placeholder]="f('PASSWORD.PLACEHOLDER')"
             />
             <mat-icon matPrefix>lock</mat-icon>
+
+            <button
+              mat-icon-button
+              type="button"
+              class="show-password-button"
+              (click)="passwordShown.set(!passwordShown())"
+            >
+              <mat-icon>{{ passwordShown() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
 
             <mat-error>
               @if (form.get('password')?.hasError('required')) {
@@ -69,7 +80,7 @@
           </mat-form-field>
 
           <div class="forgot-pass">
-            <a routerLink="/reset-password">{{ f('FORGOT_PASSWORD') }}</a>
+            <a routerLink="/auth/reset-password">{{ f('FORGOT_PASSWORD') }}</a>
           </div>
 
           <div class="actions">
@@ -88,7 +99,7 @@
 
       <mat-card-footer class="auth-footer">
         <p>
-          {{ t('SIGNIN.NO_ACCOUNT') }} <a routerLink="/signup">{{ t('SIGNIN.SIGN_UP') }}</a>
+          {{ t('SIGNIN.NO_ACCOUNT') }} <a routerLink="/auth/signup">{{ t('SIGNIN.SIGN_UP') }}</a>
         </p>
       </mat-card-footer>
     </mat-card>

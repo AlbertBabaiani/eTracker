@@ -11,6 +11,8 @@ $nav-width-collapsed: 5.5rem;
   display: flex;
   flex-direction: column;
 
+  height: 100%;
+
   width: $nav-width;
   padding: 5rem 1.5rem 2rem;
 
@@ -193,7 +195,7 @@ $nav-width-collapsed: 5.5rem;
     height: auto !important;
     padding: 0.5rem !important;
     position: fixed;
-    bottom: var(--spacing-4);
+    bottom: var(--spacing-2);
     left: 50%;
     transform: translateX(-50%);
 

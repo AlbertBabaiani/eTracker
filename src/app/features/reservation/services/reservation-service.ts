@@ -17,8 +17,9 @@ export class ReservationService {
       startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 5, 14, 0),
       // Check-out: 8th at 11:00 (11 AM)
       endDate: new Date(new Date().getFullYear(), new Date().getMonth(), 8, 11, 0),
-      price: 300,
-      status: 'confirmed',
+      dayPrice: 300,
+      totalPrice: 900,
+      days: 3,
     },
     {
       id: 'res_2',
@@ -28,8 +29,9 @@ export class ReservationService {
       startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 8, 15, 0),
       // Check-out: 12th at 10:00 (10 AM)
       endDate: new Date(new Date().getFullYear(), new Date().getMonth(), 12, 10, 0),
-      price: 600,
-      status: 'confirmed',
+      dayPrice: 600,
+      totalPrice: 2400,
+      days: 4,
     },
     {
       id: 'res_3',
@@ -39,8 +41,9 @@ export class ReservationService {
       startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 8, 15, 0),
       // Check-out: 12th at 10:00 (10 AM)
       endDate: new Date(new Date().getFullYear(), new Date().getMonth(), 12, 10, 0),
-      price: 600,
-      status: 'confirmed',
+      dayPrice: 1000,
+      totalPrice: 10000,
+      days: 10,
     },
   ]);
 

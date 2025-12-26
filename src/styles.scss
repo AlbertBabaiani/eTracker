@@ -9,6 +9,8 @@
 @use 'assets/styles/_tokens.scss';
 @use 'assets/styles/_typography.scss';
 @use 'assets/styles/_materialOverrides.scss';
+@use 'assets/styles/_utilities.scss';
+
 *,
 *::before,
 *::after {

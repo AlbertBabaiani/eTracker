@@ -1,8 +1,9 @@
 import { Component, computed, input, output } from '@angular/core';
+import { AddBtn } from '../../../../shared/components/add-btn/add-btn';
 
 @Component({
   selector: 'app-year-view',
-  imports: [],
+  imports: [AddBtn],
   templateUrl: './year-view.html',
   styleUrl: './year-view.scss',
 })

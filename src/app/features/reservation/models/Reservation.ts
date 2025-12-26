@@ -1,10 +1,14 @@
 export interface Reservation {
-  id: string;
+  id?: string;
   propertyId: string;
   guestId: string;
+
   startDate: Date;
   endDate: Date;
-  price: number;
+
   bePrice?: number;
-  status: 'confirmed' | 'pending';
+  dayPrice: number;
+  totalPrice: number;
+
+  days: number;
 }

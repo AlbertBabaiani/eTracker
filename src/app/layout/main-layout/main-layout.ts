@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { NavBar } from '../nav-bar/nav-bar';
 
 @Component({
@@ -9,4 +9,6 @@ import { NavBar } from '../nav-bar/nav-bar';
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
 })
-export class MainLayout {}
+export class MainLayout {
+  private router = inject(Router);
+}

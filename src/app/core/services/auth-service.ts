@@ -24,7 +24,7 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { catchError, firstValueFrom, Observable, of, switchMap } from 'rxjs';
+import { catchError, EMPTY, firstValueFrom, Observable, of, switchMap, take } from 'rxjs';
 import { LoadingService } from './loading-service';
 import { Notification } from './notification';
 
@@ -47,26 +47,31 @@ export class AuthService {
   private loading = inject(LoadingService);
   private notification = inject(Notification);
 
-  private authUser$ = user(this.firebaseAuth);
+  // TODO: Add Loading Everywhere
+
+  public readonly authUser$ = user(this.firebaseAuth);
 
   currentUser = toSignal(
     this.authUser$.pipe(
       switchMap((fUser) => {
-        if (!fUser) return of(null);
+        if (!fUser) return EMPTY;
 
-        const userDoc = doc(this.fireStore, `users/${fUser.uid}`);
-
-        return (docData(userDoc) as Observable<IUser>).pipe(
-          catchError((err) => {
-            console.error('Database Error:', err);
-            return of(null);
-          })
-        );
+        try {
+          const userDoc = doc(this.fireStore, `users/${fUser.uid}`);
+          return (docData(userDoc) as Observable<IUser>).pipe(
+            catchError(() => {
+              this.notification.showError();
+              return EMPTY;
+            })
+          );
+        } catch (err: any) {
+          this.notification.showError();
+          return EMPTY;
+        }
       })
     )
   );
 
-  // Computed helper for guards
   isAuthenticated = () => !!this.currentUser();
 
   private async fetchLocationData() {
@@ -79,7 +84,7 @@ export class AuthService {
         location: `${data.city}, ${data.country_name}`,
       };
     } catch (error) {
-      console.warn('Location API failed or blocked:', error);
+      this.notification.showError();
       return {
         ip: 'Unknown',
         lat: '0',
@@ -99,8 +104,8 @@ export class AuthService {
 
       if (!querySnapshot.empty) {
         const error: any = new Error('Email already in use');
-        error.code = 'auth/email-already-in-use';
-        this.notification.handleAuthError(error);
+        error.code = 'email-already-in-use';
+        this.notification.handleAuthError(error.code);
         throw error;
       }
 
@@ -143,11 +148,7 @@ export class AuthService {
         await sendEmailVerification(this.firebaseAuth.currentUser);
       }
     } catch (error: any) {
-      if (error.code === 'auth/email-already-in-use') {
-        this.notification.showError('AUTH.TOAST.EMAIL_IN_USE');
-      } else {
-        this.notification.handleAuthError(error);
-      }
+      this.notification.handleAuthError(error.code);
 
       throw error;
     } finally {
@@ -167,7 +168,7 @@ export class AuthService {
       // 1. Check Email Verification
       if (!credential.user.emailVerified) {
         await signOut(this.firebaseAuth);
-        this.notification.showError('AUTH.TOAST.EMAIL_NOT_VERIFIED');
+        this.notification.handleAuthError('auth/email-not-verified');
         return false;
       }
 
@@ -178,10 +179,10 @@ export class AuthService {
       const name = userData?.firstName || email.split('@')[0];
 
       this.notification.showSuccess('AUTH.TOAST.WELCOME_BACK', { name });
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/feature/calendar']);
       return true;
     } catch (error: any) {
-      this.notification.handleAuthError(error);
+      this.notification.handleAuthError(error.code);
       return false;
     } finally {
       this.loading.stopProcess();
@@ -189,8 +190,12 @@ export class AuthService {
   }
 
   async logout() {
-    await signOut(this.firebaseAuth);
-    this.router.navigate(['/login']);
+    try {
+      await signOut(this.firebaseAuth);
+      this.router.navigate(['/auth/signin']);
+    } catch (error) {
+      this.notification.showError();
+    }
   }
 
   async resetPassword(email: string): Promise<void> {
@@ -198,9 +203,9 @@ export class AuthService {
       this.loading.startProcess();
       await sendPasswordResetEmail(this.firebaseAuth, email);
       this.notification.showSuccess('AUTH.TOAST.RESET_SENT');
-      this.router.navigate(['/signin']);
+      this.router.navigate(['/auth/signin']);
     } catch (error: any) {
-      this.notification.showError('AUTH.TOAST.ERROR_RESET');
+      this.notification.handleAuthError(error.code);
       throw error;
     } finally {
       this.loading.stopProcess();
@@ -208,6 +213,8 @@ export class AuthService {
   }
 
   async updateProfile(data: Partial<IUser>): Promise<void> {
+    // TODO: Add Error Handling
+
     const current = this.currentUser();
     if (!current) throw new Error('No user logged in');
     const userDoc = doc(this.fireStore, `users/${current.uid}`);
