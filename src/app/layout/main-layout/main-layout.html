@@ -1,7 +1,7 @@
 <div class="app-container">
   <app-nav-bar class="navbar" />
   <!-- CONTENT AREA -->
-  <main class="content-area">
+  <main class="content-area" [class.calendar]="url() === '/feature/calendar'">
     <router-outlet />
   </main>
 </div>

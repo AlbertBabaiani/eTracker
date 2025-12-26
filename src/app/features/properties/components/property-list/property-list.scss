@@ -245,3 +245,11 @@ mat-card-content {
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 550px) {
+  .header-row {
+    flex-direction: column;
+    margin-bottom: var(--spacing-4);
+    gap: var(--spacing-5);
+  }
+}

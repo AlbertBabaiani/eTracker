@@ -5,7 +5,7 @@
     <span class="count-badge">{{ properties().length }} units</span>
   </div>
 
-  <a mat-flat-button color="primary" routerLink="/properties/add" class="add-btn">
+  <a mat-flat-button color="primary" routerLink="/feature/properties/add" class="add-btn">
     <mat-icon>add</mat-icon>
     Add Property
   </a>
@@ -15,7 +15,7 @@
   <!-- Property Cards -->
   @for(property of properties(); track property.id) {
   <mat-card class="property-card" appearance="outlined">
-    <div class="image-container" [routerLink]="['/properties', property.id]">
+    <div class="image-container" [routerLink]="['/feature/properties', property.id]">
       <img
         src="https://material.angular.dev/assets/img/examples/shiba2.jpg"
         alt="{{ property.name }}"
@@ -23,7 +23,7 @@
     </div>
 
     <!-- Card Body -->
-    <mat-card-header class="card-header" [routerLink]="['/properties', property.id]">
+    <mat-card-header class="card-header" [routerLink]="['/feature/properties', property.id]">
       <mat-card-title class="card-title">
         {{ property.name | titlecase | truncate : 30 }}
       </mat-card-title>
@@ -63,7 +63,7 @@
         class="details-btn"
         mat-button
         color="primary"
-        [routerLink]="['/properties', property.id]"
+        [routerLink]="['/feature/properties', property.id]"
       >
         Details
       </button>
@@ -71,7 +71,7 @@
       <div class="right-actions">
         <button
           mat-icon-button
-          [routerLink]="['/properties', property.id, 'edit']"
+          [routerLink]="['/feature/properties', property.id, 'edit']"
           matTooltip="Edit"
         >
           <mat-icon>edit</mat-icon>
@@ -88,7 +88,7 @@
   <mat-card
     class="property-card add-new-card"
     appearance="outlined"
-    routerLink="/properties/add"
+    routerLink="/feature/properties/add"
     mat-ripple
   >
     <div class="add-content">

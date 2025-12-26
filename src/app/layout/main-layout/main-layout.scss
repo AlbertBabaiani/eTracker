@@ -43,6 +43,10 @@
     height: 100vh;
     height: 100dvh;
 
-    padding: 0;
+    padding: var(--spacing-4);
+
+    &.calendar {
+      padding: 0;
+    }
   }
 }

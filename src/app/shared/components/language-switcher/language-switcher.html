@@ -15,4 +15,12 @@
   >
     ქა
   </button>
+  <button
+    (click)="setLanguage('ru')"
+    class="lang-label"
+    [class.active]="activeLanguage() === 'ru'"
+    type="button"
+  >
+    РУ
+  </button>
 </div>
