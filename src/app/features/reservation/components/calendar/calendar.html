@@ -8,28 +8,26 @@
 
 <!-- 2. Year View Grid -->
 @if (view() === 'year') {
-<app-year-view
-  [currentDate]="currentDate()"
-  [selectedDate]="selectedDate()"
-  (monthSelection)="monthSelection($event)"
-/>
+  <app-year-view
+    [currentDate]="currentDate()"
+    [selectedDate]="selectedDate()"
+    (monthSelection)="monthSelection($event)"
+  />
 }
 
 <!-- 3. Day (Timeline) View -->
 @else if (view() === 'day') {
-<app-day-view [currentDate]="currentDate()" [reservations]="getCurrentDayReservations()" />
+  <app-day-view [currentDate]="currentDate()" [reservations]="getCurrentDayReservations()" />
 }
 
 <!-- 4. Month / Week Grid -->
 @else {
-
-<app-week-month-view
-  [view]="view()"
-  [days]="calendarDays()"
-  (viewDate)="onDayClick($event)"
-  (startReservation)="openAddReservation()"
-/>
-
+  <app-week-month-view
+    [view]="view()"
+    [days]="calendarDays()"
+    (viewDate)="onDayClick($event)"
+    (startReservation)="openAddReservation($event)"
+  />
 }
 
 <!-- 5. Bottom Panel: Properties List -->

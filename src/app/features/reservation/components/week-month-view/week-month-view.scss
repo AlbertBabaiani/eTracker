@@ -149,7 +149,7 @@
   padding: 3px 6px;
   font-size: 0.75rem;
   color: var(--black);
-  overflow: hidden;
+  // overflow: hidden;
   white-space: nowrap;
 
   transition: transform 0.1s;
@@ -174,7 +174,7 @@
     margin-right: var(--spacing-2);
     border-top-right-radius: var(--radius-md);
     border-bottom-right-radius: var(--radius-md);
-    border-right: solid var(--custom-border-color);
+    border-right: 3px solid var(--custom-border-color);
   }
   &.chip-stay {
     margin: 0 0;

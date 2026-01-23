@@ -181,10 +181,13 @@ export class Calendar {
 
   // --- ADD RESERVATION START
 
-  openAddReservation() {
+  openAddReservation(startingDate: Date | null) {
     this.dialog.open(AddReservation, {
       width: '500px',
-      // Pass data if needed, e.g. pre-selected date
+
+      data: {
+        startingDate,
+      },
     });
   }
 }

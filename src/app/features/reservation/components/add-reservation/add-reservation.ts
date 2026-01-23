@@ -1,6 +1,6 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -17,6 +17,10 @@ import { AddReservationService } from '../../services/add-reservation-service';
 import { CustomValidators } from '../../../../shared/validators/passowrdMatchValidator';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { Reservation } from '../../models/Reservation';
+
+export interface AddReservationDialogData {
+  startingDate?: Date;
+}
 
 @Component({
   selector: 'app-add-reservation',
@@ -43,6 +47,8 @@ export class AddReservation {
   private fb = inject(NonNullableFormBuilder);
   private service = inject(AddReservationService);
   private dialogRef = inject(MatDialogRef<AddReservation>);
+
+  private dialogData = inject<AddReservationDialogData>(MAT_DIALOG_DATA);
 
   properties = this.service.properties;
   filteredGuests = signal<Guest[]>(this.service.guests());
@@ -79,6 +85,17 @@ export class AddReservation {
   });
 
   constructor() {
+    if (this.dialogData && this.dialogData.startingDate) {
+      const selectedDate = new Date(this.dialogData.startingDate);
+      const nextDay = new Date(selectedDate);
+      nextDay.setDate(selectedDate.getDate() + 1);
+
+      this.form.patchValue({
+        startDate: selectedDate,
+        endDate: nextDay,
+      });
+    }
+
     this.form
       .get('guestSearch')
       ?.valueChanges.pipe(debounceTime(300), distinctUntilChanged())
@@ -95,7 +112,7 @@ export class AddReservation {
       this.form.get('startDate')!.valueChanges,
       this.form.get('startTime')!.valueChanges,
       this.form.get('endDate')!.valueChanges,
-      this.form.get('endTime')!.valueChanges
+      this.form.get('endTime')!.valueChanges,
     )
       .pipe(startWith(null))
       .subscribe(() => {
@@ -271,7 +288,7 @@ export class AddReservation {
       {
         totalPrice: (dPrice || 50) * this.days(),
       },
-      { emitEvent: false }
+      { emitEvent: false },
     );
   }
 
@@ -282,7 +299,7 @@ export class AddReservation {
       {
         dayPrice: Number(((tPrice || 50) / this.days()).toFixed(2)),
       },
-      { emitEvent: false }
+      { emitEvent: false },
     );
   }
 }
