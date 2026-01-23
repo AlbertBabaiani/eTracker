@@ -2,7 +2,7 @@ export interface Guest {
   id?: string;
   firstName: string;
   lastName: string;
+  phone: string;
 
-  phone?: string;
   notes?: string;
 }

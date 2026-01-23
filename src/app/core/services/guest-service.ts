@@ -1,13 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import {
-  addDoc,
-  collection,
-  collectionData,
-  Firestore,
-  getDocs,
-  query,
-  where,
-} from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, Firestore, getDocs } from '@angular/fire/firestore';
 import { Guest } from '../../features/reservation/models/Guest';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { EMPTY, Observable } from 'rxjs';
@@ -24,20 +16,21 @@ export class GuestService {
 
   guests = toSignal(
     collectionData(collection(this.firestore, 'guests'), { idField: 'id' }) as Observable<Guest[]>,
-    { initialValue: [] }
+    { initialValue: [] },
   );
 
-  async searchGuests(term: string): Promise<Guest[]> {
-    const guestsRef = collection(this.firestore, 'guests');
+  searchGuests(term: string): Guest[] {
+    const lowerTerm = term.toLowerCase().trim();
 
-    const q = query(
-      guestsRef,
-      where('firstName', '>=', term),
-      where('firstName', '<=', term + '\uf8ff')
-    );
+    if (!lowerTerm) return [] as Guest[];
 
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as Guest));
+    return this.guests().filter((guest) => {
+      const fn = guest.firstName?.toLowerCase().includes(lowerTerm);
+      const ls = guest.lastName?.toLowerCase().includes(lowerTerm);
+      const pn = guest.phone?.toLowerCase().includes(lowerTerm);
+
+      return fn || ls || pn;
+    });
   }
 
   async addGuest(guest: Guest): Promise<any> {
@@ -46,15 +39,19 @@ export class GuestService {
     try {
       const guestsRef = collection(this.firestore, 'guests');
 
-      const sanitizedData = JSON.parse(JSON.stringify(guest));
+      const sanitizedData = JSON.parse(JSON.stringify(guest)) as Guest;
 
-      const docRef = await addDoc(guestsRef, sanitizedData);
-      return docRef.id;
+      const response = await addDoc(guestsRef, sanitizedData);
+      return response.id;
     } catch (err) {
       this.notification.showError();
       return EMPTY;
     } finally {
       this.loading.stopProcess();
     }
+  }
+
+  getGuestNameById(id: string) {
+    return (this.guests().filter((guest) => guest.id === id) || [])[0];
   }
 }

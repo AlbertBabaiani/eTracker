@@ -1,46 +1,46 @@
 <div class="time-labels">
   @for (hour of hours; track hour) {
-  <div class="time-label">
-    <span>{{ formatHour(hour) }}</span>
-  </div>
+    <div class="time-label">
+      <span>{{ formatHour(hour) }}</span>
+    </div>
   }
 </div>
 
 <div class="timeline-grid">
   @for (hour of hours; track hour) {
-  <div class="grid-line"></div>
+    <div class="grid-line"></div>
   }
   <!--  -->
-  @for (slot of reservations(); track slot.reservation.id) {
-  <div
-    class="timeline-event"
-    [class]="getReservationStatusClasses(slot.reservation)"
-    [style.top.%]="calculateTop(slot.reservation)"
-    [style.height.%]="calculateHeight(slot.reservation)"
-  >
-    <div class="event-content">
-      <div class="event-date-info">
-        {{ slot.reservation.startDate | date : 'dd-MM-yyyy' }} -
-        {{ slot.reservation.endDate | date : 'dd-MM-yyyy' }}
-      </div>
+  @for (slot of reservations(); track $index) {
+    <div
+      class="timeline-event"
+      [class]="getReservationStatusClasses(slot.reservation)"
+      [style.top.%]="calculateTop(slot.reservation)"
+      [style.height.%]="calculateHeight(slot.reservation)"
+    >
+      <div class="event-content">
+        <div class="event-date-info">
+          {{ slot.reservation.startDate | date: 'dd-MM-yyyy' }} -
+          {{ slot.reservation.endDate | date: 'dd-MM-yyyy' }}
+        </div>
 
-      <div class="event-date-info">
-        {{ slot.reservation.startDate | date : 'HH:mm' }} -
-        {{ slot.reservation.endDate | date : 'HH:mm' }}
-      </div>
+        <div class="event-date-info">
+          {{ slot.reservation.startDate | date: 'HH:mm' }} -
+          {{ slot.reservation.endDate | date: 'HH:mm' }}
+        </div>
 
-      <div class="event-guest">
-        <span>{{ slot.reservation.guestId }}</span>
+        <div class="event-guest">
+          <span>{{ slot.reservation.guestId }}</span>
+        </div>
       </div>
     </div>
-  </div>
   }
   <!--  -->
   @if (isToday(currentDate())) {
-  <div class="current-time-line-container" [style.top.%]="calculateCurrentTimeTop()">
-    <span class="current-time">
-      {{ now() | date : 'HH:mm' }}
-    </span>
-  </div>
+    <div class="current-time-line-container" [style.top.%]="calculateCurrentTimeTop()">
+      <span class="current-time">
+        {{ now() | date: 'HH:mm' }}
+      </span>
+    </div>
   }
 </div>

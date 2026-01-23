@@ -1,4 +1,4 @@
-import { Component, computed, HostListener, input, output, signal } from '@angular/core';
+import { Component, computed, HostListener, inject, input, output, signal } from '@angular/core';
 import { CalendarDay, CalendarView } from '../../models/Calendar';
 import { MatIcon } from '@angular/material/icon';
 import { TitleCasePipe } from '@angular/common';
@@ -6,6 +6,8 @@ import { InitialsPipe } from '../../../../shared/pipes/initials-pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { AddBtn } from '../../../../shared/components/add-btn/add-btn';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { GuestService } from '../../../../core/services/guest-service';
+import { PropertyService } from '../../../../core/services/property-service';
 
 @Component({
   selector: 'app-week-month-view',
@@ -14,6 +16,9 @@ import { TranslocoDirective } from '@jsverse/transloco';
   styleUrl: './week-month-view.scss',
 })
 export class WeekMonthView {
+  private guestService = inject(GuestService);
+  private propertyService = inject(PropertyService);
+
   readonly weekDays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
   view = input.required<CalendarView>();
@@ -79,5 +84,17 @@ export class WeekMonthView {
     event.stopPropagation();
 
     this.startReservation.emit(date ?? null);
+  }
+
+  // Helpers
+
+  getGuestName(id: string) {
+    const guest = this.guestService.getGuestNameById(id);
+
+    return `${guest.firstName} ${guest.lastName}`;
+  }
+
+  getPropertyColor(id: string) {
+    return this.propertyService.getPropertyColorById(id);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ReservationService } from '../../services/reservation-service';
+import { ReservationService } from '../../../../core/services/reservation-service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -187,5 +187,4 @@ export class Calendar {
       // Pass data if needed, e.g. pre-selected date
     });
   }
-  // --- ADD RESERVATION END
 }

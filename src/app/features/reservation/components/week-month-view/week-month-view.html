@@ -1,6 +1,6 @@
 <div class="days-header" *transloco="let t; prefix: 'CALENDAR.WEEKDAY_SHORT'">
   @for (day of weekDays; track day) {
-  <div class="day-name">{{ t(day) }}</div>
+    <div class="day-name">{{ t(day) }}</div>
   }
 </div>
 
@@ -8,111 +8,113 @@
 
 <div class="calendar-grid" [class]="view()">
   @for (day of days(); track $index) {
-
-  <div
-    class="day-cell"
-    [class.empty]="!day.date"
-    [class.today]="day.isToday"
-    [class.past]="day.isPast"
-    (click)="selectDate($index, $event)"
-  >
-    @if (activeDate() === $index && day.date) {
     <div
-      class="actions-overlay"
-      [class]="{
-        'overlay-top': isFirstRow($index),
-        'overlay-bottom': isLastWeek($index),
-        week: view() === 'week',
-        month: view() === 'month'
-      }"
-      [animate.enter]="'animation-fade-start'"
-      [animate.leave]="'animation-fade-end'"
+      class="day-cell"
+      [class.empty]="!day.date"
+      [class.today]="day.isToday"
+      [class.past]="day.isPast"
+      (click)="selectDate($index, $event)"
     >
-      <button
-        mat-mini-fab
-        color="primary"
-        (click)="triggerAddReservation($event, day.date)"
-        class="action-btn add-btn"
-        matTooltip="Add Reservation"
-      >
-        <mat-icon>add</mat-icon>
-      </button>
-      <button
-        mat-mini-fab
-        class="action-btn view-btn"
-        matTooltip="View Day"
-        (click)="triggerView(day.date, $event)"
-      >
-        <mat-icon>visibility</mat-icon>
-      </button>
-    </div>
-    }
-
-    <!--  -->
-
-    @if (day.date) {
-    <div class="cell-header">
-      <span class="day-number">{{ day.dayNumber }} </span>
-    </div>
-
-    <div class="reservations-stack">
-      @let slot = day.slots;
-      <!--  -->
-      @if(slot.length === 1){
-
-      <div class="guest-chip-mobile month">
-        {{ slot[0].reservation.guestId | titlecase | initials }}
-      </div>
-      } @else if(slot.length !== 0) {
-      <div class="guest-chip-mobile month">
-        {{ slot.length }}
-      </div>
+      @if (activeDate() === $index && day.date) {
+        <div
+          class="actions-overlay"
+          [class]="{
+            'overlay-top': isFirstRow($index),
+            'overlay-bottom': isLastWeek($index),
+            week: view() === 'week',
+            month: view() === 'month',
+          }"
+          [animate.enter]="'animation-fade-start'"
+          [animate.leave]="'animation-fade-end'"
+        >
+          <button
+            mat-mini-fab
+            color="primary"
+            (click)="triggerAddReservation($event, day.date)"
+            class="action-btn add-btn"
+            matTooltip="Add Reservation"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            class="action-btn view-btn"
+            matTooltip="View Day"
+            (click)="triggerView(day.date, $event)"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </div>
       }
 
       <!--  -->
 
-      @for (slot of day.slots; track slot.reservation.id) {
-
-      <div class="guest-chip-mobile week">
-        {{ slot.reservation.guestId | titlecase | initials }}
-      </div>
-
-      <div
-        class="guest-chip"
-        [class.chip-start]="slot.type === 'start'"
-        [class.chip-end]="slot.type === 'end'"
-        [class.chip-stay]="slot.type === 'stay'"
-      >
-        <div class="chip-content">
-          <span class="guest-name">{{ slot.reservation.guestId }}</span>
-          @if (slot.timeLabel) {
-          <span class="chip-time">{{ slot.timeLabel }}</span>
-          }
+      @if (day.date) {
+        <div class="cell-header">
+          <span class="day-number">{{ day.dayNumber }} </span>
         </div>
 
-        @if (slot.type === 'start') { <mat-icon class="tiny-icon">login</mat-icon> }
+        <div class="reservations-stack">
+          @let slot = day.slots;
+          <!--  -->
+          @if (slot.length === 1) {
+            <div class="guest-chip-mobile month">
+              {{ getGuestName(slot[0].reservation.guestId) | titlecase | initials }}
+            </div>
+          } @else if (slot.length !== 0) {
+            <div class="guest-chip-mobile month">
+              {{ slot.length }}
+            </div>
+          }
 
-        <!--  -->
-        @if (slot.type === 'end') { <mat-icon class="tiny-icon">logout</mat-icon> }
-      </div>
+          <!--  -->
+
+          @for (slot of day.slots; track $index) {
+            <div class="guest-chip-mobile week">
+              {{ getGuestName(slot.reservation.guestId) | titlecase | initials }}
+            </div>
+
+            <div
+              class="guest-chip"
+              [class.chip-start]="slot.type === 'start'"
+              [class.chip-end]="slot.type === 'end'"
+              [class.chip-stay]="slot.type === 'stay'"
+              style="--custom-border-color: {{ getPropertyColor(slot.reservation.propertyId) }}"
+            >
+              <div class="chip-content">
+                <span class="guest-name">{{ getGuestName(slot.reservation.guestId) }}</span>
+                @if (slot.timeLabel) {
+                  <span class="chip-time">{{ slot.timeLabel }}</span>
+                }
+              </div>
+
+              @if (slot.type === 'start') {
+                <mat-icon class="tiny-icon">login</mat-icon>
+              }
+
+              <!--  -->
+              @if (slot.type === 'end') {
+                <mat-icon class="tiny-icon">logout</mat-icon>
+              }
+            </div>
+          }
+        </div>
       }
     </div>
-    }
-  </div>
   }
 
   <!--  -->
 
-  @if(lastDay()?.getDay() !== 0){
-  <!--  -->
-  @for(day of nextMonthPadding(); track $index){
-
-  <div class="day-cell empty past">
-    <div class="cell-header">
-      <span class="day-number">{{ day }} </span>
-    </div>
-  </div>
-  } }
+  @if (lastDay()?.getDay() !== 0) {
+    <!--  -->
+    @for (day of nextMonthPadding(); track $index) {
+      <div class="day-cell empty past">
+        <div class="cell-header">
+          <span class="day-number">{{ day }} </span>
+        </div>
+      </div>
+    }
+  }
 </div>
 
 <app-add-btn class="add-reservation-btn" (click)="triggerAddReservation($event)" />

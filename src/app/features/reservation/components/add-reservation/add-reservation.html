@@ -1,35 +1,38 @@
-<h2 mat-dialog-title>Add New Reservation</h2>
+<h2 mat-dialog-title *transloco="let t; prefix: 'ADD_RESERVATION'">{{ t('TITLE') }}</h2>
 
-<mat-dialog-content class="dialog-content">
-  <form [formGroup]="form">
-    <!-- PROPERTY SELECT -->
-    <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="full-width">
-      <mat-label>Property</mat-label>
+<mat-dialog-content *transloco="let t; prefix: 'ADD_RESERVATION'">
+  <form [formGroup]="form" class="form">
+    <mat-form-field appearance="outline" [hideRequiredMarker]="true" class="input">
+      <mat-label>{{ t('PROPERTY_SELECTION.TITLE') }}</mat-label>
       <mat-select formControlName="propertyId">
         @for (prop of properties(); track prop.id) {
-        <mat-option [value]="prop.id">{{ prop.name }}</mat-option>
+        <mat-option [value]="prop.id">{{ prop.name | truncate : 30 }}</mat-option>
+
         }
       </mat-select>
+
+      <mat-error> {{ t('PROPERTY_SELECTION.ERROR') }} </mat-error>
     </mat-form-field>
 
     <div class="divider"></div>
 
     <!-- GUEST SECTION -->
     <div class="guest-header">
-      <h3>Guest Details</h3>
+      <h3>{{ t('GUEST_DETAILS_TITLE') }}</h3>
       <mat-slide-toggle
         color="primary"
         [checked]="isNewGuest()"
         (change)="isNewGuest.set($event.checked)"
       >
-        New Guest
+        {{ t('NEW_GUEST.SWITCH') }}
       </mat-slide-toggle>
     </div>
 
     @if (!isNewGuest()) {
+
     <!-- Existing Guest Search -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Search Guest</mat-label>
+    <mat-form-field appearance="outline" class="input" [hideRequiredMarker]="true">
+      <mat-label>{{ t('SEARCH_GUEST.LABEL') }}</mat-label>
       <input type="text" matInput formControlName="guestSearch" [matAutocomplete]="auto" />
       <mat-autocomplete
         #auto="matAutocomplete"
@@ -39,78 +42,171 @@
         @for (guest of filteredGuests(); track guest.id) {
         <mat-option [value]="guest">
           <span>{{ guest.firstName }} {{ guest.lastName }}</span>
-          <!-- <small *ngIf="guest.phone"> | {{ guest.phone }}</small> -->
+          <small> | {{ guest.phone }}</small>
         </mat-option>
         }
       </mat-autocomplete>
-      <mat-icon matSuffix>search</mat-icon>
+      @if(form.get('selectedGuestId')?.hasError('required')){ }
     </mat-form-field>
     } @else {
-    <!-- New Guest Fields -->
-    <div class="row-2">
-      <mat-form-field appearance="outline">
-        <mat-label>First Name</mat-label>
-        <input matInput formControlName="guestFirstName" />
+
+    <ng-container *transloco="let n; prefix: 'ADD_RESERVATION.NEW_GUEST'">
+      <!-- New Guest Fields -->
+      <div class="row-2">
+        <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+          <mat-label>{{ n('FIRST_NAME.LABEL') }}</mat-label>
+          <input matInput formControlName="guestFirstName" />
+
+          <mat-error>
+            @if (form.get('guestFirstName')?.hasError('required')) {
+            {{ n('FIRST_NAME.ERROR.REQUIRED') }}
+            } @else if (form.get('guestFirstName')?.hasError('minlength')) {
+            {{ n('FIRST_NAME.ERROR.MIN_LENGTH', { length: form.get('guestFirstName')?.errors?.['minlength']?.requiredLength  }) }}
+            } @else if (form.get('guestFirstName')?.hasError('maxlength')) {
+            {{ n('FIRST_NAME.ERROR.MAX_LENGTH', { length: form.get('guestFirstName')?.errors?.['maxlength']?.requiredLength  }) }}
+            } @else if (form.get('guestFirstName')?.hasError('whitespace')) {
+            {{ n('FIRST_NAME.ERROR.WHITESPACE') }}
+            } @else if (form.get('guestFirstName')?.hasError('maxWords')) {
+            {{ n('FIRST_NAME.ERROR.MAX_WORDS', { required: 2 }) }}
+            }
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+          <mat-label>{{ n('LAST_NAME.LABEL') }}</mat-label>
+          <input matInput formControlName="guestLastName" />
+
+          <mat-error>
+            @if (form.get('guestLastName')?.hasError('required')) {
+            {{ n('LAST_NAME.ERROR.REQUIRED') }}
+            } @else if (form.get('guestLastName')?.hasError('minlength')) {
+            {{ n('LAST_NAME.ERROR.MIN_LENGTH', { length: form.get('guestLastName')?.errors?.['minlength']?.requiredLength  }) }}
+            } @else if (form.get('guestLastName')?.hasError('maxlength')) {
+            {{ n('LAST_NAME.ERROR.MAX_LENGTH', { length: form.get('guestLastName')?.errors?.['maxlength']?.requiredLength  }) }}
+            } @else if (form.get('guestLastName')?.hasError('whitespace')) {
+            {{ n('LAST_NAME.ERROR.WHITESPACE') }}
+            } @else if (form.get('guestLastName')?.hasError('maxWords')) {
+            {{ n('LAST_NAME.ERROR.MAX_WORDS', { required: 2 }) }}
+            }
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="input" [hideRequiredMarker]="true">
+        <mat-label>
+          {{ n('PHONE.LABEL') }}
+        </mat-label>
+        <input matInput formControlName="guestPhone" />
+
+        <mat-error>
+          @if (form.get('guestPhone')?.hasError('required')) {
+          {{ n('PHONE.ERROR.REQUIRED') }}
+          } @else if (form.get('guestPhone')?.hasError('pattern')) {
+          {{ n('PHONE.ERROR.INVALID') }}
+          }
+        </mat-error>
       </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Last Name</mat-label>
-        <input matInput formControlName="guestLastName" />
-      </mat-form-field>
-    </div>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Phone</mat-label>
-      <input matInput formControlName="guestPhone" />
-    </mat-form-field>
+    </ng-container>
     }
 
     <div class="divider"></div>
 
-    <!-- DATE & TIME SECTION -->
-    <h3>Dates</h3>
+    <h3 class="title-margin">{{ t('DATES.TITLE') }}</h3>
 
     <!-- Start Date/Time -->
-    <div class="date-time-row">
-      <mat-form-field appearance="outline" class="date-field">
-        <mat-label>Check-in Date</mat-label>
+    <div class="date-time-row" *transloco="let d; prefix: 'ADD_RESERVATION.DATES'">
+      <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+        <mat-label>{{ d('DATE.CHECK-IN') }}</mat-label>
         <input matInput [matDatepicker]="pickerStart" formControlName="startDate" />
         <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker #pickerStart></mat-datepicker>
+
+        <mat-error>
+          {{ d('DATE.ERROR') }}
+        </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="time-field">
-        <mat-label>Time</mat-label>
+      <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+        <mat-label>{{ d('TIME.LABEL') }}</mat-label>
         <input matInput type="time" formControlName="startTime" />
+
+        <mat-error>
+          {{ d('TIME.ERROR') }}
+        </mat-error>
       </mat-form-field>
     </div>
 
     <!-- End Date/Time -->
-    <div class="date-time-row">
-      <mat-form-field appearance="outline" class="date-field">
-        <mat-label>Check-out Date</mat-label>
+    <div class="date-time-row" *transloco="let d; prefix: 'ADD_RESERVATION.DATES'">
+      <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+        <mat-label>{{ d('DATE.CHECK-OUT') }}</mat-label>
         <input matInput [matDatepicker]="pickerEnd" formControlName="endDate" />
         <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+
+        <mat-error>
+          {{ d('DATE.ERROR') }}
+        </mat-error>
         <mat-datepicker #pickerEnd></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="time-field">
-        <mat-label>Time</mat-label>
+      <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+        <mat-label>{{ d('TIME.LABEL') }}</mat-label>
         <input matInput type="time" formControlName="endTime" />
+
+        <mat-error>
+          {{ d('TIME.ERROR') }}
+        </mat-error>
       </mat-form-field>
     </div>
 
-    <!-- PRICE -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Total Price</mat-label>
-      <span matTextPrefix>$&nbsp;</span>
-      <input matInput type="number" formControlName="price" />
-    </mat-form-field>
+    <div class="divider"></div>
+
+    <h3 class="title-margin">{{ t('PRICES.TITLE') }}</h3>
+
+    <div class="row-2" *transloco="let d; prefix: 'ADD_RESERVATION.PRICES'">
+      <mat-form-field appearance="outline" class="input" [hideRequiredMarker]="true">
+        <mat-label>{{ d('DAYS_QUANTITY') }}</mat-label>
+        <input matInput type="number" readonly [value]="days()" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input" [hideRequiredMarker]="true">
+        <mat-label>{{ d('DAY_PRICE') }}</mat-label>
+        <span matTextPrefix>&#8382;</span>
+        <input matInput type="number" formControlName="dayPrice" step="5" max="1000" min="50" />
+      </mat-form-field>
+    </div>
+
+    <div class="row-2" *transloco="let d; prefix: 'ADD_RESERVATION.PRICES'">
+      <mat-form-field appearance="outline" class="input" [hideRequiredMarker]="true">
+        <mat-label>{{ d('TOTAL_PRICE') }}</mat-label>
+        <span matTextPrefix>&#8382;</span>
+        <input
+          matInput
+          type="number"
+          formControlName="totalPrice"
+          min="50"
+          max="100000"
+          step="50"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input">
+        <mat-label>{{ d('BE_PRICE') }}</mat-label>
+        <span matTextPrefix>&#8382; </span>
+        <input matInput type="number" formControlName="bePrice" min="0" max="10000" step="5" />
+      </mat-form-field>
+    </div>
+
+    <strong *transloco="let d; prefix: 'ADD_RESERVATION.PRICES'"
+      >{{ d('TOTAL') }}: &#8382;{{
+        (form.get('totalPrice')?.value || 50) + (form.get('bePrice')?.value || 0)
+      }}</strong
+    >
   </form>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-flat-button color="primary" (click)="onSubmit()">
-    <!-- [disabled]="form.invalid" -->
-    Save Reservation
+<mat-dialog-actions align="end" *transloco="let t; prefix: 'ADD_RESERVATION.ACTIONS'">
+  <button mat-button mat-dialog-close>{{ t('CANCEL') }}</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="form.invalid">
+    {{ t('SAVE') }}
   </button>
 </mat-dialog-actions>

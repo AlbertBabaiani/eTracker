@@ -6,7 +6,7 @@ export interface Reservation {
   startDate: Date;
   endDate: Date;
 
-  bePrice?: number;
+  bePrice: number;
   dayPrice: number;
   totalPrice: number;
 

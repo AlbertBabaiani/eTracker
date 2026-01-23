@@ -45,11 +45,17 @@
 
     &.active {
       background-color: var(--primary);
-      color: var(--white);
       border-color: var(--primary);
+      color: var(--white);
+
       .prop-icon {
         color: var(--white);
       }
+    }
+
+    &.active:not(.all) {
+      background-color: var(--custom-color);
+      border-color: var(--custom-color);
     }
   }
 }

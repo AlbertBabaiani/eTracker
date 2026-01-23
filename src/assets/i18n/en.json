@@ -165,5 +165,72 @@
       "NOVEMBER": "November",
       "DECEMBER": "December"
     }
+  },
+  "ADD_RESERVATION": {
+    "ACTIONS": {
+      "CANCEL": "Cancel",
+      "SAVE": "Save Reservation"
+    },
+    "TITLE": "Add New Reservation",
+    "PROPERTY_SELECTION": {
+      "TITLE": "Property",
+      "ERROR": "Property selection is required"
+    },
+    "GUEST_DETAILS_TITLE": "Guest Details",
+    "NEW_GUEST": {
+      "SWITCH": "New Guest",
+
+      "FIRST_NAME": {
+        "LABEL": "First Name",
+        "ERROR": {
+          "REQUIRED": "First name is required",
+          "MIN_LENGTH": "Enter at least {{length}} characters.",
+          "MAX_LENGTH": "Cannot exceed {{length}} characters.",
+          "WHITESPACE": "Cannot consist of empty spaces",
+          "MAX_WORDS": "Cannot exceed {{required}} words"
+        }
+      },
+      "LAST_NAME": {
+        "LABEL": "Last Name",
+        "ERROR": {
+          "REQUIRED": "Last name is required",
+          "MIN_LENGTH": "Enter be at least {{length}} characters.",
+          "MAX_LENGTH": "Cannot exceed {{length}} characters.",
+          "WHITESPACE": "Cannot consist of empty spaces",
+          "MAX_WORDS": "Cannot exceed {{required}} words"
+        }
+      },
+      "PHONE": {
+        "LABEL": "Phone",
+        "ERROR": {
+          "REQUIRED": "Phone number is required",
+          "INVALID": "Phone number must be exactly 9 digits"
+        }
+      }
+    },
+    "SEARCH_GUEST": {
+      "LABEL": "Search Guest",
+      "ERROR": "Select the guest"
+    },
+    "DATES": {
+      "TITLE": "Dates",
+      "DATE": {
+        "CHECK-IN": "Check-in Date",
+        "CHECK-OUT": "Check-Out Date",
+        "ERROR": "Date is required."
+      },
+      "TIME": {
+        "LABEL": "Time",
+        "ERROR": "Time is required."
+      }
+    },
+    "PRICES": {
+      "TITLE": "Days & Prices",
+      "DAYS_QUANTITY": "Days Quantity",
+      "DAY_PRICE": "Day Price",
+      "TOTAL_PRICE": "Total Price",
+      "BE_PRICE": "Be Price",
+      "TOTAL": "Total"
+    }
   }
 }

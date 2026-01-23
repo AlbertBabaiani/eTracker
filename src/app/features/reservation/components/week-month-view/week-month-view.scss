@@ -156,8 +156,8 @@
   cursor: pointer;
 
   border: 1px solid transparent;
-  border-top-color: var(--grid-border-color);
-  border-bottom-color: var(--grid-border-color);
+  border-top-color: var(--custom-border-color);
+  border-bottom-color: var(--custom-border-color);
 
   &:hover {
     transform: scale(1.02);
@@ -168,13 +168,13 @@
     margin-left: var(--spacing-2);
     border-top-left-radius: var(--radius-md);
     border-bottom-left-radius: var(--radius-md);
-    border-left: 3px solid rgba(0, 0, 0, 0.2);
+    border-left: 3px solid var(--custom-border-color);
   }
   &.chip-end {
     margin-right: var(--spacing-2);
     border-top-right-radius: var(--radius-md);
     border-bottom-right-radius: var(--radius-md);
-    border-right: 3px solid rgba(0, 0, 0, 0.2);
+    border-right: solid var(--custom-border-color);
   }
   &.chip-stay {
     margin: 0 0;

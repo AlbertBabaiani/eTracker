@@ -20,4 +20,6 @@ export interface Property {
 
   floor: number;
   blockName?: string;
+
+  color: string;
 }

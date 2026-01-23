@@ -21,10 +21,10 @@ import { IUser } from '../../shared/models/IUser';
 })
 export class PropertyService {
   private firestore = inject(Firestore);
-  private authService = inject(AuthService);
+  private auth = inject(AuthService);
 
   properties = toSignal(
-    toObservable(this.authService.currentUser).pipe(
+    toObservable(this.auth.currentUser).pipe(
       switchMap((user) => {
         if (!user) {
           return of([] as Property[]);
@@ -35,9 +35,9 @@ export class PropertyService {
         const q = query(propertiesCollection, where('ownerIds', 'array-contains', user.uid));
 
         return collectionData(q, { idField: 'id' }) as Observable<Property[]>;
-      })
+      }),
     ),
-    { initialValue: [] }
+    { initialValue: [] },
   );
 
   getPropertyById(id: string): any {
@@ -45,9 +45,10 @@ export class PropertyService {
   }
 
   async addProperty(newProperty: Property): Promise<void> {
-    const user = this.authService.currentUser();
+    const user = this.auth.currentUser();
 
     if (!user) {
+      // TODO
       throw new Error('You must be logged in to add a property.');
     }
 
@@ -59,14 +60,10 @@ export class PropertyService {
       owners = [...owners, user.uid!];
     }
 
-    // Remove the 'id' field if it exists (Firestore generates a new unique ID)
     const { id, ...dataToSave } = newProperty;
 
-    // Sanitize data: Firestore throws an error if fields are 'undefined'.
-    // JSON.parse/stringify is a quick way to strip undefined fields.
     const sanitizedData = JSON.parse(JSON.stringify(dataToSave));
 
-    // Create the document
     await addDoc(propertiesCollection, {
       ...sanitizedData,
       ownerIds: owners,
@@ -81,10 +78,8 @@ export class PropertyService {
 
     const docRef = doc(this.firestore, `properties/${updatedProperty.id}`);
 
-    // Separate the ID from the data payload
     const { id, ...data } = updatedProperty;
 
-    // Sanitize data to remove undefined values
     const sanitizedData = JSON.parse(JSON.stringify(data));
 
     await updateDoc(docRef, sanitizedData);
@@ -100,10 +95,14 @@ export class PropertyService {
     const q = query(
       usersCollection,
       where('displayName', '>=', term),
-      where('displayName', '<=', term + '\uf8ff')
+      where('displayName', '<=', term + '\uf8ff'),
     );
 
     const snapshot = await getDocs(q);
     return snapshot.docs.map((d) => d.data() as IUser);
+  }
+
+  getPropertyColorById(id: string) {
+    return (this.properties().filter((p) => p.id === id) || [])[0].color ?? '#e2e8f0';
   }
 }
