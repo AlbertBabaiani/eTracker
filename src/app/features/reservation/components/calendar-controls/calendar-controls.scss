@@ -39,6 +39,8 @@ $gap: var(--spacing-4);
   }
 
   @media (max-width: 600px) {
+    padding: var(--spacing-4) var(--spacing-3);
+
     .month-navigator {
       gap: 0;
     }

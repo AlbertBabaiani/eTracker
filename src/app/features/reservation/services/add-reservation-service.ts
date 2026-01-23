@@ -29,7 +29,7 @@ export class AddReservationService {
   }
 
   async addOnlyReservation(reservation: Reservation) {
-    await this.reservation.addReservation(reservation);
+    return await this.reservation.addReservation(reservation);
   }
 
   searchGuests(term: string): Guest[] {

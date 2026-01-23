@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Reservation } from '../../features/reservation/models/Reservation';
 import { addDoc, collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -38,14 +38,14 @@ export class ReservationService {
                       ? data.startDate.toDate()
                       : new Date(data.startDate),
                     endDate: data.endDate?.toDate ? data.endDate.toDate() : new Date(data.endDate),
-                  } as Reservation)
+                  }) as Reservation,
               )
               .filter((res) => res.propertyId && myPropertyIds.has(res.propertyId));
-          })
+          }),
         );
-      })
+      }),
     ),
-    { initialValue: [] }
+    { initialValue: [] },
   );
 
   getReservationsForDate(date: Date): Reservation[] {
@@ -74,9 +74,30 @@ export class ReservationService {
     return 'stay';
   }
 
+  private hasOverlap(newRes: Reservation): boolean {
+    const newStart = newRes.startDate.getTime();
+    const newEnd = newRes.endDate.getTime();
+
+    const existingReservations = this.reservations().filter(
+      (r) => r.propertyId === newRes.propertyId,
+    );
+
+    return existingReservations.some((r) => {
+      const existingStart = r.startDate.getTime();
+      const existingEnd = r.endDate.getTime();
+
+      return newStart < existingEnd && newEnd > existingStart;
+    });
+  }
+
   async addReservation(reservation: Reservation) {
     try {
       this.loading.startProcess();
+
+      if (this.hasOverlap(reservation)) {
+        this.notification.showError('RESERVATION.TOAST.OVERLAP');
+        return null;
+      }
 
       const sanitizedData = JSON.parse(JSON.stringify(reservation));
 
@@ -87,7 +108,7 @@ export class ReservationService {
       return response.id;
     } catch (err: any) {
       this.notification.showError();
-      return of(EMPTY);
+      return null;
     } finally {
       this.loading.stopProcess();
     }

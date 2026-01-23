@@ -202,6 +202,8 @@ export class AddReservation {
     const endDateTime = this.combineDateTime(val.endDate!, val.endTime!);
 
     try {
+      let response: any;
+
       if (this.isNewGuest()) {
         const final_reservation: Omit<Reservation, 'guestId'> = {
           propertyId: val.propertyId!,
@@ -219,7 +221,7 @@ export class AddReservation {
           phone: this.form.get('guestPhone')!.value,
         };
 
-        this.service.addGuestAndReservation(final_reservation, guest);
+        response = await this.service.addGuestAndReservation(final_reservation, guest);
       } else {
         const final_reservation: Reservation = {
           propertyId: val.propertyId!,
@@ -232,17 +234,13 @@ export class AddReservation {
           bePrice: val.bePrice!,
         };
 
-        this.service.addOnlyReservation(final_reservation);
+        response = await this.service.addOnlyReservation(final_reservation);
       }
+
+      if (response === null) return;
 
       this.dialogRef.close(true);
     } catch (err) {}
-
-    // if (this.isNewGuest()) {
-
-    //   console.log(startDateTime, endDateTime);
-    //   console.log(days);
-    // }
   }
 
   private combineDateTime(date: Date, timeStr: string): Date {

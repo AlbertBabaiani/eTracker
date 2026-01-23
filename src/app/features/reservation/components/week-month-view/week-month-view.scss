@@ -227,28 +227,46 @@
 }
 
 @media (max-width: 700px) {
-  .day-cell {
-    overflow: visible;
+  .days-header {
+    padding: var(--spacing-2) 0;
   }
 
+  // .day-cell {
+  //   overflow: visible;
+  // }
+
   .month {
+    .reservations-stack {
+      gap: var(--spacing-1);
+
+      position: relative;
+      height: 100%;
+      top: unset;
+    }
+
+    .guest-chip {
+      top: calc(var(--row) * var(--spacing-7));
+      position: absolute;
+      height: var(--spacing-7);
+    }
+
     .day-cell {
-      grid-template-rows: 1fr 1fr;
+      grid-template-rows: auto 1fr;
     }
 
     .cell-header {
       padding: 0;
-      padding-top: 2px;
       justify-content: center;
+      height: 100%;
     }
 
-    .guest-chip-mobile {
-      &.month {
-        display: flex;
-      }
-      &.week {
-        display: none;
-      }
+    .day-number {
+      font-size: 0.9rem;
+    }
+
+    .today .day-number {
+      width: 100%;
+      border-radius: var(--radius-md);
     }
   }
 
@@ -274,7 +292,7 @@
 
   .reservations-stack {
     height: min-content;
-    justify-content: center;
+    justify-content: stretch;
     align-items: center;
     flex-direction: column;
     gap: 0.8rem;
@@ -282,11 +300,21 @@
   }
 
   .guest-chip {
+    width: 100%;
+    margin: 0 !important;
+  }
+
+  .chip-content-mobile {
+    text-align: center;
+    width: 100%;
+  }
+
+  .chip-content {
     display: none;
   }
 
-  .guest-chip-mobile {
-    display: flex;
+  .tiny-icon {
+    display: none;
   }
 }
 

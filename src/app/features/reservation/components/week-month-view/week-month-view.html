@@ -55,8 +55,8 @@
         </div>
 
         <div class="reservations-stack">
-          @let slot = day.slots;
-          <!--  -->
+          <!-- @let slot = day.slots;
+
           @if (slot.length === 1) {
             <div class="guest-chip-mobile month">
               {{ getGuestName(slot[0].reservation.guestId) | titlecase | initials }}
@@ -65,22 +65,25 @@
             <div class="guest-chip-mobile month">
               {{ slot.length }}
             </div>
-          }
+          } -->
 
           <!--  -->
 
           @for (slot of day.slots; track $index) {
-            <div class="guest-chip-mobile week">
-              {{ getGuestName(slot.reservation.guestId) | titlecase | initials }}
-            </div>
-
             <div
               class="guest-chip"
               [class.chip-start]="slot.type === 'start'"
               [class.chip-end]="slot.type === 'end'"
               [class.chip-stay]="slot.type === 'stay'"
-              style="--custom-border-color: {{ getPropertyColor(slot.reservation.propertyId) }}"
+              [style]="{
+                '--custom-border-color': getPropertyColor(slot.reservation.propertyId),
+                '--row': $index,
+              }"
             >
+              <div class="chip-content-mobile">
+                {{ getGuestName(slot.reservation.guestId) | titlecase | initials }}
+              </div>
+
               <div class="chip-content">
                 <span class="guest-name">{{ getGuestName(slot.reservation.guestId) }}</span>
                 @if (slot.timeLabel) {
