@@ -1,61 +1,67 @@
-.properties-panel {
+footer {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
-  padding: var(--spacing-3) var(--spacing-6);
+  padding: var(--spacing-2) var(--spacing-6);
   background: var(--white);
   overflow-x: auto;
   white-space: nowrap;
 
   position: relative;
 
-  .panel-label {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+  border-top: 1px solid var(--grid-border-color);
+
+  @media (min-width: 700px) {
+    padding-block: var(--spacing-3);
+  }
+}
+
+.panel-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.prop-list {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.prop-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--grid-border-color);
+  background: var(--white);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: var(--hover-bg);
   }
 
-  .prop-list {
-    display: flex;
-    gap: var(--spacing-2);
-  }
-
-  .prop-chip {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border: 1px solid var(--grid-border-color);
-    background: var(--white);
-    padding: 6px 12px;
-    border-radius: var(--radius-full);
-    cursor: pointer;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    transition: all 0.2s;
+  &.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--white);
 
     .prop-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
-      color: var(--text-secondary);
-    }
-
-    &:hover {
-      background-color: var(--hover-bg);
-    }
-
-    &.active {
-      background-color: var(--primary);
-      border-color: var(--primary);
       color: var(--white);
-
-      .prop-icon {
-        color: var(--white);
-      }
-    }
-
-    &.active:not(.all) {
-      background-color: var(--custom-color);
-      border-color: var(--custom-color);
     }
   }
+
+  &.active:not(.all) {
+    background-color: var(--custom-color);
+    border-color: var(--custom-color);
+  }
+}
+
+.prop-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--text-secondary);
 }

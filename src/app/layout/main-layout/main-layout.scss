@@ -33,7 +33,12 @@
   position: relative;
 }
 
-/* --- MOBILE (Floating Pill) --- */
+@media (max-height: 800px) {
+  .content-area {
+    padding: var(--spacing-2);
+  }
+}
+
 @media (max-width: 1000px) {
   .app-container {
     grid-template-columns: 1fr;

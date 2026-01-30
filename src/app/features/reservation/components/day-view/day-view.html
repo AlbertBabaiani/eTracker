@@ -8,7 +8,7 @@
 
 <div class="timeline-grid">
   @for (hour of hours; track hour) {
-    <div class="grid-line"></div>
+    <div class="grid-line" [class]="{ last: $last }"></div>
   }
   <!--  -->
   @for (slot of reservations(); track $index) {

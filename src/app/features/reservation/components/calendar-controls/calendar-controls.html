@@ -5,8 +5,14 @@
     </button>
 
     <h2 class="current-label">
-      {{ currentView() === 'day' ? `${t(`WEEKDAY.${lbl()[0]}`)}, ${t(`MONTHS.${lbl()[1]}`)}
-      ${lbl()[2]}, ${lbl()[3]}` : currentView() === 'year' ? lbl() : `${t(`MONTHS.${lbl()[0]}`)} ${lbl()[1]}`}}
+      {{
+        currentView() === 'day'
+          ? `${t(`WEEKDAY.${lbl()[0]}`)}, ${t(`MONTHS.${lbl()[1]}`)}
+      ${lbl()[2]}, ${lbl()[3]}`
+          : currentView() === 'year'
+            ? lbl()
+            : `${t(`MONTHS.${lbl()[0]}`)} ${lbl()[1]}`
+      }}
     </h2>
 
     <button mat-icon-button (click)="onNavigate(1)">

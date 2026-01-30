@@ -51,7 +51,7 @@ export class GuestService {
     }
   }
 
-  getGuestNameById(id: string) {
+  getGuestById(id: string): Guest {
     return (this.guests().filter((guest) => guest.id === id) || [])[0];
   }
 }

@@ -1,8 +1,7 @@
 import { Component, computed, HostListener, inject, input, output, signal } from '@angular/core';
 import { CalendarDay, CalendarView } from '../../models/Calendar';
 import { MatIcon } from '@angular/material/icon';
-import { TitleCasePipe } from '@angular/common';
-import { InitialsPipe } from '../../../../shared/pipes/initials-pipe';
+
 import { MatButtonModule } from '@angular/material/button';
 import { AddBtn } from '../../../../shared/components/add-btn/add-btn';
 import { TranslocoDirective } from '@jsverse/transloco';
@@ -11,7 +10,7 @@ import { PropertyService } from '../../../../core/services/property-service';
 
 @Component({
   selector: 'app-week-month-view',
-  imports: [MatIcon, MatButtonModule, TitleCasePipe, InitialsPipe, AddBtn, TranslocoDirective],
+  imports: [MatIcon, MatButtonModule, AddBtn, TranslocoDirective],
   templateUrl: './week-month-view.html',
   styleUrl: './week-month-view.scss',
 })
@@ -89,7 +88,7 @@ export class WeekMonthView {
   // Helpers
 
   getGuestName(id: string) {
-    const guest = this.guestService.getGuestNameById(id);
+    const guest = this.guestService.getGuestById(id);
 
     return `${guest.firstName} ${guest.lastName}`;
   }

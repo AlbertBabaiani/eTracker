@@ -6,28 +6,35 @@
   height: 100%;
 }
 
+// Calendar Day Start
+
 .days-header {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  padding: var(--spacing-3) 0;
+  padding: var(--spacing-2) 0;
   background-color: var(--white);
-  border-bottom: 1px solid var(--grid-border-color);
 
-  .day-name {
-    text-align: center;
-    font-weight: 600;
-    color: var(--text-secondary);
-
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-
-    &:nth-child(6),
-    &:nth-child(7) {
-      color: var(--primary);
-    }
+  @media (min-width: 700px) {
+    padding-block: var(--spacing-3);
   }
 }
+
+.day-name {
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-secondary);
+
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &:nth-child(6),
+  &:nth-child(7) {
+    color: var(--primary);
+  }
+}
+
+// Calendar Day End
 
 .calendar-grid {
   width: 100%;
@@ -49,16 +56,18 @@
   }
 }
 
+// Day Cell Layout Start
+
 .day-cell {
   border-right: 1px solid var(--grid-border-color);
-  border-bottom: 1px solid var(--grid-border-color);
-
-  position: relative;
+  border-top: 1px solid var(--grid-border-color);
 
   display: grid;
   grid-template-rows: auto 1fr;
-  gap: var(--spacing-1);
+  gap: var(--spacing-2);
   cursor: pointer;
+
+  position: relative;
 
   overflow: hidden;
 
@@ -69,7 +78,7 @@
   }
 
   &.empty {
-    background-color: #fbfbfb !important;
+    background-color: #fbfbfb;
     cursor: default;
   }
 
@@ -91,15 +100,21 @@
 
 .cell-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--spacing-1);
-}
-
-.calendar-grid.week .cell-header {
   justify-content: center;
+  align-items: center;
+  padding-top: var(--spacing-1);
 
-  padding: var(--spacing-3);
+  .calendar-grid.week & {
+    justify-content: center;
+
+    padding: var(--spacing-3);
+  }
+
+  @media (min-width: 700px) {
+    justify-content: start;
+
+    padding: var(--spacing-1);
+  }
 }
 
 .day-number {
@@ -107,6 +122,7 @@
   font-size: 0.95rem;
   width: var(--spacing-7);
   height: var(--spacing-7);
+
   display: flex;
   align-items: center;
   text-align: center;
@@ -114,22 +130,91 @@
   border-radius: 50%;
   transition: all 0.2s;
 
+  font-size: 0.9rem;
+
   color: var(--black);
 
   .day-cell.today & {
-    background-color: var(--primary);
+    background: var(--primary);
     color: var(--white);
   }
 
   .day-cell.past & {
     color: var(--text-secondary);
   }
+
+  @media (min-width: 700px) {
+    width: var(--spacing-8);
+    height: var(--spacing-8);
+
+    font-size: 1rem;
+  }
+}
+
+// Day Cell Layout End
+
+// Actions On Day Cell Start
+
+.actions-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  z-index: 11;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+
+  gap: var(--spacing-1);
+
+  backdrop-filter: blur(2px);
+  z-index: 20;
+
+  @media (min-width: 800px) {
+    gap: var(--spacing-5);
+  }
+
+  @media (min-width: 700px) {
+    flex-direction: row;
+  }
+}
+
+.action-btn {
+  transform: scale(0.9);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+  &.add-btn {
+    background: var(--primary);
+    color: var(--white);
+  }
+
+  &.view-btn {
+    background-color: var(--white);
+    color: var(--text-secondary);
+  }
+
+  @media (min-width: 800px) {
+    transform: scale(1.1);
+  }
+}
+
+// Actions On Day Cell End
+
+// Reservations Start
+
+.reservations-stack-container {
+  position: relative;
 }
 
 .reservations-stack {
   position: absolute;
   left: 0;
-  top: 2.5rem;
+  top: 0rem;
   width: 100%;
 
   display: flex;
@@ -140,13 +225,17 @@
 .guest-chip {
   height: 2.1rem;
 
-  display: flex;
-  align-items: center;
-  background: var(--white);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 2px;
 
-  gap: 6px;
-  padding: 3px 6px;
+  display: grid;
+  grid-template-columns: 1fr;
+
+  align-items: center;
+
+  background: var(--white);
+
+  gap: var(--spacing-2);
+
   font-size: 0.75rem;
   color: var(--black);
   // overflow: hidden;
@@ -165,20 +254,65 @@
   }
 
   &.chip-start {
-    margin-left: var(--spacing-2);
     border-top-left-radius: var(--radius-md);
     border-bottom-left-radius: var(--radius-md);
     border-left: 3px solid var(--custom-border-color);
+
+    grid-template-columns: 1fr;
+
+    width: calc(100% - var(--spacing-1));
+    margin-left: var(--spacing-1);
   }
+
   &.chip-end {
-    margin-right: var(--spacing-2);
     border-top-right-radius: var(--radius-md);
     border-bottom-right-radius: var(--radius-md);
     border-right: 3px solid var(--custom-border-color);
+
+    grid-template-columns: 1fr;
+
+    width: calc(100% - var(--spacing-1));
+    margin-right: var(--spacing-1);
   }
+
   &.chip-stay {
+    justify-content: center;
     margin: 0 0;
     border-radius: 0;
+
+    text-align: center;
+  }
+
+  @media (min-width: 700px) {
+    padding: 3px 6px;
+
+    &.chip-start {
+      width: calc(100% - var(--spacing-2));
+      margin-left: var(--spacing-2);
+
+      grid-template-columns: auto 1fr;
+    }
+
+    &.chip-end {
+      width: calc(100% - var(--spacing-2));
+      margin-right: var(--spacing-2);
+
+      grid-template-columns: auto 1fr;
+    }
+  }
+}
+
+.tiny-icon {
+  font-size: var(--spacing-4);
+  width: var(--spacing-4);
+  height: var(--spacing-4);
+  opacity: 0.6;
+  color: var(--text-secondary);
+
+  display: none;
+
+  @media (min-width: 900px) {
+    display: block;
   }
 }
 
@@ -189,10 +323,17 @@
   overflow: hidden;
   gap: 0.1rem;
 }
+
 .chip-time {
   font-size: 0.7rem;
   opacity: 0.7;
   margin-top: 1px;
+
+  display: none;
+
+  @media (min-width: 700px) {
+    display: block;
+  }
 }
 
 .guest-name {
@@ -201,206 +342,22 @@
   overflow: hidden;
 }
 
-.tiny-icon {
-  font-size: var(--spacing-4);
-  width: var(--spacing-4);
-  height: var(--spacing-4);
-  opacity: 0.6;
-  color: var(--text-secondary);
-  margin-left: auto;
-}
-
-.guest-chip-mobile {
-  display: none;
-
-  width: var(--spacing-7);
-  height: var(--spacing-7);
-
-  justify-content: center;
-  align-items: center;
-
-  background: var(--secondary);
-  border-radius: var(--radius-full);
-
-  color: var(--black);
-  font-weight: var(--fw-medium);
-}
-
-@media (max-width: 700px) {
-  .days-header {
-    padding: var(--spacing-2) 0;
-  }
-
-  // .day-cell {
-  //   overflow: visible;
-  // }
-
-  .month {
-    .reservations-stack {
-      gap: var(--spacing-1);
-
-      position: relative;
-      height: 100%;
-      top: unset;
-    }
-
-    .guest-chip {
-      top: calc(var(--row) * var(--spacing-7));
-      position: absolute;
-      height: var(--spacing-7);
-    }
-
-    .day-cell {
-      grid-template-rows: auto 1fr;
-    }
-
-    .cell-header {
-      padding: 0;
-      justify-content: center;
-      height: 100%;
-    }
-
-    .day-number {
-      font-size: 0.9rem;
-    }
-
-    .today .day-number {
-      width: 100%;
-      border-radius: var(--radius-md);
-    }
-  }
-
-  .week {
-    .day-cell {
-      gap: 1rem;
-    }
-
-    .cell-header {
-      padding: 0;
-      padding-top: 0.8rem;
-    }
-
-    .guest-chip-mobile {
-      &.month {
-        display: none;
-      }
-      &.week {
-        display: flex;
-      }
-    }
-  }
-
-  .reservations-stack {
-    height: min-content;
-    justify-content: stretch;
-    align-items: center;
-    flex-direction: column;
-    gap: 0.8rem;
-    position: static;
-  }
-
-  .guest-chip {
-    width: 100%;
-    margin: 0 !important;
-  }
-
-  .chip-content-mobile {
-    text-align: center;
-    width: 100%;
-  }
-
-  .chip-content {
-    display: none;
-  }
-
-  .tiny-icon {
-    display: none;
-  }
-}
-
-.actions-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-6);
-  background: rgba(255, 255, 255, 0.85);
-
-  backdrop-filter: blur(2px);
-  z-index: 20;
-
-  .action-btn {
-    transform: scale(1.1);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-
-    &.add-btn {
-      background: var(--primary);
-      color: var(--white);
-    }
-
-    &.view-btn {
-      background-color: var(--white);
-      color: var(--text-secondary);
-    }
-  }
-
-  @media (max-width: 800px) {
-    gap: var(--spacing-1);
-
-    .action-btn {
-      transform: scale(0.9);
-    }
-  }
-
-  @media (max-width: 700px) {
-    background: none;
-    backdrop-filter: none;
-
-    top: 50%;
-    transform: translateY(-50%);
-    height: auto;
-
-    flex-direction: column;
-
-    &.overlay-top {
-      top: 2px;
-      transform: none;
-    }
-
-    &.overlay-bottom {
-      top: auto;
-      bottom: 2px;
-      transform: none;
-    }
-
-    .action-btn {
-      transform: scale(0.9);
-    }
-
-    &.week {
-      inset: 0;
-      top: 0;
-      transform: none;
-      background: rgba(255, 255, 255, 0.85);
-
-      backdrop-filter: blur(2px);
-    }
-  }
-}
+// Reservations End
 
 .add-reservation-btn {
   position: absolute;
 
-  bottom: var(--spacing-8);
-  right: var(--spacing-8);
+  z-index: 10;
 
-  @media (max-width: 500px) {
-    bottom: var(--spacing-4);
-    right: var(--spacing-4);
+  bottom: var(--spacing-3);
+  right: var(--spacing-3);
+
+  transform: scale(0.9);
+
+  @media (min-width: 500px) {
+    bottom: var(--spacing-8);
+    right: var(--spacing-8);
+
+    transform: scale(1);
   }
 }

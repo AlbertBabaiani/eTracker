@@ -3,7 +3,7 @@ import { ReservationService } from '../../../../core/services/reservation-servic
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { Reservation } from '../../models/Reservation';
+import { Reservation, ReservationShown } from '../../models/Reservation';
 import { PropertyService } from '../../../../core/services/property-service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddReservation } from '../add-reservation/add-reservation';
@@ -13,6 +13,7 @@ import { YearView } from '../year-view/year-view';
 import { DayView } from '../day-view/day-view';
 import { WeekMonthView } from '../week-month-view/week-month-view';
 import { PropertySelection } from '../property-selection/property-selection';
+import { GuestService } from '../../../../core/services/guest-service';
 
 @Component({
   selector: 'app-calendar',
@@ -32,6 +33,7 @@ import { PropertySelection } from '../property-selection/property-selection';
 export class Calendar {
   private reservationService = inject(ReservationService);
   private propertyService = inject(PropertyService);
+  private guestService = inject(GuestService);
   private dialog = inject(MatDialog);
 
   view = signal<CalendarView>('month');
@@ -103,6 +105,23 @@ export class Calendar {
       // Use filtered reservations
       const reservations = this.getFilteredReservations(date);
 
+      const shown_reservations = reservations.map((reservation) => {
+        let guest = this.guestService.getGuestById(reservation.guestId);
+
+        const shownReservation: ReservationShown = {
+          id: reservation.id,
+          propertyId: reservation.propertyId,
+
+          guestId: reservation.guestId,
+          guestName: `${guest.firstName} ${guest.lastName}`,
+
+          startDate: reservation.startDate,
+          endDate: reservation.endDate,
+        };
+
+        return shownReservation;
+      });
+
       const slots: DaySlot[] = reservations.map((res) => {
         const type = this.reservationService.getReservationType(date, res);
         let timeLabel: string | undefined;
@@ -135,6 +154,7 @@ export class Calendar {
         slots: slots,
       });
     }
+
     return days;
   });
 

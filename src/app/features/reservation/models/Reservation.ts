@@ -12,3 +12,13 @@ export interface Reservation {
 
   days: number;
 }
+
+export interface ReservationShown {
+  id?: string;
+  propertyId: string;
+  guestId: string;
+  guestName: string;
+
+  startDate: Date;
+  endDate: Date;
+}

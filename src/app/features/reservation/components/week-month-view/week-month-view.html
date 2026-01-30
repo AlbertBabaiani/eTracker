@@ -19,8 +19,6 @@
         <div
           class="actions-overlay"
           [class]="{
-            'overlay-top': isFirstRow($index),
-            'overlay-bottom': isLastWeek($index),
             week: view() === 'week',
             month: view() === 'month',
           }"
@@ -54,8 +52,9 @@
           <span class="day-number">{{ day.dayNumber }} </span>
         </div>
 
-        <div class="reservations-stack">
-          <!-- @let slot = day.slots;
+        <div class="reservations-stack-container">
+          <div class="reservations-stack">
+            <!-- @let slot = day.slots;
 
           @if (slot.length === 1) {
             <div class="guest-chip-mobile month">
@@ -67,40 +66,36 @@
             </div>
           } -->
 
-          <!--  -->
+            <!--  -->
 
-          @for (slot of day.slots; track $index) {
-            <div
-              class="guest-chip"
-              [class.chip-start]="slot.type === 'start'"
-              [class.chip-end]="slot.type === 'end'"
-              [class.chip-stay]="slot.type === 'stay'"
-              [style]="{
-                '--custom-border-color': getPropertyColor(slot.reservation.propertyId),
-                '--row': $index,
-              }"
-            >
-              <div class="chip-content-mobile">
-                {{ getGuestName(slot.reservation.guestId) | titlecase | initials }}
-              </div>
+            @for (slot of day.slots; track $index) {
+              <div
+                class="guest-chip"
+                [class.chip-start]="slot.type === 'start'"
+                [class.chip-end]="slot.type === 'end'"
+                [class.chip-stay]="slot.type === 'stay'"
+                [style]="{
+                  '--custom-border-color': getPropertyColor(slot.reservation.propertyId),
+                }"
+              >
+                @if (slot.type === 'start') {
+                  <mat-icon class="tiny-icon">login</mat-icon>
+                }
 
-              <div class="chip-content">
-                <span class="guest-name">{{ getGuestName(slot.reservation.guestId) }}</span>
-                @if (slot.timeLabel) {
-                  <span class="chip-time">{{ slot.timeLabel }}</span>
+                <div class="chip-content">
+                  <span class="guest-name">{{ getGuestName(slot.reservation.guestId) }}</span>
+                  @if (slot.timeLabel) {
+                    <span class="chip-time">{{ slot.timeLabel }}</span>
+                  }
+                </div>
+
+                <!--  -->
+                @if (slot.type === 'end') {
+                  <mat-icon class="tiny-icon">logout</mat-icon>
                 }
               </div>
-
-              @if (slot.type === 'start') {
-                <mat-icon class="tiny-icon">login</mat-icon>
-              }
-
-              <!--  -->
-              @if (slot.type === 'end') {
-                <mat-icon class="tiny-icon">logout</mat-icon>
-              }
-            </div>
-          }
+            }
+          </div>
         </div>
       }
     </div>

@@ -9,4 +9,8 @@
   box-shadow: var(--shadow-base);
   overflow: hidden;
   overflow-y: auto;
+
+  @media (max-width: 1000px) {
+    border-radius: unset;
+  }
 }
