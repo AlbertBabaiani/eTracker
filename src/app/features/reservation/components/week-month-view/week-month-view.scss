@@ -297,7 +297,9 @@
       width: calc(100% - var(--spacing-2));
       margin-right: var(--spacing-2);
 
-      grid-template-columns: auto 1fr;
+      grid-template-columns: 1fr auto;
+
+      justify-content: space-between;
     }
   }
 }
