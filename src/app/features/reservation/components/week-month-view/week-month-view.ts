@@ -1,7 +1,6 @@
 import { Component, computed, HostListener, inject, input, output, signal } from '@angular/core';
 import { CalendarDay, CalendarView } from '../../models/Calendar';
 import { MatIcon } from '@angular/material/icon';
-
 import { MatButtonModule } from '@angular/material/button';
 import { AddBtn } from '../../../../shared/components/add-btn/add-btn';
 import { TranslocoDirective } from '@jsverse/transloco';
