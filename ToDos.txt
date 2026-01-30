@@ -1,3 +1,7 @@
 1. In Day View replace ID with Name
 2. Change the ripple effect of a button.
 3. Fix jumping in header.
+4. Add a dialog on reservation clicking.
+
+5. Remake Property Section
+6. When deleting a property its reservations should be deleted too.

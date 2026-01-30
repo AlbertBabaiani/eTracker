@@ -197,7 +197,7 @@ $primaryBtnHeightDesktop: 2.75rem;
       filled-container-color: var(--primary),
       filled-label-text-size: var(--fs-lg),
       filled-container-height: $primaryBtnHeight,
-      filled-container-shape: var(--radius-lg),
+      // filled-container-shape: var(--radius-lg),
       filled-label-text-weight: var(--fw-medium),
       //
       text-label-text-color: var(--primary),
@@ -210,7 +210,7 @@ $primaryBtnHeightDesktop: 2.75rem;
       outlined-label-text-color: var(--primary),
       outlined-container-height: $primaryBtnHeight,
       outlined-horizontal-padding: 1.5rem,
-      outlined-container-shape: var(--radius-lg),
+      // outlined-container-shape: var(--radius-lg),
       outlined-state-layer-color: var(--primary),
       outlined-ripple-color: var(--secondary),
     )
